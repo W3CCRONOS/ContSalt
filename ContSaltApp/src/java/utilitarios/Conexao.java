@@ -19,8 +19,7 @@ public class Conexao
     final private String url = "jdbc:mysql://localhost/paraquedismo";
     final private String usuario = "root";
     final private String senha = "";
-    teste;
-    
+  
     public Connection conectar()
     {
         Connection conn = null;
