@@ -34,7 +34,7 @@ public class ClienteDAO {
             PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM filme");
             rs = ppStmt.executeQuery();
             while(rs.next()){
-                lstF.add(getFilme(rs));
+                lstF.add(getFil(rs));
             }
         }
         catch(SQLException ex){
