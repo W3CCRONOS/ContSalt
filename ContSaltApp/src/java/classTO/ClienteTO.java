@@ -30,6 +30,6 @@ public class ClienteTO {
     public void setNomeCliente(String nomeCliente) {
         this.nomeCliente = nomeCliente;
     
-       // aula java
+       
 
 }
