@@ -14,7 +14,9 @@ package classTO;
 
 public class ClienteTO {
     private int idCliente;
-    private String nomeCliente;
+    private String nome;
+    private String cpf;
+    
     public int getIdCliente() {
         return idCliente;
     }
@@ -23,14 +25,20 @@ public class ClienteTO {
         this.idCliente = idCliente;
     }
 
-    public String getNomeCliente() {
-        return nomeCliente;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomeCliente(String nomeCliente) {
-        this.nomeCliente = nomeCliente;
-    
-      // adfdsfasdfdsa;
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-}
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }  
+
 }
