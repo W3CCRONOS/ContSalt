@@ -26,21 +26,6 @@ public class ClienteDAO {
         conn = new Conexao().conectar();
         //conn = new GMCConexao().
     }
-     
-      public List<ClienteTO> consultar(){
-        List<ClienteTO> lstF = new LinkedList<>();
-        ResultSet rs;
-        try{            
-            PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM filme");
-            rs = ppStmt.executeQuery();
-            while(rs.next()){
-                lstF.add(getFil(rs));
-            }
-        }
-        catch(SQLException ex){
-            ex.printStackTrace();
-        }
-        return lstF;
-    }
+    
 }
 //teste atualizado
