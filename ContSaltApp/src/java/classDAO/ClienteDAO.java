@@ -24,8 +24,33 @@ public class ClienteDAO {
     
      public ClienteDAO(){
         conn = new Conexao().conectar();
-        //conn = new GMCConexao().
     }
     
+      public List<ClienteTO> getClientes(){
+        List<ClienteTO> lstC = new LinkedList<>();
+        try{
+            PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM cliente");
+            ResultSet rs;
+            rs = ppStmt.executeQuery();
+            while(rs.next()){
+                lstC.add(getCliente(rs));
+            }
+        }
+        catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        return lstC;
+    }
+    
+    // throws SQLException refere-se ao try cath do método anterior
+     //private pq este metodo deve ser visto apenas nesta classe  
+       private ClienteTO getCliente(ResultSet rs) throws SQLException {
+       ClienteTO cliente =  new ClienteTO(); 
+       //carro.setIdcarro(rs.getInt("idcarro"));
+       cliente.setNome(rs.getString("nome"));
+       cliente.setCpf(rs.getString("cpf"));
+       cliente.setIdCliente(rs.getInt("ano"));
+       return cliente;
+    }
 }
 //teste atualizado
