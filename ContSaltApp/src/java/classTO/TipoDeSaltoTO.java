@@ -8,13 +8,14 @@ package classTO;
 /**
  *
  * @author Almir
+ * 
  */
 public class TipoDeSaltoTO {
     
     private int idTipoDeSalto;
-    private String nomeTipoDeSalto;
-    private double valorTipoDeSalto;
-
+    private String nome;
+    private double valor;
+    
     public int getIdTipoDeSalto() {
         return idTipoDeSalto;
     }
@@ -22,22 +23,22 @@ public class TipoDeSaltoTO {
     public void setIdTipoDeSalto(int idTipoDeSalto) {
         this.idTipoDeSalto = idTipoDeSalto;
     }
-    
-    
-    
-    public String getNomeTipoDeSalto() {
-        return nomeTipoDeSalto;
+
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomeTipoDeSalto(String nomeTipoDeSalto) {
-        this.nomeTipoDeSalto = nomeTipoDeSalto;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public double getValorTipoDeSalto() {
-        return valorTipoDeSalto;
+    public double getValor() {
+        return valor;
     }
 
-    public void setValorTipoDeSalto(double valorTipoDeSalto) {
-        this.valorTipoDeSalto = valorTipoDeSalto;
+    public void setValor(double valor) {
+        this.valor = valor;
     }
+
+  
 }
