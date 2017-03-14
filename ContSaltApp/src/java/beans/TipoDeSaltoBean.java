@@ -33,18 +33,10 @@ public class TipoDeSaltoBean implements Serializable {
     }
     
     public  void salvar(){
-        System.out.println(cTO.getNome());
-        System.out.println(valor);
-        removerMascara(valor);
-        System.out.println(cTO.getNome());
-        System.out.println(cTO.getValor());
-        cBO.salvar(cTO);
-        
-        cTO= new TipoDeSaltoTO();
-        valor=new String();
-                
-       
+        removerMascara(valor);        
+        cBO.salvar(cTO);                  
     }
+    
     public void removerMascara(String str){
         double y=0;
         y=Double.parseDouble(str.replaceAll("\\D", ""));

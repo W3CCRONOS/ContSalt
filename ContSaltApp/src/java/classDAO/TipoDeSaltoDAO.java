@@ -31,6 +31,9 @@ public class TipoDeSaltoDAO {
             PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO tipodesalto (nome, valor) VALUES (?,?)");
             ppStmt.setString(1,tipodesalto.getNome());
             ppStmt.setDouble(2,tipodesalto.getValor());
+            System.out.println(tipodesalto.getNome());       
+            System.out.println(tipodesalto.getValor());
+            System.out.println("beanadsfdfadfadsfasdasdfdsadf");
             ppStmt.execute();
             System.out.println("Cadastrou");
         }

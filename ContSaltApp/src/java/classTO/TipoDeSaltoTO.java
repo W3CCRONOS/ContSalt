@@ -40,5 +40,5 @@ public class TipoDeSaltoTO {
         this.valor = valor;
     }
 
-  
+    
 }
