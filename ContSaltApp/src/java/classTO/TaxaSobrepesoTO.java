@@ -12,9 +12,8 @@ package classTO;
 public class TaxaSobrepesoTO {
     
     private int idTaxaSobrepeso;
-    private double pesoMaximo;
-    private double valorTaxaSobrePeso;
-
+    private double valor;
+    
     public int getIdTaxaSobrepeso() {
         return idTaxaSobrepeso;
     }
@@ -22,22 +21,14 @@ public class TaxaSobrepesoTO {
     public void setIdTaxaSobrepeso(int idTaxaSobrepeso) {
         this.idTaxaSobrepeso = idTaxaSobrepeso;
     }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
     
-    
-    public double getPesoMaximo() {
-        return pesoMaximo;
-    }
-
-    public void setPesoMaximo(double pesoMaximo) {
-        this.pesoMaximo = pesoMaximo;
-    }
-
-    public double getValorTaxaSobrePeso() {
-        return valorTaxaSobrePeso;
-    }
-
-    public void setValorTaxaSobrePeso(double valorTaxaSobrePeso) {
-        this.valorTaxaSobrePeso = valorTaxaSobrePeso;
-    }
     
 }
