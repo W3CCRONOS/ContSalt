@@ -13,7 +13,8 @@ public class TaxaSobrepesoTO {
     
     private int idTaxaSobrepeso;
     private double valor;
-    
+    private int codigo;
+
     public int getIdTaxaSobrepeso() {
         return idTaxaSobrepeso;
     }
@@ -30,5 +31,12 @@ public class TaxaSobrepesoTO {
         this.valor = valor;
     }
     
+     public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
     
 }

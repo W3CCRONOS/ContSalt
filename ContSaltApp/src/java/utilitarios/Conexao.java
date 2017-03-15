@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class Conexao 
 {
     final private String drive = "com.mysql.jdbc.Driver";
-    final private String url = "jdbc:mysql://localhost/paraquedismo";
+    final private String url = "jdbc:mysql://localhost/escolapqd";
     final private String usuario = "root";
     final private String senha = "";
   
