@@ -22,29 +22,34 @@ import java.util.List;
 @SessionScoped
 public class TipoDeSaltoBean implements Serializable {
 
-    TipoDeSaltoTO cTO;
-    TipoDeSaltoBO cBO;
-    String valor;
+   private TipoDeSaltoTO CTO;
+   private TipoDeSaltoBO cBO;
+   private String valor;
     
     public TipoDeSaltoBean() {
-        this.setcTO(new TipoDeSaltoTO());
+        this.setCTO(new TipoDeSaltoTO());
         this.setcBO(new TipoDeSaltoBO());
         this.setValor(new String());
     }
     
     public  void salvar(){
         removerMascara(valor);        
-        cBO.salvar(cTO);                  
+        cBO.salvar(CTO); 
+        CTO = new TipoDeSaltoTO();
+        valor = new String();                
     }
     
     public void removerMascara(String str){
         double y=0;
+        //O método replaceAll("\\D", "") remove todos os carcteres != números
         y=Double.parseDouble(str.replaceAll("\\D", ""));
         y= y * 0.01;
-        cTO.setValor(y);        
+        CTO.setValor(y);        
     }
     
-    public List<TipoDeSaltoTO> getTipoDeSalto(){
+ 
+    
+    public List<TipoDeSaltoTO> getTiposDeSaltos(){
         return cBO.getTipoDeSalto();
     }
     
@@ -53,19 +58,11 @@ public class TipoDeSaltoBean implements Serializable {
     }
      
     public  void preparaAlteracao(TipoDeSaltoTO c){
-         this.setcTO(c);
+         this.setCTO(c);
     }
      
     public void alterar(){ 
-        cBO.alterar(cTO);
-    }
-
-    public TipoDeSaltoTO getcTO() {
-        return cTO;
-    }
-
-    public void setcTO(TipoDeSaltoTO cTO) {
-        this.cTO = cTO;
+        cBO.alterar(CTO);
     }
 
 
@@ -85,5 +82,13 @@ public class TipoDeSaltoBean implements Serializable {
     public void setValor(String valor) {
         this.valor = valor;
     }
+
+    public TipoDeSaltoTO getCTO() {
+        return CTO;
+    }
+
+    public void setCTO(TipoDeSaltoTO CTO) {
+        this.CTO = CTO;
+    }
     
-}
+ }

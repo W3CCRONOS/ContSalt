@@ -41,26 +41,29 @@ and open the template in the editor.
 
                 <p:layoutUnit position="center">
                     <h:form>
-                        Welcome to PrimeFaces
-                        <h:panelGrid columns="2" cellpadding="5">
+                        <h2>Cadastro de Tipos de Saltos</h2>
+                        <h:panelGrid columns="2" cellpadding="6">
                             <h:outputLabel for="txtName" value="Name:" style="font-weight:bold" />
-                            <p:inputText id="txtName" value="#{tipoDeSaltoBean.cTO.nome}" />
+                            <p:inputText id="txtName" value="#{tipoDeSaltoBean.CTO.nome}" />
                             <h:outputLabel for="txtValor" value="Valor:" style="font-weight:bold" />
                             <p:inputMask id="txtValor" value="#{tipoDeSaltoBean.valor}" mask="R$999,99"/>
-                            <p:commandButton value="Salvar" action="#{tipoDeSaltoBean.salvar()}" />
+                            <p:commandButton value="Salvar" action="#{tipoDeSaltoBean.salvar()}" ajax="false" />
+                            <p:commandButton value="Conf Alterar" action="#{tipoDeSaltoBean.alterar()}" ajax="false" />
                         </h:panelGrid>
-                        <p:dataTable var="car" >
-
-                            <p:column headerText="Id">
-                            </p:column>
-
+                        
+                        <p:dataTable var="dados" value="#{tipoDeSaltoBean.tiposDeSaltos}" >
                             <p:column headerText="Tipo de Salto">
+                                <h:outputText value="#{dados.nome}"/>
                             </p:column>
-
                             <p:column headerText="Valor">
+                                <h:outputText value="#{dados.valor}"/>
                             </p:column>
-
+                            <p:column headerText="Valor">
+                                <p:commandButton value="Alterar" action="#{tipoDeSaltoBean.preparaAlteracao(dados)}" ajax="false" />
+                                <p:commandButton value="Excluir" action="#{tipoDeSaltoBean.excluir(dados)}" ajax="false" />
+                            </p:column>
                         </p:dataTable>
+                        
                     </h:form>
                 </p:layoutUnit>
             </p:layout>
