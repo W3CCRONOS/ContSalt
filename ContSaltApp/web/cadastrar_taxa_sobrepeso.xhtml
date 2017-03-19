@@ -19,49 +19,44 @@ and open the template in the editor.
         </h:head>
         <h:body>
              <p:layout fullPage="true">
-
-                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
-                    Header
-                </p:layoutUnit>
-
-                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
-                    Footer
-                </p:layoutUnit>
-
-                <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
+                 <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
                     <p:menu>
-                        <p:submenu label="Resources">
-                            <p:menuitem value="Demo" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
-                            <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
-                            <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
-                            <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
+                        <p:submenu label="Resources" >
+                            <p:menuitem value="Home" url="http://localhost:8080/ContSaltApp/faces/index.xhtml" />
+                            <p:menuitem value="Saltos" url="http://localhost:8080/ContSaltApp/faces/cadastrar_salto.xhtml" />
+                            <p:menuitem value="Tipos de Saltos" url="http://localhost:8080/ContSaltApp/faces/cadastrar_tipos_de_saltos.xhtml" />                  
                         </p:submenu>
                     </p:menu>
                 </p:layoutUnit>
 
                 <p:layoutUnit position="center">
                     <h:form>
-                        Welcome to PrimeFaces
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <h:outputLabel for="txtTaxa" value="Taxa:" style="font-weight:bold" />
-                            <p:inputText id="txtTaxa" value="#{taxaSobrepesoBean.cTO.valor}" />
+                       <h2>Cadastro de Taxas de Sobrepeso</h2>
+                        <h:panelGrid columns="2" cellpadding="6">
+                            <h:outputLabel for="txtCodigo" value="Codigo:" style="font-weight:bold" />
+                            <p:inputText id="txtCodigo" value="#{taxaSobrepesoBean.CTO.codigo}" />
+                            <h:outputLabel for="txtDescricao" value="Descricao:" style="font-weight:bold" />
+                            <p:inputText id="txtDescricao" value="#{taxaSobrepesoBean.CTO.descricao}" />
                             <h:outputLabel for="txtValor" value="Valor:" style="font-weight:bold" />
                             <p:inputMask id="txtValor" value="#{taxaSobrepesoBean.valor}" mask="R$999,99"/>
-                            <p:commandButton value="Salvar" action="#{taxaSobrepesoBean.salvar()}" />
-                             <h:outputLabel for="txtCodigo" value="Codigo:" style="font-weight:bold" />
-                            <p:inputText id="txtCodigo" value="#{taxaSobrepesoBean.cTO.codigo}" />
+                            <p:commandButton value="Salvar Novo Registro" action="#{taxaSobrepesoBean.salvar()}"  ajax="false" />
+                            <p:commandButton value="Confirmar Alteração" action="#{taxaSobrepesoBean.alterar()}" ajax="false" />
                         </h:panelGrid>
-                        <p:dataTable var="car" >
-
-                            <p:column headerText="Id">
+                       <center><h2>Taxas de Sobrepeso</h2></center>
+                        <p:dataTable var="dados" value="#{taxaSobrepesoBean.taxasSobrepesos}" >
+                            <p:column headerText="Código">
+                                <h:outputText value="#{dados.codigo}"/>
                             </p:column>
-
-                            <p:column headerText="Taxa de Sobrepeso">
+                             <p:column headerText="Descrição">
+                                 <h:outputText value="#{dados.descricao}"/>
                             </p:column>
-
                             <p:column headerText="Valor">
+                                <h:outputText value="#{dados.valor}"/>
                             </p:column>
-
+                            <p:column>
+                                <p:commandButton value="Alterar" action="#{taxaSobrepesoBean.preparaAlteracao(dados)}" ajax="false" />
+                                <p:commandButton value="Excluir" action="#{taxaSobrepesoBean.excluir(dados)}" ajax="false" />
+                            </p:column>
                         </p:dataTable>
                     </h:form>
                 </p:layoutUnit>

@@ -20,26 +20,28 @@ import java.util.List;
 @SessionScoped
 public class TaxaSobrepesoBean implements Serializable {
     
-    TaxaSobrepesoTO cTO;
-    TaxaSobrepesoBO cBO;
-    String valor;
+    private TaxaSobrepesoTO CTO;
+    private TaxaSobrepesoBO cBO;
+    private String valor;
 
     public TaxaSobrepesoBean() {
-        this.setcTO(new TaxaSobrepesoTO());
+        this.setCTO(new TaxaSobrepesoTO());
         this.setcBO(new TaxaSobrepesoBO());
         this.setValor(new String());
     }
     
       public  void salvar(){
         removerMascara(valor);        
-        cBO.salvar(cTO);                  
+        cBO.salvar(CTO); 
+        CTO = new TaxaSobrepesoTO();
+        valor = new String();
     }
     
     public void removerMascara(String str){
         double y=0;
         y=Double.parseDouble(str.replaceAll("\\D", ""));
         y= y * 0.01;
-        cTO.setValor(y);        
+        CTO.setValor(y);        
     }
     
     public List<TaxaSobrepesoTO> getTaxasSobrepesos(){
@@ -51,20 +53,25 @@ public class TaxaSobrepesoBean implements Serializable {
     }
      
     public  void preparaAlteracao(TaxaSobrepesoTO c){
-         this.setcTO(c);
+         this.setCTO(c);
     }
      
-    public void alterar(){ 
-        cBO.alterar(cTO);
-    }
-    
-    public TaxaSobrepesoTO getcTO() {
-        return cTO;
+    public void alterar(){
+        removerMascara(valor); 
+        cBO.alterar(CTO);
+        CTO = new TaxaSobrepesoTO();
+        valor = new String();
     }
 
-    public void setcTO(TaxaSobrepesoTO cTO) {
-        this.cTO = cTO;
+    public TaxaSobrepesoTO getCTO() {
+        return CTO;
     }
+
+    public void setCTO(TaxaSobrepesoTO CTO) {
+        this.CTO = CTO;
+    }
+    
+   
 
     public TaxaSobrepesoBO getcBO() {
         return cBO;

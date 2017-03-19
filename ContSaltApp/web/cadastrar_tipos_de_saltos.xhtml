@@ -19,22 +19,12 @@ and open the template in the editor.
         </h:head>
         <h:body>
              <p:layout fullPage="true">
-
-                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
-                    Header
-                </p:layoutUnit>
-
-                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
-                    Footer
-                </p:layoutUnit>
-
-                <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
-                    <p:menu>
-                        <p:submenu label="Resources">
-                            <p:menuitem value="Demo" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
-                            <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
-                            <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
-                            <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
+                <p:layoutUnit  position="west" size="175" header="Menu" collapsible="true">
+                    <p:menu >
+                        <p:submenu label="Resources" >
+                            <p:menuitem value="Home" url="http://localhost:8080/ContSaltApp/faces/index.xhtml" />
+                            <p:menuitem value="Saltos" url="http://localhost:8080/ContSaltApp/faces/cadastrar_salto.xhtml" />
+                            <p:menuitem value="Taxas de Sobrepeso" url="http://localhost:8080/ContSaltApp/faces/cadastrar_taxa_sobrepeso.xhtml" />                  
                         </p:submenu>
                     </p:menu>
                 </p:layoutUnit>
@@ -47,10 +37,10 @@ and open the template in the editor.
                             <p:inputText id="txtName" value="#{tipoDeSaltoBean.CTO.nome}" />
                             <h:outputLabel for="txtValor" value="Valor:" style="font-weight:bold" />
                             <p:inputMask id="txtValor" value="#{tipoDeSaltoBean.valor}" mask="R$999,99"/>
-                            <p:commandButton value="Salvar" action="#{tipoDeSaltoBean.salvar()}" ajax="false" />
-                            <p:commandButton value="Conf Alterar" action="#{tipoDeSaltoBean.alterar()}" ajax="false" />
+                            <p:commandButton value="Salvar Novo Registro" action="#{tipoDeSaltoBean.salvar()}" ajax="false" />
+                            <p:commandButton value="Confirmar Alteração" action="#{tipoDeSaltoBean.alterar()}" ajax="false" />
                         </h:panelGrid>
-                        
+                        <center><h2>Tipos de Saltos</h2></center>
                         <p:dataTable var="dados" value="#{tipoDeSaltoBean.tiposDeSaltos}" >
                             <p:column headerText="Tipo de Salto">
                                 <h:outputText value="#{dados.nome}"/>
@@ -58,7 +48,7 @@ and open the template in the editor.
                             <p:column headerText="Valor">
                                 <h:outputText value="#{dados.valor}"/>
                             </p:column>
-                            <p:column headerText="Valor">
+                            <p:column>
                                 <p:commandButton value="Alterar" action="#{tipoDeSaltoBean.preparaAlteracao(dados)}" ajax="false" />
                                 <p:commandButton value="Excluir" action="#{tipoDeSaltoBean.excluir(dados)}" ajax="false" />
                             </p:column>

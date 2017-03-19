@@ -1,14 +1,47 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pm="http://primefaces.org/mobile">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        Hello from Facelets
-        <br /><br />
-        <h:link outcome="welcomePrimefaces" value="Página de boas-vindas do Primefaces" />
+        <pm:page>
+            <p:layout fullPage="true">
+                <p:layoutUnit  position="west" size="175" header="Menu" collapsible="true">
+                    <p:menu >
+                        <p:submenu label="Resources" >
+                            <p:menuitem value="Saltos" url="http://localhost:8080/ContSaltApp/faces/cadastrar_salto.xhtml" />
+                            <p:menuitem value="Taxas de Sobrepeso" url="http://localhost:8080/ContSaltApp/faces/cadastrar_taxa_sobrepeso.xhtml" />
+                            <p:menuitem value="Tipos de Saltos" url="http://localhost:8080/ContSaltApp/faces/cadastrar_tipos_de_saltos.xhtml" />                           
+                            </p:submenu>
+                   </p:menu>
+                </p:layoutUnit>
+                <p:layoutUnit position="center">
+                    <h1>https://www.primefaces.org/showcase/mobile/singlePage.xhtml</h1><br></br>
+                    <h1>Ver se estar para visualização mobile.</h1>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <center><h2>Saltos</h2></center>
+                    <p:dataTable var="car" >
+                        <p:column headerText="Id">
+                        </p:column>
+                        <p:column headerText="Year">
+                        </p:column>
+                        <p:column headerText="Brand">
+                        </p:column>
+                        <p:column headerText="Color">
+                        </p:column>
+                    </p:dataTable>
+                </p:layoutUnit>                        
+            </p:layout>
+        </pm:page>
     </h:body>
 </html>
 

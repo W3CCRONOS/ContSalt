@@ -28,9 +28,10 @@ public class TaxaSobrepesoDAO {
     public void salvar(TaxaSobrepesoTO taxa){
  
         try{
-            PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO taxasobrepeso (valor,codigo) VALUES (?,?)");
+            PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO taxasobrepeso (valor,codigo,descricao) VALUES (?,?,?)");
             ppStmt.setDouble(1,taxa.getValor());
             ppStmt.setInt(2,taxa.getCodigo());
+            ppStmt.setString(3,taxa.getDescricao());
             ppStmt.execute();
             System.out.println("Cadastrou");
         }
@@ -41,10 +42,11 @@ public class TaxaSobrepesoDAO {
     }
      public void alterar(TaxaSobrepesoTO taxa){
         try {
-            PreparedStatement stmt = conn.prepareStatement("UPDATE taxasobrepeso SET valor =?, WHERE idtaxasobrepeso=?");
+            PreparedStatement stmt = conn.prepareStatement("UPDATE taxasobrepeso SET valor =?, codigo =?, descricao =? WHERE idtaxasobrepeso =?");
             stmt.setDouble(1, taxa.getValor());
-            stmt.setInt(2,taxa.getIdTaxaSobrepeso());
-            stmt.setInt(3, taxa.getCodigo());
+            stmt.setInt(2,taxa.getCodigo());
+            stmt.setString(3,taxa.getDescricao());
+            stmt.setInt(4, taxa.getIdTaxaSobrepeso());
             stmt.execute();
             System.out.println("Alterado");
         }catch(SQLException EX){
@@ -74,6 +76,7 @@ public class TaxaSobrepesoDAO {
         t.setValor(rs.getDouble("valor"));
         t.setIdTaxaSobrepeso(rs.getInt("idtaxasobrepeso"));    
         t.setCodigo(rs.getInt("codigo"));
+        t.setDescricao(rs.getString("descricao"));
         return t;
     }
     public void excluir(TaxaSobrepesoTO t){

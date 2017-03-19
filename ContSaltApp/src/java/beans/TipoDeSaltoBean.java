@@ -61,11 +61,12 @@ public class TipoDeSaltoBean implements Serializable {
          this.setCTO(c);
     }
      
-    public void alterar(){ 
+    public void alterar(){
+        removerMascara(valor);
         cBO.alterar(CTO);
+        CTO = new TipoDeSaltoTO();
+        valor = new String();
     }
-
-
 
     public TipoDeSaltoBO getcBO() {
         return cBO;
