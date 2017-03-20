@@ -9,16 +9,16 @@ package classTO;
  *
  * @author Almir
  */
-//çfsdgfds
+
+import java.sql.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 public class InstrutorTO {
     private int idInstrutor;
-    private String nomeInstrutor;
-    private GregorianCalendar dataAdmissao;
-    private boolean disponibilidadeDiaSalto;
-    private List<TipoDeSaltoTO> aptidaoParaSaltos;
-
+    private String nome;
+    private Date admissao;
+    private int presenca;
+    
     public int getIdInstrutor() {
         return idInstrutor;
     }
@@ -26,38 +26,28 @@ public class InstrutorTO {
     public void setIdInstrutor(int idInstrutor) {
         this.idInstrutor = idInstrutor;
     }
-    
-    
-    public String getNomeInstrutor() {
-        return nomeInstrutor;
+
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomeInstrutor(String nomeInstrutor) {
-        this.nomeInstrutor = nomeInstrutor;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public GregorianCalendar getDataAdmissao() {
-        return dataAdmissao;
+    public Date getAdmissao() {
+        return admissao;
     }
 
-    public void setDataAdmissao(GregorianCalendar dataAdmissao) {
-        this.dataAdmissao = dataAdmissao;
+    public void setAdmissao(Date admissao) {
+        this.admissao = admissao;
     }
 
-    public boolean isDisponibilidadeDiaSalto() {
-        return disponibilidadeDiaSalto;
+    public int getPresenca() {
+        return presenca;
     }
 
-    public void setDisponibilidadeDiaSalto(boolean disponibilidadeDiaSalto) {
-        this.disponibilidadeDiaSalto = disponibilidadeDiaSalto;
-    }
-
-    public List<TipoDeSaltoTO> getAptidaoParaSaltos() {
-        return aptidaoParaSaltos;
-    }
-
-    public void setAptidaoParaSaltos(List<TipoDeSaltoTO> aptidaoParaSaltos) {
-        this.aptidaoParaSaltos = aptidaoParaSaltos;
-    }
-
+    public void setPresenca(int presenca) {
+        this.presenca = presenca;
+    }     
 }

@@ -42,12 +42,12 @@ public class TaxaSobrepesoDAO {
     }
      public void alterar(TaxaSobrepesoTO taxa){
         try {
-            PreparedStatement stmt = conn.prepareStatement("UPDATE taxasobrepeso SET valor =?, codigo =?, descricao =? WHERE idtaxasobrepeso =?");
-            stmt.setDouble(1, taxa.getValor());
-            stmt.setInt(2,taxa.getCodigo());
-            stmt.setString(3,taxa.getDescricao());
-            stmt.setInt(4, taxa.getIdTaxaSobrepeso());
-            stmt.execute();
+            PreparedStatement ppStmt = conn.prepareStatement("UPDATE taxasobrepeso SET valor =?, codigo =?, descricao =? WHERE idtaxasobrepeso =?");
+            ppStmt.setDouble(1, taxa.getValor());
+            ppStmt.setInt(2,taxa.getCodigo());
+            ppStmt.setString(3,taxa.getDescricao());
+            ppStmt.setInt(4, taxa.getIdTaxaSobrepeso());
+            ppStmt.execute();
             System.out.println("Alterado");
         }catch(SQLException EX){
              EX.printStackTrace();
