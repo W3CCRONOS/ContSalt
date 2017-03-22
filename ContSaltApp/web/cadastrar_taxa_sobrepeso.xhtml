@@ -14,7 +14,7 @@ and open the template in the editor.
         <h:head>
         <f:facet name="first">
             <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-            <title>Cadastrar Taxa</title>             
+            <title>Cadastrar Instrutor</title>             
         </f:facet>
         </h:head>
         <h:body>
@@ -31,12 +31,13 @@ and open the template in the editor.
 
                 <p:layoutUnit position="center">
                     <h:form>
-                       <h2>Cadastro de Taxas de Sobrepeso</h2>
+                       <h2>Cadastro de Instrutores</h2>
                         <h:panelGrid columns="2" cellpadding="6">
-                            <h:outputLabel for="txtCodigo" value="Código:" style="font-weight:bold" />
-                            <p:inputText id="txtCodigo" value="#{taxaSobrepesoBean.CTO.codigo}" />
+                            <h:outputLabel for="txtNome" value="Nome:" style="font-weight:bold" />
+                            <p:inputText id="txtNome" value="#{instrutorBean.CTO.nome}" />                            
                             <h:outputLabel for="txtDescricao" value="Descrição:" style="font-weight:bold" />
                             <p:inputText id="txtDescricao" value="#{taxaSobrepesoBean.CTO.descricao}" />
+                            
                             <h:outputLabel for="txtValor" value="Valor:" style="font-weight:bold" />
                             <p:inputMask id="txtValor" value="#{taxaSobrepesoBean.valor}" mask="R$999,99"/>
                             <p:commandButton value="Salvar Novo Registro" action="#{taxaSobrepesoBean.salvar()}"  ajax="false" />

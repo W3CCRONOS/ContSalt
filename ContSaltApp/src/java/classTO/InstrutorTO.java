@@ -17,6 +17,7 @@ public class InstrutorTO {
     private int idInstrutor;
     private String nome;
     private Date admissao;
+    private String cpf;
     private int presenca;
     
     public int getIdInstrutor() {
@@ -41,6 +42,14 @@ public class InstrutorTO {
 
     public void setAdmissao(Date admissao) {
         this.admissao = admissao;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public int getPresenca() {
