@@ -30,13 +30,19 @@ public class InstrutorBean implements Serializable {
     }
 
     
-      public  void salvar(){       
-        cBO.salvar(CTO); 
-        CTO = new InstrutorTO();
+      public  void salvar(){
+        String x;
+        CTO.setPresenca(0);
+        System.out.println(CTO.getNome());
+        System.out.println(CTO.getCpf());
+        System.out.println(CTO.getAdmi());
+        System.out.println(CTO.getPresenca());
+       // cBO.salvar(CTO); 
+       // CTO = new InstrutorTO();
     }
     
   
-    public List<InstrutorTO> getTaxasSobrepesos(){
+    public List<InstrutorTO> getInstrutores(){
         return cBO.getInstrutores();
     }
     

@@ -11,12 +11,14 @@ package classTO;
  */
 
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 public class InstrutorTO {
     private int idInstrutor;
     private String nome;
     private Date admissao;
+    private Calendar admi;
     private String cpf;
     private int presenca;
     
@@ -58,5 +60,15 @@ public class InstrutorTO {
 
     public void setPresenca(int presenca) {
         this.presenca = presenca;
-    }     
+    } 
+
+    public Calendar getAdmi() {
+        return admi;
+    }
+
+    public void setAdmi(Calendar admi) {
+        this.admi = admi;
+    }
+
+    
 }
