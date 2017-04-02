@@ -7,6 +7,7 @@ package classBO;
 
 import classDAO.InstrutorDAO;
 import classTO.InstrutorTO;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,5 +33,11 @@ public class InstrutorBO {
     } 
     public List<InstrutorTO> getInstrutores(){
         return instrutorDao.getIntrutores();
+    }
+    
+    public InstrutorTO passarDataParaDataSql(InstrutorTO i ,Date data){
+        java.sql.Date dataSql = new java.sql.Date(data.getTime());
+        i.setAdmissao(dataSql);
+        return i;
     }
 }

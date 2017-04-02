@@ -27,10 +27,15 @@ public class InstrutorDAO {
     public void salvar(InstrutorTO i){
  
         try{
-            PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO instrutor (nome,admissao,presenca) VALUES (?,?,?)");
+            PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO instrutor (nome,cpf,admissao,presenca) VALUES (?,?,?,?)");
             ppStmt.setString(1,i.getNome());
-            ppStmt.setDate(2,i.getAdmissao());
-            ppStmt.setInt(3,i.getPresenca());
+            ppStmt.setString(2,i.getCpf());
+            ppStmt.setDate(3, i.getAdmissao());            
+            ppStmt.setInt(4,i.getPresenca());
+             System.out.println(i.getNome());
+             System.out.println(i.getCpf());
+            //System.out.println(i.getAdmissao());
+            System.out.println(i.getPresenca());
             ppStmt.execute();
             System.out.println("Cadastrou");
         }

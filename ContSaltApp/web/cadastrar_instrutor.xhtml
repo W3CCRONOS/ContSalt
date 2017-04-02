@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
@@ -21,6 +21,7 @@ and open the template in the editor.
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
                 <title>Cadastrar Taxa</title>             
             </f:facet>
+                <script src="JavaScript/Calendario.js"></script>
             </h:head>
             <h:body>
                  <p:layout fullPage="true">
@@ -40,23 +41,23 @@ and open the template in the editor.
                             <h:panelGrid columns="2" cellpadding="6">
                                 <h:outputLabel for="txtNome" value="Nome:" style="font-weight:bold" />
                                 <p:inputText id="txtNome" value="#{instrutorBean.CTO.nome}" />                            
-                                <h:outputLabel for="txtCpf" value="Cpf:" style="font-weight:bold" />
+                                <h:outputLabel for="txtCpf" value="CPF:" style="font-weight:bold" />
                                 <p:inputMask id="txtCpf" value="#{instrutorBean.CTO.cpf}" mask="999.999.999-99"/>
-                                <p:outputLabel for="txtAdmissao" value="AdmissÃ£o"/>
-                                <p:calendar id="txtAdmissao" value="#{instrutorBean.CTO.admi}" showOn="button"/>
+                                <p:outputLabel for="txtAdmissao" value="Admissão:" style="font-weight:bold"/>
+                                <p:calendar id="txtAdmissao" value="#{instrutorBean.data}" locale="pt_BR" pattern="dd/MM/yyyy" navigator="true"  showOn="button"/>
                                 
                                 <p:commandButton value="Salvar Novo Registro" action="#{instrutorBean.salvar()}"  ajax="false" />
-                                <p:commandButton value="Confirmar AlteraÃ§Ã£o" action="#{instrutorBean.alterar()}" ajax="false" />
+                                <p:commandButton value="Confirmar Alteração" action="#{instrutorBean.alterar()}" ajax="false" />
                             </h:panelGrid>
                            <center><h2>Intrutores</h2></center>
-                           <p:dataTable var="dados" value="#{instrutorBean.instrutores}" >
+                           <p:dataTable var="dados" value="" >
                                 <p:column headerText="Nome">
                                     <h:outputText value=""/>
                                 </p:column>
                                  <p:column headerText="Cpf">
                                      <h:outputText value=""/>
                                 </p:column>
-                                <p:column headerText="AdmissÃ£o">
+                                <p:column headerText="Admissão">
                                     <h:outputText value=""/>
                                 </p:column>
                                 <p:column>

@@ -6,11 +6,15 @@
 package beans;
 
 import classBO.InstrutorBO;
+import classDAO.InstrutorDAO;
 import classTO.InstrutorTO;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
 
 /**
  *
@@ -23,21 +27,32 @@ public class InstrutorBean implements Serializable {
     
     private InstrutorTO CTO;
     private InstrutorBO cBO;
+    private InstrutorDAO cDAO ;
+    private Date data;
+  
+    SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy");
     
     public InstrutorBean() {
         this.setCTO(new InstrutorTO());
         this.setcBO(new InstrutorBO());
+        this.setcDAO(new InstrutorDAO());
+        this.setData(new Date());
     }
 
     
       public  void salvar(){
-        String x;
-        CTO.setPresenca(0);
-        System.out.println(CTO.getNome());
-        System.out.println(CTO.getCpf());
-        System.out.println(CTO.getAdmi());
-        System.out.println(CTO.getPresenca());
-       // cBO.salvar(CTO); 
+          System.out.println("XXXXXXXX");
+          System.out.println("XXXXXXXX");
+          System.out.println("XXXXXXXX");
+         System.out.println("XXXXXXXX");
+         System.out.println("XXXXXXXX");
+         System.out.println(CTO.getNome());
+         System.out.println("XXXXXXXX");
+         System.out.println("XXXXXXXX");
+         this.setCTO(cBO.passarDataParaDataSql(CTO, data));
+         cDAO.salvar(CTO);
+        //System.out.println(CTO.getPresenca());
+        //cDAO.salvar(CTO); 
        // CTO = new InstrutorTO();
     }
     
@@ -74,5 +89,22 @@ public class InstrutorBean implements Serializable {
     public void setcBO(InstrutorBO cBO) {
         this.cBO = cBO;
     }
+
+    public InstrutorDAO getcDAO() {
+        return cDAO;
+    }
+
+    public void setcDAO(InstrutorDAO cDAO) {
+        this.cDAO = cDAO;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
+
   
 }

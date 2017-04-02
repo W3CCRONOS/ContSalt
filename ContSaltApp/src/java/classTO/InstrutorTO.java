@@ -5,22 +5,18 @@
  */
 package classTO;
 
+import java.sql.Date;
+
 /**
  *
  * @author Almir
  */
-
-import java.sql.Date;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
 public class InstrutorTO {
     private int idInstrutor;
     private String nome;
-    private Date admissao;
-    private Calendar admi;
+    Date admissao;
     private String cpf;
-    private int presenca;
+    private int presenca = 0;
     
     public int getIdInstrutor() {
         return idInstrutor;
@@ -36,14 +32,6 @@ public class InstrutorTO {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public Date getAdmissao() {
-        return admissao;
-    }
-
-    public void setAdmissao(Date admissao) {
-        this.admissao = admissao;
     }
 
     public String getCpf() {
@@ -62,13 +50,15 @@ public class InstrutorTO {
         this.presenca = presenca;
     } 
 
-    public Calendar getAdmi() {
-        return admi;
+    public Date getAdmissao() {
+        return admissao;
     }
 
-    public void setAdmi(Calendar admi) {
-        this.admi = admi;
+    public void setAdmissao(Date admissao) {
+        this.admissao = admissao;
     }
+
+   
 
     
 }
