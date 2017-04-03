@@ -41,37 +41,31 @@ public class InstrutorBean implements Serializable {
 
     
       public  void salvar(){
-          System.out.println("XXXXXXXX");
-          System.out.println("XXXXXXXX");
-          System.out.println("XXXXXXXX");
-         System.out.println("XXXXXXXX");
-         System.out.println("XXXXXXXX");
-         System.out.println(CTO.getNome());
-         System.out.println("XXXXXXXX");
-         System.out.println("XXXXXXXX");
-         this.setCTO(cBO.passarDataParaDataSql(CTO, data));
+         this.setCTO(cBO.passarDataUtilParaDataSql(CTO, data));
          cDAO.salvar(CTO);
-        //System.out.println(CTO.getPresenca());
-        //cDAO.salvar(CTO); 
-       // CTO = new InstrutorTO();
+         CTO = new InstrutorTO();
+         data = new Date();
     }
     
   
     public List<InstrutorTO> getInstrutores(){
-        return cBO.getInstrutores();
+        return cDAO.getInstrutores();
     }
     
      public void excluir(InstrutorTO c){ 
-        cBO.excluir(c);
+        cDAO.excluir(c);
     }
      
     public  void preparaAlteracao(InstrutorTO c){
-         this.setCTO(c);
+        this.setData(cBO.passarDataSqlParaDataUtil(c));
+        this.setCTO(c);
     }
      
-    public void alterar(){   
-        cBO.alterar(CTO);
-        CTO = new InstrutorTO();
+    public void alterar(){ 
+         this.setCTO(cBO.passarDataUtilParaDataSql(CTO, data));
+         cDAO.alterar(CTO);
+         CTO = new InstrutorTO();
+         data = new Date();
     }
 
     public InstrutorTO getCTO() {

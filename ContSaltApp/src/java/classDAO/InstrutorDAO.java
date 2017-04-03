@@ -32,10 +32,6 @@ public class InstrutorDAO {
             ppStmt.setString(2,i.getCpf());
             ppStmt.setDate(3, i.getAdmissao());            
             ppStmt.setInt(4,i.getPresenca());
-             System.out.println(i.getNome());
-             System.out.println(i.getCpf());
-            //System.out.println(i.getAdmissao());
-            System.out.println(i.getPresenca());
             ppStmt.execute();
             System.out.println("Cadastrou");
         }
@@ -46,11 +42,12 @@ public class InstrutorDAO {
     }
      public void alterar(InstrutorTO i){
         try {
-            PreparedStatement ppStmt = conn.prepareStatement("UPDATE instrutor SET nome =?, admissao =?, presenca =? WHERE idinstrutor =?");
+            PreparedStatement ppStmt = conn.prepareStatement("UPDATE instrutor SET nome =?, cpf =?, admissao =?, presenca =? WHERE idinstrutor =?");
             ppStmt.setString(1, i.getNome());
-            ppStmt.setDate(2,i.getAdmissao());
-            ppStmt.setInt(3,i.getPresenca());
-            ppStmt.setInt(4, i.getIdInstrutor());
+            ppStmt.setString(2, i.getCpf());
+            ppStmt.setDate(3,i.getAdmissao());
+            ppStmt.setInt(4,i.getPresenca());
+            ppStmt.setInt(5, i.getIdInstrutor());
             ppStmt.execute();
             System.out.println("Alterado");
         }catch(SQLException EX){
@@ -58,7 +55,7 @@ public class InstrutorDAO {
         }        
     }
     
-    public List<InstrutorTO> getIntrutores(){
+    public List<InstrutorTO> getInstrutores(){
             
             List<InstrutorTO> lstA = new LinkedList<InstrutorTO>();
             ResultSet rs;
@@ -78,7 +75,8 @@ public class InstrutorDAO {
     private InstrutorTO getIntrutor(ResultSet rs) throws SQLException{
         InstrutorTO i = new InstrutorTO();
         i.setIdInstrutor(rs.getInt("idinstrutor"));
-        i.setNome(rs.getString("nome"));            
+        i.setNome(rs.getString("nome"));  
+        i.setCpf(rs.getString("cpf"));
         i.setAdmissao(rs.getDate("admissao"));
         i.setPresenca(rs.getInt("presenca"));
         return i;

@@ -5,7 +5,7 @@
  */
 package beans;
 
-import classBO.TipoDeSaltoBO;
+import classDAO.TipoDeSaltoDAO;
 import classTO.TipoDeSaltoTO;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -23,38 +23,34 @@ import java.util.List;
 public class TipoDeSaltoBean implements Serializable {
 
    private TipoDeSaltoTO CTO;
-   private TipoDeSaltoBO cBO;
    private String valor;
+   private TipoDeSaltoDAO cDAO;
     
     public TipoDeSaltoBean() {
         this.setCTO(new TipoDeSaltoTO());
-        this.setcBO(new TipoDeSaltoBO());
         this.setValor(new String());
+        this.setcDAO(new TipoDeSaltoDAO());
     }
     
     public  void salvar(){
-        removerMascara(valor);        
-        cBO.salvar(CTO); 
+        CTO.setValor(removerMascara(valor));        
+        cDAO.salvar(CTO); 
         CTO = new TipoDeSaltoTO();
-        valor = new String();                
+        valor = new String();
     }
     
-    public void removerMascara(String str){
+    public double removerMascara(String str){
         double y=0;
-        //O método replaceAll("\\D", "") remove todos os carcteres != números
         y=Double.parseDouble(str.replaceAll("\\D", ""));
-        y= y * 0.01;
-        CTO.setValor(y);        
+        return y * 0.01;               
     }
-    
- 
-    
+   
     public List<TipoDeSaltoTO> getTiposDeSaltos(){
-        return cBO.getTipoDeSalto();
+        return cDAO.getTiposDeSaltos();
     }
     
      public void excluir(TipoDeSaltoTO c){ 
-        cBO.excluir(c);
+        cDAO.excluir(c);
     }
      
     public  void preparaAlteracao(TipoDeSaltoTO c){
@@ -62,20 +58,12 @@ public class TipoDeSaltoBean implements Serializable {
     }
      
     public void alterar(){
-        removerMascara(valor);
-        cBO.alterar(CTO);
+        CTO.setValor(removerMascara(valor));        
+        cDAO.alterar(CTO); 
         CTO = new TipoDeSaltoTO();
         valor = new String();
     }
-
-    public TipoDeSaltoBO getcBO() {
-        return cBO;
-    }
-
-    public void setcBO(TipoDeSaltoBO cBO) {
-        this.cBO = cBO;
-    }
-
+    
     public String getValor() {
         return valor;
     }
@@ -91,5 +79,13 @@ public class TipoDeSaltoBean implements Serializable {
     public void setCTO(TipoDeSaltoTO CTO) {
         this.CTO = CTO;
     }
-    
+
+    public TipoDeSaltoDAO getcDAO() {
+        return cDAO;
+    }
+
+    public void setcDAO(TipoDeSaltoDAO cDAO) {
+        this.cDAO = cDAO;
+    }
+   
  }

@@ -7,27 +7,37 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:pm="http://primefaces.org/mobile">
     <h:head>
-        <title>Facelet Title</title>
+        <title>ContSalt</title>
     </h:head>
     <h:body>
         <pm:page>
             <p:layout fullPage="true">
-                <p:layoutUnit  position="west" size="175" header="Menu" collapsible="true">
-                    <p:menu >
-                        <p:submenu label="Resources" >
-                            <p:menuitem value="Saltos" url="http://localhost:8080/ContSaltApp/faces/cadastrar_salto.xhtml" />
-                            <p:menuitem value="Taxas de Sobrepeso" url="http://localhost:8080/ContSaltApp/faces/cadastrar_taxa_sobrepeso.xhtml" />
-                            <p:menuitem value="Tipos de Saltos" url="http://localhost:8080/ContSaltApp/faces/cadastrar_tipos_de_saltos.xhtml" />                           
-                            </p:submenu>
-                   </p:menu>
+                <p:layoutUnit  position="west" size="175" header="Ocultar" visible="true" collapsible="true">
+                    <p:panelMenu style="width:175px">
+                        <p:submenu label="Instrutores">
+                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_instrutor.xhtml" />
+                            <p:menuitem value="Presença" url="" />
+                            <p:menuitem value="Taxas e Tipos de Saltos" url="" />
+                        </p:submenu>
+                    </p:panelMenu>
+                    <p:panelMenu style="width:175px">
+                        <p:submenu label="Saltos">
+                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_salto.xhtml" />
+                            <p:menuitem value="Relatório de Saltos" url="" />
+                        </p:submenu>
+                    </p:panelMenu>
+                    <p:panelMenu style="width:175px">
+                        <p:submenu label="Taxas de Sobrepeso">
+                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_taxa_sobrepeso.xhtml" />
+                        </p:submenu>
+                    </p:panelMenu>                   
+                    <p:panelMenu style="width:175px">
+                        <p:submenu label="Tipos de Saltos">
+                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_tipos_de_saltos.xhtml" />
+                        </p:submenu>
+                    </p:panelMenu>
                 </p:layoutUnit>
                 <p:layoutUnit position="center">
-                    <h1>https://www.primefaces.org/showcase/mobile/singlePage.xhtml</h1><br></br>
-                    <h1>Ver se estar para visualização mobile.</h1>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
                     <center><h2>Saltos</h2></center>
                     <p:dataTable var="car" >
                         <p:column headerText="Id">

@@ -14,19 +14,34 @@ and open the template in the editor.
         <h:head>
         <f:facet name="first">
             <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-            <title>Cadastrar Salto</title>             
+            <title>ContSalt/Saltos</title>             
         </f:facet>
         </h:head>
         <h:body>
              <p:layout fullPage="true">
-                <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
-                    <p:menu>
-                        <p:submenu label="Resources">
-                            <p:menuitem value="Home" url="http://localhost:8080/ContSaltApp/faces/index.xhtml" />
-                            <p:menuitem value="Taxas de Sobrepeso" url="http://localhost:8080/ContSaltApp/faces/cadastrar_taxa_sobrepeso.xhtml" />
-                            <p:menuitem value="Tipos de Saltos" url="http://localhost:8080/ContSaltApp/faces/cadastrar_tipos_de_saltos.xhtml" />  
-                        </p:submenu>
-                    </p:menu>
+                    <p:layoutUnit  position="west" size="175" header="Ocultar" visible="true" collapsible="true">
+                        <p:panelMenu style="width:175px">
+                            <p:submenu label="Home">
+                                <p:menuitem value="Inicio" url="http://localhost:8080/ContSaltApp/faces/index.xhtml" />
+                            </p:submenu>
+                        </p:panelMenu>
+                        <p:panelMenu style="width:175px">
+                            <p:submenu label="Instrutores">
+                                <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_instrutor.xhtml" />
+                                <p:menuitem value="Presença" url="" />
+                                <p:menuitem value="Taxas e Tipos de Saltos" url="" />
+                            </p:submenu>
+                        </p:panelMenu>
+                        <p:panelMenu style="width:175px">
+                            <p:submenu label="Taxas de Sobrepeso">
+                                <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_taxa_sobrepeso.xhtml" />
+                            </p:submenu>
+                        </p:panelMenu>                   
+                        <p:panelMenu style="width:175px">
+                            <p:submenu label="Tipos de Saltos">
+                                <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_tipos_de_saltos.xhtml" />
+                            </p:submenu>
+                        </p:panelMenu>
                 </p:layoutUnit>
                 <p:layoutUnit position="center">
                     <h2>Cadastro de Saltos</h2>

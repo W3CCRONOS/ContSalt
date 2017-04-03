@@ -32,6 +32,11 @@ public class TaxaSobrepesoDAO {
             ppStmt.setDouble(1,taxa.getValor());
             ppStmt.setInt(2,taxa.getCodigo());
             ppStmt.setString(3,taxa.getDescricao());
+             System.out.println(taxa.getCodigo());
+              System.out.println(taxa.getDescricao());
+               System.out.println(taxa.getValor());
+                System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                 System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxx");
             ppStmt.execute();
             System.out.println("Cadastrou");
         }
@@ -81,7 +86,7 @@ public class TaxaSobrepesoDAO {
     }
     public void excluir(TaxaSobrepesoTO t){
            try {
-               PreparedStatement ppStmt = conn.prepareStatement("DELETE FROM taxasobrepeso WHERE idaxasobrepeso=?");
+               PreparedStatement ppStmt = conn.prepareStatement("DELETE FROM taxasobrepeso WHERE idtaxasobrepeso=?");
                ppStmt.setInt(1,t.getIdTaxaSobrepeso());
                ppStmt.execute();
                System.out.println("Excluido");
