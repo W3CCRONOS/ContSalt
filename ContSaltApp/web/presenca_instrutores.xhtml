@@ -14,7 +14,7 @@ and open the template in the editor.
         <h:head>
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>ContSalt/Instrutor</title>             
+                <title>ContSalt/Presença dos Instrutores</title>             
             </f:facet>
                 <script src="JavaScript/Calendario.js"></script>
             </h:head>
@@ -28,10 +28,10 @@ and open the template in the editor.
                     </p:panelMenu>
                     <p:panelMenu style="width:175px">
                     <p:submenu label="Instrutores">
-                        <p:menuitem value="Presença" url="http://localhost:8080/ContSaltApp/faces/presenca_instrutores.xhtml" />
+                        <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_instrutor.xhtml" />                        
                         <p:menuitem value="Taxas e Tipos de Saltos" url="" />
                     </p:submenu>
-                    </p:panelMenu>
+                </p:panelMenu>
                     <p:panelMenu style="width:175px">
                         <p:submenu label="Saltos">
                             <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_salto.xhtml" />
@@ -51,36 +51,19 @@ and open the template in the editor.
                 </p:layoutUnit>
                 <p:layoutUnit position="center">
                     <h:form>
-                        <h2>Cadastro de Instrutores</h2>
-                        <h:panelGrid columns="2" cellpadding="6">
-                            <h:outputLabel for="txtNome" value="Nome:" style="font-weight:bold" />
-                            <p:inputText id="txtNome" value="#{instrutorBean.CTO.nome}" />                            
-                            <h:outputLabel for="txtCpf" value="CPF:" style="font-weight:bold" />
-                            <p:inputMask id="txtCpf" value="#{instrutorBean.CTO.cpf}" mask="999.999.999-99"/>
-                            <p:outputLabel for="txtAdmissao" value="Admissão:" style="font-weight:bold"/>
-                            <p:calendar id="txtAdmissao" value="#{instrutorBean.data}" locale="pt_BR" pattern="dd/MM/yyyy" navigator="true"  showOn="button"/>
-                                
-                            <p:commandButton value="Salvar Novo Registro" action="#{instrutorBean.salvar()}"  ajax="false" />
-                            <p:commandButton value="Confirmar Alteração" action="#{instrutorBean.alterar()}" ajax="false" />
-                        </h:panelGrid>
-                        <center><h2>Instrutores</h2></center>
-                        <p:dataTable var="dados" value="#{instrutorBean.instrutores}" >
+                        <center><h2>Lista de Presença dos Instrutores</h2></center>
+                        <p:dataTable var="dados" value="" >
                             <p:column headerText="Nome">
-                                <h:outputText value="#{dados.nome}"/>
-                            </p:column>
-                            <p:column headerText="CPF">
-                                <h:outputText value="#{dados.cpf}"/>
-                            </p:column>
-                            <p:column headerText="Admissão">
-                                <h:outputText value="#{dados.admissao}" >
-                                    <f:convertDateTime pattern="dd/MM/yyyy" />
-                                </h:outputText>
+                                <h:outputText value=""/>
                             </p:column>
                             <p:column>
-                                <p:commandButton value="Alterar" action="#{instrutorBean.preparaAlteracao(dados)}" ajax="false" />
-                                <p:commandButton value="Excluir" action="#{instrutorBean.excluir(dados)}" ajax="false" />
+                               <p:selectOneRadio  value="">
+                                    <f:selectItem itemLabel="Presente" itemValue="1" />
+                                    <f:selectItem  itemLabel="Ausente" itemValue="0" />
+                                </p:selectOneRadio>
                             </p:column>
                         </p:dataTable>
+                        <p:commandButton value="Confirmar Alteração"  ajax="false" />
                     </h:form>
                 </p:layoutUnit>
             </p:layout>

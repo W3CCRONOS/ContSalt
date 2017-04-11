@@ -4,54 +4,51 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:pm="http://primefaces.org/mobile">
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>ContSalt</title>
     </h:head>
     <h:body>
-        <pm:page>
-            <p:layout fullPage="true">
-                <p:layoutUnit  position="west" size="175" header="Ocultar" visible="true" collapsible="true">
-                    <p:panelMenu style="width:175px">
-                        <p:submenu label="Instrutores">
-                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_instrutor.xhtml" />
-                            <p:menuitem value="Presença" url="" />
-                            <p:menuitem value="Taxas e Tipos de Saltos" url="" />
-                        </p:submenu>
-                    </p:panelMenu>
-                    <p:panelMenu style="width:175px">
-                        <p:submenu label="Saltos">
-                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_salto.xhtml" />
-                            <p:menuitem value="Relatório de Saltos" url="" />
-                        </p:submenu>
-                    </p:panelMenu>
-                    <p:panelMenu style="width:175px">
-                        <p:submenu label="Taxas de Sobrepeso">
-                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_taxa_sobrepeso.xhtml" />
-                        </p:submenu>
-                    </p:panelMenu>                   
-                    <p:panelMenu style="width:175px">
-                        <p:submenu label="Tipos de Saltos">
-                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_tipos_de_saltos.xhtml" />
-                        </p:submenu>
-                    </p:panelMenu>
-                </p:layoutUnit>
-                <p:layoutUnit position="center">
-                    <center><h2>Saltos</h2></center>
-                    <p:dataTable var="car" >
-                        <p:column headerText="Id">
-                        </p:column>
-                        <p:column headerText="Year">
-                        </p:column>
-                        <p:column headerText="Brand">
-                        </p:column>
-                        <p:column headerText="Color">
-                        </p:column>
-                    </p:dataTable>
-                </p:layoutUnit>                        
-            </p:layout>
-        </pm:page>
+        <p:layout fullPage="true">
+            <p:layoutUnit  position="west" size="175" header="Ocultar" visible="true" collapsible="true">
+                <p:panelMenu style="width:175px">
+                    <p:submenu label="Instrutores">
+                        <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_instrutor.xhtml" />
+                        <p:menuitem value="Presença" url="http://localhost:8080/ContSaltApp/faces/presenca_instrutores.xhtml" />
+                        <p:menuitem value="Taxas e Tipos de Saltos" url="" />
+                    </p:submenu>
+                </p:panelMenu>
+                <p:panelMenu style="width:175px">
+                    <p:submenu label="Saltos">
+                        <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_salto.xhtml" />
+                        <p:menuitem value="Relatório de Saltos" url="" />
+                   </p:submenu>
+                </p:panelMenu>
+                <p:panelMenu style="width:175px">
+                    <p:submenu label="Taxas de Sobrepeso">
+                        <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_taxa_sobrepeso.xhtml" />
+                    </p:submenu>
+                </p:panelMenu>                   
+                <p:panelMenu style="width:175px">
+                   <p:submenu label="Tipos de Saltos">
+                        <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_tipos_de_saltos.xhtml" />
+                    </p:submenu>
+                </p:panelMenu>
+            </p:layoutUnit>
+            <p:layoutUnit position="center">
+                <center><h2>Saltos</h2></center>
+                <p:dataTable var="car" >
+                    <p:column headerText="Id">
+                    </p:column>
+                    <p:column headerText="Year">
+                    </p:column>
+                    <p:column headerText="Brand">
+                    </p:column>
+                    <p:column headerText="Color">
+                    </p:column>
+                </p:dataTable>
+            </p:layoutUnit>                        
+        </p:layout>        
     </h:body>
 </html>
 
