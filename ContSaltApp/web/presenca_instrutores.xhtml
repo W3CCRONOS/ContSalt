@@ -52,18 +52,15 @@ and open the template in the editor.
                 <p:layoutUnit position="center">
                     <h:form>
                         <center><h2>Lista de Presença dos Instrutores</h2></center>
-                        <p:dataTable var="dados" value="" >
+                        <p:dataTable var="dados" value="#{instrutorBean.instrutores}" >
                             <p:column headerText="Nome">
-                                <h:outputText value=""/>
+                                <h:outputText value="#{dados.nome}"/>
                             </p:column>
-                            <p:column>
-                               <p:selectOneRadio  value="">
-                                    <f:selectItem itemLabel="Presente" itemValue="1" />
-                                    <f:selectItem  itemLabel="Ausente" itemValue="0" />
-                                </p:selectOneRadio>
+                            <p:column headerText="Presente 1" style="text-align: center;">
+                                <p:selectBooleanCheckbox value="#{dados.presenca}" />                                
                             </p:column>
                         </p:dataTable>
-                        <p:commandButton value="Confirmar Alteração"  ajax="false" />
+                        <p:commandButton value="Confirmar Alteração"  ajax="false" action="#{instrutorBean.presenca(dados)}" />
                     </h:form>
                 </p:layoutUnit>
             </p:layout>

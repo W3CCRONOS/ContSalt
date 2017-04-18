@@ -16,7 +16,7 @@ public class InstrutorTO {
     private String nome;
     Date admissao;
     private String cpf;
-    private int presenca = 0;
+    private String presenca = "false";
     
     public int getIdInstrutor() {
         return idInstrutor;
@@ -42,13 +42,7 @@ public class InstrutorTO {
         this.cpf = cpf;
     }
 
-    public int getPresenca() {
-        return presenca;
-    }
-
-    public void setPresenca(int presenca) {
-        this.presenca = presenca;
-    } 
+ 
 
     public Date getAdmissao() {
         return admissao;
@@ -58,7 +52,12 @@ public class InstrutorTO {
         this.admissao = admissao;
     }
 
-   
+    public String getPresenca() {
+        return presenca;
+    }
 
-    
+    public void setPresenca(String presenca) {
+        this.presenca = presenca;
+    }
+   
 }

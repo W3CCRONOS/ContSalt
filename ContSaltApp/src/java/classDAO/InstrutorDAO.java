@@ -31,7 +31,7 @@ public class InstrutorDAO {
             ppStmt.setString(1,i.getNome());
             ppStmt.setString(2,i.getCpf());
             ppStmt.setDate(3, i.getAdmissao());            
-            ppStmt.setInt(4,i.getPresenca());
+            ppStmt.setString(4,i.getPresenca());
             ppStmt.execute();
             System.out.println("Cadastrou");
         }
@@ -46,8 +46,20 @@ public class InstrutorDAO {
             ppStmt.setString(1, i.getNome());
             ppStmt.setString(2, i.getCpf());
             ppStmt.setDate(3,i.getAdmissao());
-            ppStmt.setInt(4,i.getPresenca());
+            ppStmt.setString(4,i.getPresenca());
             ppStmt.setInt(5, i.getIdInstrutor());
+            ppStmt.execute();
+            System.out.println("Alterado");
+        }catch(SQLException EX){
+             EX.printStackTrace();
+        }        
+    }
+     
+      public void presenca(InstrutorTO i){
+        try {
+            PreparedStatement ppStmt = conn.prepareStatement("UPDATE instrutor SET presenca =? WHERE idinstrutor =?");
+            ppStmt.setString(1,i.getPresenca());
+            ppStmt.setInt(2, i.getIdInstrutor());
             ppStmt.execute();
             System.out.println("Alterado");
         }catch(SQLException EX){
@@ -78,7 +90,7 @@ public class InstrutorDAO {
         i.setNome(rs.getString("nome"));  
         i.setCpf(rs.getString("cpf"));
         i.setAdmissao(rs.getDate("admissao"));
-        i.setPresenca(rs.getInt("presenca"));
+        i.setPresenca(rs.getString("presenca"));
         return i;
     }
     public void excluir(InstrutorTO i){

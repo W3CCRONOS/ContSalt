@@ -11,10 +11,8 @@ import classTO.InstrutorTO;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
 
 /**
  *
@@ -24,14 +22,11 @@ import java.util.List;
 @SessionScoped
 public class InstrutorBean implements Serializable {
 
-    
     private InstrutorTO CTO;
     private InstrutorBO cBO;
     private InstrutorDAO cDAO ;
     private Date data;
-  
-    SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy");
-    
+
     public InstrutorBean() {
         this.setCTO(new InstrutorTO());
         this.setcBO(new InstrutorBO());
@@ -39,16 +34,14 @@ public class InstrutorBean implements Serializable {
         this.setData(new Date());
     }
 
-    
-      public  void salvar(){
-         this.setCTO(cBO.passarDataUtilParaDataSql(CTO, data));
-         cDAO.salvar(CTO);
-         CTO = new InstrutorTO();
-         data = new Date();
+    public  void salvar(){
+        this.setCTO(cBO.passarDataUtilParaDataSql(CTO, data));
+        cDAO.salvar(CTO);
+        CTO = new InstrutorTO();
+        data = new Date();
     }
-    
-  
-    public List<InstrutorTO> getInstrutores(){
+      
+    public List<InstrutorTO> getInstrutores(){       
         return cDAO.getInstrutores();
     }
     
@@ -57,6 +50,7 @@ public class InstrutorBean implements Serializable {
     }
      
     public  void preparaAlteracao(InstrutorTO c){
+        /*Passar a data que está em um formato SQL para o formato Util*/
         this.setData(cBO.passarDataSqlParaDataUtil(c));
         this.setCTO(c);
     }
@@ -66,6 +60,13 @@ public class InstrutorBean implements Serializable {
          cDAO.alterar(CTO);
          CTO = new InstrutorTO();
          data = new Date();
+    }
+    
+     public void presenca(InstrutorTO c){        
+        this.setCTO(c);
+         System.out.println(c.getPresenca());
+         System.out.println(CTO.getPresenca());
+        //cDAO.presenca(CTO);
     }
 
     public InstrutorTO getCTO() {
@@ -99,6 +100,5 @@ public class InstrutorBean implements Serializable {
     public void setData(Date data) {
         this.data = data;
     }
-
   
 }
