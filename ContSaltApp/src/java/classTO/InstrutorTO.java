@@ -17,6 +17,7 @@ public class InstrutorTO {
     Date admissao;
     private String cpf;
     private String presenca = "false";
+    private boolean boo ;
     
     public int getIdInstrutor() {
         return idInstrutor;
@@ -58,6 +59,14 @@ public class InstrutorTO {
 
     public void setPresenca(String presenca) {
         this.presenca = presenca;
+    }
+
+    public boolean isBoo() {
+        return boo;
+    }
+
+    public void setBoo(boolean boo) {
+        this.boo = boo;
     }
    
 }

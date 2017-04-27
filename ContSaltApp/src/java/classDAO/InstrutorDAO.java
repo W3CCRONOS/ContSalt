@@ -51,7 +51,7 @@ public class InstrutorDAO {
             ppStmt.execute();
             System.out.println("Alterado");
         }catch(SQLException EX){
-             EX.printStackTrace();
+            EX.printStackTrace();
         }        
     }
      
@@ -63,7 +63,7 @@ public class InstrutorDAO {
             ppStmt.execute();
             System.out.println("Alterado");
         }catch(SQLException EX){
-             EX.printStackTrace();
+            EX.printStackTrace();
         }        
     }
     
@@ -103,5 +103,6 @@ public class InstrutorDAO {
                EX.printStackTrace();
            }
     }
+    
     
 }

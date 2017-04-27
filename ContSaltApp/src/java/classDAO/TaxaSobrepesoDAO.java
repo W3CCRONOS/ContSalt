@@ -32,11 +32,9 @@ public class TaxaSobrepesoDAO {
             ppStmt.setDouble(1,taxa.getValor());
             ppStmt.setInt(2,taxa.getCodigo());
             ppStmt.setString(3,taxa.getDescricao());
-             System.out.println(taxa.getCodigo());
-              System.out.println(taxa.getDescricao());
-               System.out.println(taxa.getValor());
-                System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-                 System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxx");
+            System.out.println(taxa.getCodigo());
+            System.out.println(taxa.getDescricao());
+            System.out.println(taxa.getValor());
             ppStmt.execute();
             System.out.println("Cadastrou");
         }

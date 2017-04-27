@@ -56,11 +56,12 @@ and open the template in the editor.
                             <p:column headerText="Nome">
                                 <h:outputText value="#{dados.nome}"/>
                             </p:column>
-                            <p:column headerText="Presente 1" style="text-align: center;">
-                                <p:selectBooleanCheckbox value="#{dados.presenca}" />                                
+                            <p:column headerText="Presença" style="text-align: center;">
+                                <p:selectBooleanCheckbox value="#{dados.presenca}"   >
+                                    <p:ajax listener="#{instrutorBean.presenca(dados)}"/>
+                                </p:selectBooleanCheckbox>                                
                             </p:column>
-                        </p:dataTable>
-                        <p:commandButton value="Confirmar Alteração"  ajax="false" action="#{instrutorBean.presenca(dados)}" />
+                        </p:dataTable>                        
                     </h:form>
                 </p:layoutUnit>
             </p:layout>

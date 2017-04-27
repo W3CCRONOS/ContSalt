@@ -11,7 +11,10 @@ import classTO.InstrutorTO;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -26,12 +29,23 @@ public class InstrutorBean implements Serializable {
     private InstrutorBO cBO;
     private InstrutorDAO cDAO ;
     private Date data;
+    private String s;
 
     public InstrutorBean() {
         this.setCTO(new InstrutorTO());
         this.setcBO(new InstrutorBO());
         this.setcDAO(new InstrutorDAO());
         this.setData(new Date());
+        this.setS(new String());
+
+    }
+
+    public String getS() {
+        return s;
+    }
+
+    public void setS(String s) {
+        this.s = s;
     }
 
     public  void salvar(){
@@ -62,13 +76,19 @@ public class InstrutorBean implements Serializable {
          data = new Date();
     }
     
-     public void presenca(InstrutorTO c){        
-        this.setCTO(c);
-         System.out.println(c.getPresenca());
-         System.out.println(CTO.getPresenca());
-        //cDAO.presenca(CTO);
+    public void presenca(InstrutorTO instrutor){
+        this.setCTO(instrutor);
+        String presenca = instrutor.getPresenca();
+        if(presenca.equals("false")){
+            CTO.setPresenca("true");
+            cDAO.presenca(CTO);
+        }
+        else{
+            CTO.setPresenca("false");
+            cDAO.presenca(CTO);
+        }
     }
-
+    
     public InstrutorTO getCTO() {
         return CTO;
     }
