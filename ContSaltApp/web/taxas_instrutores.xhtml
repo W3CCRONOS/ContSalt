@@ -52,14 +52,14 @@ and open the template in the editor.
                 </p:layoutUnit>
                 <p:layoutUnit position="center">
                     <h:form>
-                        <center><h2>Lista de Presença dos Instrutores</h2></center>
+                        <center><h2>Cadastro da Taxas dos Instrutores</h2></center>
                         <p:dataTable var="dados" value="#{instrutorBean.instrutores}" >
                             <p:column headerText="Nome">
                                 <h:outputText value="#{dados.nome}"/>
                             </p:column>
-                            <p:column headerText="Taxas" style="text-align: center;">
-                                <p:selectManyCheckbox id="grid" value="#{taxaSobrepesoBean.taxasSobrepesos}" layout="grid" >
-                                    <f:selectItems value="#{taxaSobrepesoBean.taxasSobrepesos}" var="taxas" itemLabel="#{taxaSobrepesoBean.taxasSobrepesos}" itemValue="#{taxas}"/>
+                            <p:column headerText="Taxas1">
+                                <p:selectManyCheckbox>
+                                    <f:selectItems var="x" value="#{taxaSobrepesoBean.taxasSobrepesos}" itemLabel="#{x.descricao}"/>
                                 </p:selectManyCheckbox>
                             </p:column>
                         </p:dataTable>                        
