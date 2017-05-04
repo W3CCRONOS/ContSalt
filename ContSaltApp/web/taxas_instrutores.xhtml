@@ -29,8 +29,8 @@ and open the template in the editor.
                     <p:panelMenu style="width:175px">
                     <p:submenu label="Instrutores">
                         <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_instrutor.xhtml" />
-                        <p:menuitem value="Presença" url="http://localhost:8080/ContSaltApp/faces/presenca_instrutores.xhtml" />                        
-                        <p:menuitem value="Tipos de Saltos" url="" />
+                        <p:menuitem value="Presença" url="http://localhost:8080/ContSaltApp/faces/presenca_instrutores.xhtml" />                                               
+                        <p:menuitem value="Tipos de Saltos" url="http://localhost:8080/ContSaltApp/faces/tipos_de_saltos_instrutores.xhtml" />
                     </p:submenu>
                 </p:panelMenu>
                     <p:panelMenu style="width:175px">
@@ -52,17 +52,26 @@ and open the template in the editor.
                 </p:layoutUnit>
                 <p:layoutUnit position="center">
                     <h:form>
-                        <center><h2>Cadastro da Taxas dos Instrutores</h2></center>
+                        <h2>Cadastro das Taxas dos Instrutores</h2>
+                        <h:panelGrid columns="2" cellpadding="4">
+                            <p:selectOneMenu>
+                                <f:selectItems var="instrutor" value="#{instrutorBean.instrutores}" itemLabel="#{instrutor.nome}" />
+                            </p:selectOneMenu>
+                            <p:selectManyCheckbox>
+                                <f:selectItems var="x" value="#{taxaSobrepesoBean.taxasSobrepesos}" itemLabel="#{x.descricao}"/>
+                            </p:selectManyCheckbox>
+                            <p:commandButton value="Salvar"  ajax="false" />
+                            <p:commandButton value="Confirmar Alteração" ajax="false" />
+                        </h:panelGrid>
+                        <center><h2>Taxas por Instrutor</h2></center>
                         <p:dataTable var="dados" value="#{instrutorBean.instrutores}" >
                             <p:column headerText="Nome">
                                 <h:outputText value="#{dados.nome}"/>
                             </p:column>
-                            <p:column headerText="Taxas1">
-                                <p:selectManyCheckbox>
-                                    <f:selectItems var="x" value="#{taxaSobrepesoBean.taxasSobrepesos}" itemLabel="#{x.descricao}"/>
-                                </p:selectManyCheckbox>
-                            </p:column>
-                        </p:dataTable>                        
+                            <p:column headerText="CPF">
+                                <h:outputText value="#{dados.cpf}"/>
+                            </p:column>                            
+                        </p:dataTable>
                     </h:form>
                 </p:layoutUnit>
             </p:layout>
