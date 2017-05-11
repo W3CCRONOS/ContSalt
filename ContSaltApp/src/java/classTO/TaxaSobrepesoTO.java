@@ -15,6 +15,7 @@ public class TaxaSobrepesoTO {
     private double valor;
     private int codigo;
     private String descricao;
+    private String t;
 
     public int getIdTaxaSobrepeso() {
         return idTaxaSobrepeso;
@@ -46,5 +47,14 @@ public class TaxaSobrepesoTO {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }  
+    }
+
+    public String getT() {
+        return t;
+    }
+
+    public void setT(String t) {
+        this.t = t;
+    }
+    
 }

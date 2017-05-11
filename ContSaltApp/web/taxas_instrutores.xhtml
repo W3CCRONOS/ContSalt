@@ -54,14 +54,13 @@ and open the template in the editor.
                     <h:form>
                         <h2>Cadastro das Taxas dos Instrutores</h2>
                         <h:panelGrid columns="2" cellpadding="4">
-                            <p:selectOneMenu>
-                                <f:selectItems var="instrutor" value="#{instrutorBean.instrutores}" itemLabel="#{instrutor.nome}" />
-                            </p:selectOneMenu>
-                            <p:selectManyCheckbox>
-                                <f:selectItems var="x" value="#{taxaSobrepesoBean.taxasSobrepesos}" itemLabel="#{x.descricao}"/>
-                            </p:selectManyCheckbox>
-                            <p:commandButton value="Salvar"  ajax="false" />
-                            <p:commandButton value="Confirmar Alteração" ajax="false" />
+                            <p:selectOneMenu value="#{taxasInstrutoresBean.idInstrutor}">
+                                <f:selectItems var="inst" value="#{instrutorBean.instrutores}" itemLabel="#{inst.nome}" itemValue="#{inst.idInstrutor}" />
+                            </p:selectOneMenu>                            
+                            <p:selectManyCheckbox value="#{taxasInstrutoresBean.idTaxasSobrepeso}">
+                                <f:selectItems var="taxas" value="#{taxaSobrepesoBean.taxasSobrepesos}" itemLabel="#{taxas.descricao}" itemValue="#{taxas.idTaxaSobrepeso}" />                                
+                            </p:selectManyCheckbox>                  
+                            <p:commandButton value="Salvar" action="#{taxasInstrutoresBean.salvar()}" ajax="false" />
                         </h:panelGrid>
                         <center><h2>Taxas por Instrutor</h2></center>
                         <p:dataTable var="dados" value="#{instrutorBean.instrutores}" >
