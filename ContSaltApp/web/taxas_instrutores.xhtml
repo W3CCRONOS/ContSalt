@@ -60,7 +60,7 @@ and open the template in the editor.
                             <p:selectManyCheckbox value="#{taxasInstrutoresBean.idTaxasSobrepeso}">
                                 <f:selectItems var="taxas" value="#{taxaSobrepesoBean.taxasSobrepesos}" itemLabel="#{taxas.descricao}" itemValue="#{taxas.idTaxaSobrepeso}" />                                
                             </p:selectManyCheckbox>                  
-                            <p:commandButton value="Salvar" action="#{taxasInstrutoresBean.salvar()}" ajax="false" />
+                            <p:commandButton value="Salvar" action="#{taxasInstrutoresBean.taxasDeSobrepesoDoInstrutor()}" ajax="false" />
                         </h:panelGrid>
                         <center><h2>Taxas por Instrutor</h2></center>
                         <p:dataTable var="dados" value="#{instrutorBean.instrutores}" >
