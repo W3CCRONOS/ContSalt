@@ -57,8 +57,7 @@ public class TaxaSobrepesoDAO {
         }        
     }
     
-    public List<TaxaSobrepesoTO> getTaxasSobrepesos(){
-            
+    public List<TaxaSobrepesoTO> getTaxasSobrepesos(){           
             List<TaxaSobrepesoTO> lstA = new LinkedList<TaxaSobrepesoTO>();
             ResultSet rs;
             try{
@@ -74,7 +73,7 @@ public class TaxaSobrepesoDAO {
             return lstA;
     }
     
-    private TaxaSobrepesoTO getTaxaSobrepeso(ResultSet rs) throws SQLException{
+    protected TaxaSobrepesoTO getTaxaSobrepeso(ResultSet rs) throws SQLException{
         TaxaSobrepesoTO t = new TaxaSobrepesoTO();
         t.setValor(rs.getDouble("valor"));
         t.setIdTaxaSobrepeso(rs.getInt("idtaxasobrepeso"));    
@@ -82,6 +81,7 @@ public class TaxaSobrepesoDAO {
         t.setDescricao(rs.getString("descricao"));
         return t;
     }
+    
     public void excluir(TaxaSobrepesoTO t){
            try {
                PreparedStatement ppStmt = conn.prepareStatement("DELETE FROM taxasobrepeso WHERE idtaxasobrepeso=?");
@@ -91,6 +91,28 @@ public class TaxaSobrepesoDAO {
            }catch(SQLException EX){
                EX.printStackTrace();
            }
+    }
+    /** 
+    * Método para contar quantas taxas de sobre peso estão registradas no banco.
+    * @return int - Valor com o total de registro de taxas de sobrepeso armazenados
+    * no banco.
+    */
+    public int contarTaxasDeSobrePesoArmazenadas(){
+        int total=0;
+        ResultSet rs;
+        try{
+            PreparedStatement ppStmt =  conn.prepareStatement("SELECT COUNT(idtaxasobrepeso) AS quantidadeDeRegistros FROM taxasobrepeso");
+            rs = ppStmt.executeQuery();
+            if(rs.next()){
+               total = rs.getInt("quantidadeDeRegistros");
+            }
+            ppStmt.close();
+	    rs.close();
+        }        
+        catch(SQLException ex){         
+        ex.printStackTrace();        
+        }
+       return total;        
     }
     
 }

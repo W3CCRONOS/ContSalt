@@ -5,6 +5,8 @@
  */
 package beans;
 
+import classDAO.InstrutorDAO;
+import classDAO.TaxaSobrepesoDAO;
 import classDAO.TaxasInstrutoresDAO;
 import classTO.TaxaSobrepesoTO;
 import javax.inject.Named;
@@ -19,50 +21,49 @@ import java.util.List;
 @Named(value = "taxasInstrutoresBean")
 @SessionScoped
 public class TaxasInstrutoresBean implements Serializable {
-
+   
+    //idInstrutor armazenará a identificação do instrutor selecionado.
     private int idInstrutor;
+    //idTaxasSobrepeso e um vetor que armazenará as identificações das taxas selecionadas.
     private int idTaxasSobrepeso[];
     private TaxasInstrutoresDAO tiDAO; 
-    private TaxaSobrepesoTO taxaTO;
+    private TaxaSobrepesoDAO tDAO;
 
     public TaxasInstrutoresBean() {
         this.setIdInstrutor(idInstrutor = 0);
         this.setTiDAO( new TaxasInstrutoresDAO());
-        /* A variável quantidadeDeRegistros é inicializada com o número 
-        total de taxas de sobre peso armazenados no banco .
-        */
-        int quantidadeDeRegistros = tiDAO.ContarTaxasArmazenadas();
-        /*O vetor idTaxasSobrepeso é inicializado, recebendo a variável quantidadeDeRegistros*/
-        this.setIdTaxasSobrepeso(idTaxasSobrepeso = new int[quantidadeDeRegistros]);
-        this.setTaxaTO(new TaxaSobrepesoTO());
-    }
+        this.settDAO(new TaxaSobrepesoDAO());
+        /*O vetor é inicializado com a quantidade de taxas de sobrepeso registradas no banco*/
+        this.setIdTaxasSobrepeso(idTaxasSobrepeso = new int[tDAO.contarTaxasDeSobrePesoArmazenadas()]);
+  
+     }
 
     public void taxasDeSobrepesoDoInstrutor(){
-        //Aqui foi criada uma lista(listTaxas) com todas as taxas de sobre peso armazenadas no banco.
+        /*A lista com todas as taxas de sobre peso armazenadas no banco.*/
         List<TaxaSobrepesoTO> listTaxas = tiDAO.getTaxasSobrepesos();
         /* É possivel saber o tamanho do espaço reservado na memória para o vetor idTaxasSobrepeso,
         mas não é possível saber quantos espaços estão ocupados, então foi utilizado .length .*/       
         for (int i = 0; i < idTaxasSobrepeso.length ; i++) { 
-            tiDAO.salvarTaxaDoInstrutor(idInstrutor, idTaxasSobrepeso[i]);            
-            /*Foi criado um objeto(taxa) para percorrer a lista*/
+            tiDAO.salvarTaxaDoInstrutor(idInstrutor, idTaxasSobrepeso[i]);               
             for(TaxaSobrepesoTO taxa : listTaxas){
-                /*Se na lista houver um objeto com a identifcação igual a identificação da taxa selecionada pelo usuário,
-                este objeto e removido da lista*/
+                /*Se na lista(listTaxas) houver uma ou mais taxas com as identifcações(IdTaxaSobrepeso) iguais as identificações das taxas selecionadas pelo usuário,
+                estas taxas seram removidas da lista(listTaxas)*/
                 if(taxa.getIdTaxaSobrepeso()==idTaxasSobrepeso[i]){
                     listTaxas.remove(taxa);
                     break;
                 }
             }
         }
-        /*Após serem removidos da lista todas as taxas selecionadas, a lista resultante 
-        é percorrida novamente e as taxas que o intrutor não faz serão removidas
-        do seu cadastro*/
+        /*Após as taxas serem removidas da lista, a lista resultante é das taxas que o intrutor não faz.
+        Então, caso estejão cadastradas, será desfeito o relacionamento com o instrutor*/
         for(TaxaSobrepesoTO taxa : listTaxas){
-            tiDAO.ExcluirTaxaDoInstrutor(idInstrutor, taxa.getIdTaxaSobrepeso());
+            tiDAO.excluirTaxaDoInstrutor(idInstrutor, taxa.getIdTaxaSobrepeso());
         }
         
     }
-       
+   public List<TaxaSobrepesoTO> getTaxasDeSobrepesoPorInstrutor(int idInstrutor){
+        return tiDAO.getTaxasDeSobrepesoPorInstrutor(idInstrutor);
+    }
                    
     public int getIdInstrutor() {
         return idInstrutor;
@@ -88,12 +89,12 @@ public class TaxasInstrutoresBean implements Serializable {
         this.tiDAO = tiDAO;
     }
 
-    public TaxaSobrepesoTO getTaxaTO() {
-        return taxaTO;
+    public TaxaSobrepesoDAO gettDAO() {
+        return tDAO;
     }
 
-    public void setTaxaTO(TaxaSobrepesoTO taxaTO) {
-        this.taxaTO = taxaTO;
+    public void settDAO(TaxaSobrepesoDAO tDAO) {
+        this.tDAO = tDAO;
     }
- 
+    
 }

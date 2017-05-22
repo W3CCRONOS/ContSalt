@@ -33,7 +33,7 @@ public class InstrutorDAO {
             ppStmt.setDate(3, i.getAdmissao());            
             ppStmt.setString(4,i.getPresenca());
             ppStmt.execute();
-            System.out.println("Cadastrou");
+         //   ppStmt.close();
         }
         
         catch(SQLException ex){         
@@ -49,7 +49,7 @@ public class InstrutorDAO {
             ppStmt.setString(4,i.getPresenca());
             ppStmt.setInt(5, i.getIdInstrutor());
             ppStmt.execute();
-            System.out.println("Alterado");
+         //   ppStmt.close();
         }catch(SQLException EX){
             EX.printStackTrace();
         }        
@@ -61,7 +61,7 @@ public class InstrutorDAO {
             ppStmt.setString(1,i.getPresenca());
             ppStmt.setInt(2, i.getIdInstrutor());
             ppStmt.execute();
-            System.out.println("Alterado");
+            ppStmt.close();
         }catch(SQLException EX){
             EX.printStackTrace();
         }        
@@ -77,6 +77,8 @@ public class InstrutorDAO {
                 while(rs.next()){
                     lstA.add(getIntrutor(rs));
                 }
+                ppStmt.close();
+	        rs.close();
             }
             catch(SQLException ex){
                 ex.printStackTrace();
@@ -98,7 +100,7 @@ public class InstrutorDAO {
                PreparedStatement ppStmt = conn.prepareStatement("DELETE FROM instrutor WHERE idinstrutor=?");
                ppStmt.setInt(1,i.getIdInstrutor());
                ppStmt.execute();
-               System.out.println("Excluido");
+               ppStmt.close();
            }catch(SQLException EX){
                EX.printStackTrace();
            }

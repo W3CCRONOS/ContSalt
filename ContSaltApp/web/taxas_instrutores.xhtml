@@ -60,16 +60,21 @@ and open the template in the editor.
                             <p:selectManyCheckbox value="#{taxasInstrutoresBean.idTaxasSobrepeso}">
                                 <f:selectItems var="taxas" value="#{taxaSobrepesoBean.taxasSobrepesos}" itemLabel="#{taxas.descricao}" itemValue="#{taxas.idTaxaSobrepeso}" />                                
                             </p:selectManyCheckbox>                  
-                            <p:commandButton value="Salvar" action="#{taxasInstrutoresBean.taxasDeSobrepesoDoInstrutor()}" ajax="false" />
-                        </h:panelGrid>
+                            <p:commandButton value="Alterar" action="#{taxasInstrutoresBean.taxasDeSobrepesoDoInstrutor()}" ajax="false" />
+                        </h:panelGrid>                       
+                                                   
                         <center><h2>Taxas por Instrutor</h2></center>
-                        <p:dataTable var="dados" value="#{instrutorBean.instrutores}" >
-                            <p:column headerText="Nome">
+                        <p:dataTable var="dados" value="#{instrutorBean.instrutores}" > 
+                            <p:column headerText="Instrutor">
                                 <h:outputText value="#{dados.nome}"/>
                             </p:column>
-                            <p:column headerText="CPF">
-                                <h:outputText value="#{dados.cpf}"/>
-                            </p:column>                            
+                            <p:column>
+                                <p:dataTable var="taxas" value="#{taxasInstrutoresBean.getTaxasDeSobrepesoPorInstrutor(dados.idInstrutor)}">
+                                    <p:column headerText="Taxas">
+                                        <h:outputText value="#{taxas.descricao}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:column>                                     
                         </p:dataTable>
                     </h:form>
                 </p:layoutUnit>

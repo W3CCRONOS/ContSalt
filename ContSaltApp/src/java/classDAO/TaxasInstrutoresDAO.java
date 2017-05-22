@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 import utilitarios.Conexao;
 
 /**
@@ -20,112 +22,128 @@ public class TaxasInstrutoresDAO extends TaxaSobrepesoDAO{
     public TaxasInstrutoresDAO() {
         conn = new Conexao().conectar();
     }
-      
-      
-     
+    
  /**
- *Método para salvar registros no banco. Ele verifica se já existe uma determinda taxa de sobrepeso ligada a um instrutor específico.
- * Se não hover, ele cria este registro.
+ *Método para salvar registros no banco. Este metodo faz uma verificação se não existe
+ * registro da taxa de sobrepeso  ligado ao instrutor. Se não houver um registro ele salva no banco.
  * @param idInstrutor int - número da chave extrangeira de um instrutor.
  * @param idTaxaSobrepeso int - número da chave extrangeira de uma taxa de sobrepeso.
  */    
     public void salvarTaxaDoInstrutor(int idInstrutor, int idTaxaSobrepeso){
-        int total = 0;
-        ResultSet rs;
-        try{ 
-            /*Esse SELECT verifica se já exixte um registro com os parametros pasado para
-             o método*/
-            PreparedStatement ppStmt1 =  conn.prepareStatement("SELECT COUNT(instrutor_idinstrutor) AS quantidadeDeRegistros FROM taxasobrepeso_has_instrutor WHERE instrutor_idinstrutor = ? AND taxasobrepeso_idtaxasobrepeso = ? ");
-            ppStmt1.setInt(1,idInstrutor);
-            ppStmt1.setInt(2,idTaxaSobrepeso);
-            rs = ppStmt1.executeQuery();
-            if(rs.next()){  // Se  rs.next() for true...(existe algum registro dentro do ResuslSet)           
-                total = rs.getInt("quantidadeDeRegistros"); // total   recebe o valor do ResultSet   
-                /*Se não existe um registro com os parametros informados para
-                    o método, então, o registro será criado*/
-                if (total == 0){                    
-                    try{
-                        PreparedStatement ppStmt2 =  conn.prepareStatement("INSERT INTO taxasobrepeso_has_instrutor (instrutor_idinstrutor,taxasobrepeso_idtaxasobrepeso) VALUES (?,?)");
-                        ppStmt2.setInt(1,idInstrutor);
-                        ppStmt2.setInt(2,idTaxaSobrepeso);
-                        ppStmt2.execute();
-                        ppStmt2.close();
-                    }
-                    catch(SQLException ex){         
-                        ex.printStackTrace();
-                    }                
-                } 
+        /*Verifico se o registro ainda não existe para depois salvá-lo*/
+        if (verificarSeExisteRegistro(idInstrutor, idTaxaSobrepeso) == 0){                    
+            try{
+               PreparedStatement ppStmt2 =  conn.prepareStatement("INSERT INTO taxasobrepeso_has_instrutor (instrutor_idinstrutor,taxasobrepeso_idtaxasobrepeso) VALUES (?,?)");
+                ppStmt2.setInt(1,idInstrutor);
+                ppStmt2.setInt(2,idTaxaSobrepeso);
+                ppStmt2.execute();
+                ppStmt2.close();
             }
-            ppStmt1.close();
-	    rs.close();                    
-        }       
-        catch(SQLException ex){         
-            ex.printStackTrace();
-        }
+            catch(SQLException ex){         
+                ex.printStackTrace();
+            }                
+        } 
+    }
+  
+    /** 
+    * Método para excluir registros no banco. Este método faz uma verificação se existe
+    * registro da taxa de sobrepeso  ligado ao instrutor. Se houver um registro ele exclui do banco.
+    * @param idInstrutor int - É o número da chave extrangeira de um instrutor.
+    * @param idTaxaSobrepeso int - É o número da chave extrangeira de uma taxa de sobrepeso.
+    */
+    public void excluirTaxaDoInstrutor(int idInstrutor, int idTaxaSobrepeso){
+        /*Verifico se o registro existe para depois deleta-lo*/
+        if (verificarSeExisteRegistro(idInstrutor, idTaxaSobrepeso) != 0){
+            try{
+                PreparedStatement ppStmt =  conn.prepareStatement("DELETE FROM taxasobrepeso_has_instrutor WHERE instrutor_idinstrutor = ? AND taxasobrepeso_idtaxasobrepeso = ?");
+                ppStmt.setInt(1,idInstrutor);
+                ppStmt.setInt(2,idTaxaSobrepeso);
+                ppStmt.execute();
+                ppStmt.close();
+            }
+            catch(SQLException ex){         
+                ex.printStackTrace();
+            }                
+        } 
     }
     
     /** 
-    * Método para excluir registros no banco. Ele verifica se existe um determinado registro de taxa de sobrepeso liagdo a um instrutor. Se houver
-    * ele o exclui.
-    * @param idInstrutor int - número da chave extrangeira de um instrutor.
-    * @param idTaxaSobrepeso int - número da chave extrangeira de uma taxa de sobrepeso.
+    * Método para verificar se exite um registros no banco do instrutor com uma taxa de sobrepeso.
+    * Se existir um registro de taxa de sobrepeso, ligado a um instrutor,
+    * este método retornará um valor diferente de zero.
+    * @param idInstrutor int - É o número da chave extrangeira de um instrutor.
+    * @param idTaxaSobrepeso int - É o número da chave extrangeira de uma taxa de sobre peso.
+    * @return total int - Se não for encontrado nenhum registro retornará zero.    
     */
-    public void ExcluirTaxaDoInstrutor(int idInstrutor, int idTaxaSobrepeso){
+    private int verificarSeExisteRegistro(int idInstrutor, int idTaxaSobrepeso){
         int total = 0;
         ResultSet rs;
         try{ 
-            /*Esse SELECT verifica se já existe um registro com os parametros pasado para
-             o método*/
-            PreparedStatement ppStmt1 =  conn.prepareStatement("SELECT COUNT(instrutor_idinstrutor) AS quantidadeDeRegistros FROM taxasobrepeso_has_instrutor WHERE instrutor_idinstrutor = ? AND taxasobrepeso_idtaxasobrepeso = ? ");
-            ppStmt1.setInt(1,idInstrutor);
-            ppStmt1.setInt(2,idTaxaSobrepeso);
-            rs = ppStmt1.executeQuery();
-            if(rs.next()){  // Se  rs.next() for true...(existe algum registro dentro do ResuslSet)            
-                total = rs.getInt("quantidadeDeRegistros"); // total   recebe o valor do ResultSet   
-                /*Se existe um registro com os parametros informados para
-                    o método, então, o registro será excluido*/
-                if (total != 0){
-                    try{
-                        PreparedStatement ppStmt2 =  conn.prepareStatement("DELETE FROM taxasobrepeso_has_instrutor WHERE instrutor_idinstrutor = ? AND taxasobrepeso_idtaxasobrepeso = ?");
-                        ppStmt2.setInt(1,idInstrutor);
-                        ppStmt2.setInt(2,idTaxaSobrepeso);
-                        ppStmt2.execute();
-                        ppStmt2.close();
-                    }
-                    catch(SQLException ex){         
-                        ex.printStackTrace();
-                    }                
-                } 
-            }
-            ppStmt1.close();
-	    rs.close();                    
-        }       
-        catch(SQLException ex){         
-            ex.printStackTrace();
-        }
-    
-    }
-    
-    /** 
-    * Método para contar quantas taxas de sobre peso estão registradas no banco.
-    * @return int - Valor com o total de registro de taxas de sobrepeso armazenados
-    * no banco.
-    */
-    public int ContarTaxasArmazenadas(){
-        int total=0;
-        ResultSet rs;
-        try{
-            PreparedStatement ppStmt =  conn.prepareStatement("SELECT COUNT(idtaxasobrepeso) AS quantidadeDeRegistros FROM taxasobrepeso");
+            PreparedStatement ppStmt =  conn.prepareStatement("SELECT COUNT(instrutor_idinstrutor) AS quantidadeDeRegistros FROM taxasobrepeso_has_instrutor WHERE instrutor_idinstrutor = ? AND taxasobrepeso_idtaxasobrepeso = ? ");
+            ppStmt.setInt(1,idInstrutor);
+            ppStmt.setInt(2,idTaxaSobrepeso);
             rs = ppStmt.executeQuery();
+            /* Se  rs.next() for true...(existe algum registro dentro do ResuslSet)*/
             if(rs.next()){
-               total = rs.getInt("quantidadeDeRegistros");
+                /* a variável total, recebe o valor do ResultSet. 
+                Se este valor for diferente de zero, então, foi encontrado um registro armazenado no banco*/
+                total = rs.getInt("quantidadeDeRegistros"); 
             }
-	    rs.close();
-        }        
+            ppStmt.close();
+	    rs.close(); 
+        }       
         catch(SQLException ex){         
-        ex.printStackTrace();        
-        }
-       return total;        
-    }       
+            ex.printStackTrace();
+        }    
+        return total;        
+    }    
+    /** 
+    * Método para buscar as taxas de sobre peso que um instrutor realizar.
+    * Este método recebe o número de identificação de um instrutor e faz uma busca 
+    * sobre quais taxas de sobre peso o instrutor está  cadastrado para fazer.
+    * @param idInstrutor int - É o número da chave extrangeira de um instrutor.
+    * @return int[] - O retorno é um vertor contendo os números de identificação
+    * das taxas de sobre peso que o instrutor realiza.
+    */
+     public int[] getIdTaxasPorInstrutor(int idInstrutor){        
+        ResultSet rs;
+        int taxas[] = new int[contarTaxasDeSobrePesoArmazenadas()];
+        try{ 
+            PreparedStatement ppStmt =  conn.prepareStatement("SELECT taxasobrepeso_idtaxasobrepeso FROM taxasobrepeso_has_instrutor WHERE instrutor_idinstrutor = ?");
+            ppStmt.setInt(1,idInstrutor);
+            rs = ppStmt.executeQuery();
+            for(int i = 0; rs.next(); i++ ){                
+                taxas[i]=rs.getInt("taxasobrepeso_idtaxasobrepeso");
+            }
+            ppStmt.close();
+	    rs.close(); 
+        }       
+        catch(SQLException ex){         
+            ex.printStackTrace();
+        }       
+        return taxas;
+    }
+    
+    public List<TaxaSobrepesoTO> getTaxasDeSobrepesoPorInstrutor(int idInstrutor){
+            List<TaxaSobrepesoTO> listTaxas = new LinkedList<TaxaSobrepesoTO>();
+            ResultSet rs;
+            int [] idTaxas = getIdTaxasPorInstrutor(idInstrutor);
+            for( int i = 0; i < idTaxas.length; i++){
+                try{
+                    PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM taxasobrepeso WHERE idtaxasobrepeso = ?");
+                    ppStmt.setInt(1,idTaxas[i]);
+                    rs = ppStmt.executeQuery();
+                    while(rs.next()){
+                        listTaxas.add(getTaxaSobrepeso(rs));
+                    }
+                    ppStmt.close();
+                    rs.close(); 
+                }
+                catch(SQLException ex){
+                    ex.printStackTrace();
+                }
+            }            
+            return listTaxas;
+    }
 }   
- 
+ //
