@@ -5,7 +5,6 @@
  */
 package beans;
 
-import classDAO.InstrutorDAO;
 import classDAO.TaxaSobrepesoDAO;
 import classDAO.TaxasInstrutoresDAO;
 import classTO.TaxaSobrepesoTO;
@@ -40,27 +39,28 @@ public class TaxasInstrutoresBean implements Serializable {
 
     public void taxasDeSobrepesoDoInstrutor(){
         /*A lista com todas as taxas de sobre peso armazenadas no banco.*/
-        List<TaxaSobrepesoTO> listTaxas = tiDAO.getTaxasSobrepesos();
+        List<TaxaSobrepesoTO> list = tiDAO.getTaxasSobrepesos();
         /* É possivel saber o tamanho do espaço reservado na memória para o vetor idTaxasSobrepeso,
         mas não é possível saber quantos espaços estão ocupados, então foi utilizado .length .*/       
         for (int i = 0; i < idTaxasSobrepeso.length ; i++) { 
             tiDAO.salvarTaxaDoInstrutor(idInstrutor, idTaxasSobrepeso[i]);               
-            for(TaxaSobrepesoTO taxa : listTaxas){
+            for(TaxaSobrepesoTO taxa : list){
                 /*Se na lista(listTaxas) houver uma ou mais taxas com as identifcações(IdTaxaSobrepeso) iguais as identificações das taxas selecionadas pelo usuário,
                 estas taxas seram removidas da lista(listTaxas)*/
                 if(taxa.getIdTaxaSobrepeso()==idTaxasSobrepeso[i]){
-                    listTaxas.remove(taxa);
+                    list.remove(taxa);
                     break;
                 }
             }
         }
         /*Após as taxas serem removidas da lista, a lista resultante é das taxas que o intrutor não faz.
         Então, caso estejão cadastradas, será desfeito o relacionamento com o instrutor*/
-        for(TaxaSobrepesoTO taxa : listTaxas){
+        for(TaxaSobrepesoTO taxa : list){
             tiDAO.excluirTaxaDoInstrutor(idInstrutor, taxa.getIdTaxaSobrepeso());
         }
         
     }
+    
    public List<TaxaSobrepesoTO> getTaxasDeSobrepesoPorInstrutor(int idInstrutor){
         return tiDAO.getTaxasDeSobrepesoPorInstrutor(idInstrutor);
     }

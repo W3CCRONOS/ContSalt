@@ -36,7 +36,7 @@ public class TaxaSobrepesoDAO {
             System.out.println(taxa.getDescricao());
             System.out.println(taxa.getValor());
             ppStmt.execute();
-            System.out.println("Cadastrou");
+            ppStmt.close();
         }
         
         catch(SQLException ex){         
@@ -51,7 +51,7 @@ public class TaxaSobrepesoDAO {
             ppStmt.setString(3,taxa.getDescricao());
             ppStmt.setInt(4, taxa.getIdTaxaSobrepeso());
             ppStmt.execute();
-            System.out.println("Alterado");
+            ppStmt.close(); 
         }catch(SQLException EX){
              EX.printStackTrace();
         }        
@@ -66,6 +66,8 @@ public class TaxaSobrepesoDAO {
                 while(rs.next()){
                     lstA.add(getTaxaSobrepeso(rs));
                 }
+                ppStmt.close();
+                rs.close(); 
             }
             catch(SQLException ex){
                 ex.printStackTrace();
@@ -83,14 +85,15 @@ public class TaxaSobrepesoDAO {
     }
     
     public void excluir(TaxaSobrepesoTO t){
-           try {
-               PreparedStatement ppStmt = conn.prepareStatement("DELETE FROM taxasobrepeso WHERE idtaxasobrepeso=?");
-               ppStmt.setInt(1,t.getIdTaxaSobrepeso());
-               ppStmt.execute();
-               System.out.println("Excluido");
-           }catch(SQLException EX){
-               EX.printStackTrace();
-           }
+        try{
+            PreparedStatement ppStmt = conn.prepareStatement("DELETE FROM taxasobrepeso WHERE idtaxasobrepeso=?");
+            ppStmt.setInt(1,t.getIdTaxaSobrepeso());
+            ppStmt.execute();
+            ppStmt.close();
+        }
+        catch(SQLException EX){
+            EX.printStackTrace();
+        }
     }
     /** 
     * Método para contar quantas taxas de sobre peso estão registradas no banco.
@@ -113,6 +116,5 @@ public class TaxaSobrepesoDAO {
         ex.printStackTrace();        
         }
        return total;        
-    }
-    
+    }    
 }

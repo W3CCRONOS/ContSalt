@@ -32,7 +32,7 @@ public class TipoDeSaltoDAO {
             ppStmt.setString(1,tipodesalto.getNome());
             ppStmt.setDouble(2,tipodesalto.getValor());
             ppStmt.execute();
-            System.out.println("Cadastrou");
+            ppStmt.close(); 
         }
         
         catch(SQLException ex){         
@@ -41,12 +41,13 @@ public class TipoDeSaltoDAO {
     }
      public void alterar(TipoDeSaltoTO tipodesalto){
         try {
-            PreparedStatement stmt = conn.prepareStatement("UPDATE tipodesalto SET nome =?, valor=? WHERE idtipodesalto=?");
-            stmt.setString(1, tipodesalto.getNome());
-            stmt.setDouble(2, tipodesalto.getValor());
-            stmt.setInt(3,tipodesalto.getIdTipoDeSalto());
-            stmt.execute();
-            System.out.println("Alterado");
+            PreparedStatement ppStmt = conn.prepareStatement("UPDATE tipodesalto SET nome =?, valor=? WHERE idtipodesalto=?");
+            ppStmt.setString(1, tipodesalto.getNome());
+            ppStmt.setDouble(2, tipodesalto.getValor());
+            ppStmt.setInt(3,tipodesalto.getIdTipoDeSalto());
+            ppStmt.execute();
+            ppStmt.close();
+ 
         }catch(SQLException EX){
              EX.printStackTrace();
         }        
@@ -62,6 +63,8 @@ public class TipoDeSaltoDAO {
                 while(rs.next()){
                     lstA.add(getTipoDeSalto(rs));
                 }
+                ppStmt.close();
+                rs.close();
             }
             catch(SQLException ex){
                 ex.printStackTrace();
@@ -69,7 +72,7 @@ public class TipoDeSaltoDAO {
             return lstA;
     }
     
-    private TipoDeSaltoTO getTipoDeSalto(ResultSet rs) throws SQLException{
+    protected TipoDeSaltoTO getTipoDeSalto(ResultSet rs) throws SQLException{
         TipoDeSaltoTO c = new TipoDeSaltoTO();
         c.setNome(rs.getString("nome"));
         c.setValor(rs.getDouble("valor"));
@@ -77,13 +80,35 @@ public class TipoDeSaltoDAO {
         return c;
     }
     public void excluir(TipoDeSaltoTO c){
-           try {
-               PreparedStatement ppStmt = conn.prepareStatement("DELETE FROM tipodesalto WHERE idtipodesalto=?");
-               ppStmt.setInt(1,c.getIdTipoDeSalto());
-               ppStmt.execute();
-               System.out.println("Excluido");
-           }catch(SQLException EX){
-               EX.printStackTrace();
-           }
+        try{
+            PreparedStatement ppStmt = conn.prepareStatement("DELETE FROM tipodesalto WHERE idtipodesalto=?");
+            ppStmt.setInt(1,c.getIdTipoDeSalto());
+            ppStmt.execute();
+            ppStmt.close();
+        }
+        catch(SQLException EX){
+            EX.printStackTrace();
+        }
     }
+    /** 
+    * Método para contar quantas tipos de saltos estão registradas no banco.
+    * @return int - Valor com o total de registro armazenados no banco.
+    */
+    public int contarTaxasDeSobrePesoArmazenadas(){
+        int total=0;
+        ResultSet rs;
+        try{
+            PreparedStatement ppStmt =  conn.prepareStatement("SELECT COUNT(idtipodesalto) AS quantidadeDeRegistros FROM tipodesalto");
+            rs = ppStmt.executeQuery();
+            if(rs.next()){
+               total = rs.getInt("quantidadeDeRegistros");
+            }
+            ppStmt.close();
+	    rs.close();
+        }        
+        catch(SQLException ex){         
+        ex.printStackTrace();        
+        }
+       return total;        
+    } 
 }

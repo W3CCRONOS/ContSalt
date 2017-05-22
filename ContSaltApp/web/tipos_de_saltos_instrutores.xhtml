@@ -4,13 +4,81 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<!DOCTYPE html  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>ContSalt/Tipos de Saltos dos Instrutores</title>             
+            </f:facet>
+                <script src="JavaScript/Calendario.js"></script>
+            </h:head>
+        <h:body>
+            <p:layout fullPage="true">
+                <p:layoutUnit  position="west" size="175" header="Ocultar" visible="true" collapsible="true">
+                    <p:panelMenu style="width:175px">
+                        <p:submenu label="Home">
+                            <p:menuitem value="Inicio" url="http://localhost:8080/ContSaltApp/faces/index.xhtml" />
+                        </p:submenu>
+                    </p:panelMenu>
+                    <p:panelMenu style="width:175px">
+                    <p:submenu label="Instrutores">
+                        <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_instrutor.xhtml" />
+                        <p:menuitem value="Presença" url="http://localhost:8080/ContSaltApp/faces/presenca_instrutores.xhtml" />                                               
+                        <p:menuitem value="Taxas" url="http://localhost:8080/ContSaltApp/faces/taxas_instrutores.xhtml" />
+                    </p:submenu>
+                </p:panelMenu>
+                    <p:panelMenu style="width:175px">
+                        <p:submenu label="Saltos">
+                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_salto.xhtml" />
+                            <p:menuitem value="Relatório de Saltos" url="" />
+                        </p:submenu>
+                    </p:panelMenu>
+                    <p:panelMenu style="width:175px">
+                        <p:submenu label="Taxas de Sobrepeso">
+                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_taxa_sobrepeso.xhtml" />
+                        </p:submenu>
+                    </p:panelMenu>                   
+                    <p:panelMenu style="width:175px">
+                        <p:submenu label="Tipos de Saltos">
+                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_tipos_de_saltos.xhtml" />
+                        </p:submenu>
+                    </p:panelMenu>
+                </p:layoutUnit>
+                <p:layoutUnit position="center">
+                    <h:form>
+                        <h2>Cadastro dos Tipos de Saltos dos Instrutores</h2>
+                        <h:panelGrid columns="2" cellpadding="4">
+                            <p:selectOneMenu value="#{tiposDeSaltosInstrutoresBean.idInstrutor}">
+                                <f:selectItems var="inst" value="#{instrutorBean.instrutores}" itemLabel="#{inst.nome}" itemValue="#{inst.idInstrutor}" />
+                            </p:selectOneMenu>                            
+                            <p:selectManyCheckbox value="#{tiposDeSaltosInstrutoresBean.idTiposDeSaltos}">
+                                <f:selectItems var="saltos" value="#{tipoDeSaltoBean.tiposDeSaltos}" itemLabel="#{saltos.nome}" itemValue="#{saltos.idTipoDeSalto}" />                                
+                            </p:selectManyCheckbox>                  
+                            <p:commandButton value="Alterar" action="#{tiposDeSaltosInstrutoresBean.tiposDeSaltosDoInstrutor()}" ajax="false" />
+                        </h:panelGrid>                       
+                                                   
+                        <center><h2>Tipos de Saltos por Instrutor</h2></center>
+                        <p:dataTable var="dados" value="#{instrutorBean.instrutores}" > 
+                            <p:column headerText="Instrutor">
+                                <h:outputText value="#{dados.nome}"/>
+                            </p:column>
+                            <p:column>
+                                <p:dataTable var="saltos" value="#{tiposDeSaltosInstrutoresBean.getTiposDeSaltosPorInstrutor(dados.idInstrutor)}">
+                                    <p:column headerText="Saltos">
+                                        <h:outputText value="#{saltos.nome}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:column>                                     
+                        </p:dataTable>
+                    </h:form>
+                </p:layoutUnit>
+            </p:layout>
+        </h:body>
+    </f:view>
 </html>
