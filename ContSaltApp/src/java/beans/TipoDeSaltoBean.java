@@ -33,8 +33,8 @@ public class TipoDeSaltoBean implements Serializable {
     }
     
     public  void salvar(){
-        CTO.setValor(removerMascara(valor));        
-        cDAO.salvar(CTO); 
+        CTO.setValor(removerMascara(valor));      
+        cDAO.salvar(CTO);
         CTO = new TipoDeSaltoTO();
         valor = new String();
     }

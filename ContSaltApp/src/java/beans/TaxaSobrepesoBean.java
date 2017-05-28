@@ -23,11 +23,13 @@ public class TaxaSobrepesoBean implements Serializable {
     private TaxaSobrepesoTO CTO;
     private TaxaSobrepesoDAO cDAO;
     private String valor;
+    private boolean value1;
 
     public TaxaSobrepesoBean() {
         this.setCTO(new TaxaSobrepesoTO());
         this.setcDAO(new TaxaSobrepesoDAO());
         this.setValor(new String());
+       // this.setValue1(new Boolean("false"));
     }
     
       public  void salvar(){
@@ -85,4 +87,13 @@ public class TaxaSobrepesoBean implements Serializable {
     public void setcDAO(TaxaSobrepesoDAO cDAO) {
         this.cDAO = cDAO;
     } 
+
+    public boolean isValue1() {
+        return value1;
+    }
+
+    public void setValue1(boolean value1) {
+        this.value1 = value1;
+    }
+    
 }

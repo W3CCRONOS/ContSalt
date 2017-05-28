@@ -49,11 +49,15 @@ and open the template in the editor.
                 <p:layoutUnit position="center">
                     <h:form>
                         <h2>Cadastro de Tipos de Saltos</h2>
-                        <h:panelGrid columns="2" cellpadding="6">
+                        <h:panelGrid columns="2" cellpadding="7">
                             <h:outputLabel for="txtName" value="Name:" style="font-weight:bold" />
                             <p:inputText id="txtName" value="#{tipoDeSaltoBean.CTO.nome}" />
                             <h:outputLabel for="txtValor" value="Valor:" style="font-weight:bold" />
-                            <p:inputMask id="txtValor" value="#{tipoDeSaltoBean.valor}" mask="R$999,99"/>
+                            <p:inputMask id="txtValor" value="#{tipoDeSaltoBean.valor}" mask="R$999,99"/>                        
+                            <h:outputText value="Recebe taxa de sobre peso: " style="font-weight:bold" />
+                            <p:selectBooleanButton id="value1" value="#{tipoDeSaltoBean.CTO.taxadesobrepeso}" onLabel="Sim" offLabel="Não" style="width:60px" />
+                            <h:outputLabel for="txtPessoas" value="Informe a Quantidade de Pessoas:" style="font-weight:bold" />
+                            <p:inputText id="txtPessoas" value="#{tipoDeSaltoBean.CTO.pessoas}" type="number"/>
                             <p:commandButton value="Salvar Novo Registro" action="#{tipoDeSaltoBean.salvar()}" ajax="false" />
                             <p:commandButton value="Confirmar Alteração" action="#{tipoDeSaltoBean.alterar()}" ajax="false" />
                         </h:panelGrid>
@@ -64,6 +68,13 @@ and open the template in the editor.
                             </p:column>
                             <p:column headerText="Valor">
                                 <h:outputText value="#{dados.valor}"/>
+                            </p:column>
+                            <p:column headerText="Pessoas">
+                                <h:outputText value="#{dados.pessoas}"/>
+                            </p:column>
+                            <p:column headerText="Taxa de Sobrepeso">
+                                <p:selectBooleanCheckbox value="#{dados.taxadesobrepeso}" disabled="true"  >
+                                </p:selectBooleanCheckbox>                                
                             </p:column>
                             <p:column>
                                 <p:commandButton value="Alterar" action="#{tipoDeSaltoBean.preparaAlteracao(dados)}" ajax="false" />

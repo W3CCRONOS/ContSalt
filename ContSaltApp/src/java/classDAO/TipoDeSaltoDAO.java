@@ -26,11 +26,21 @@ public class TipoDeSaltoDAO {
     }
         
     public void salvar(TipoDeSaltoTO tipodesalto){
+        System.out.println(tipodesalto.getNome());
+        System.out.println(tipodesalto.getValor());
+         System.out.println(tipodesalto.getTaxadesobrepeso());
+          System.out.println(tipodesalto.getPessoas());
+          System.out.println("dsfadsf");
+           System.out.println("dsfadsf");
+            System.out.println("dsfadsf");
+            
  
         try{
-            PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO tipodesalto (nome, valor) VALUES (?,?)");
+            PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO tipodesalto (nome,valor,taxadesobrepeso,pessoas) VALUES (?,?,?,?)");
             ppStmt.setString(1,tipodesalto.getNome());
             ppStmt.setDouble(2,tipodesalto.getValor());
+            ppStmt.setString(3,tipodesalto.getTaxadesobrepeso());
+            ppStmt.setInt(4,tipodesalto.getPessoas());
             ppStmt.execute();
             ppStmt.close(); 
         }
@@ -41,10 +51,12 @@ public class TipoDeSaltoDAO {
     }
      public void alterar(TipoDeSaltoTO tipodesalto){
         try {
-            PreparedStatement ppStmt = conn.prepareStatement("UPDATE tipodesalto SET nome =?, valor=? WHERE idtipodesalto=?");
+            PreparedStatement ppStmt = conn.prepareStatement("UPDATE tipodesalto SET nome =?, valor=?, taxadesobrepeso=?, pessoas=? WHERE idtipodesalto=?");
             ppStmt.setString(1, tipodesalto.getNome());
             ppStmt.setDouble(2, tipodesalto.getValor());
-            ppStmt.setInt(3,tipodesalto.getIdTipoDeSalto());
+            ppStmt.setString(3, tipodesalto.getTaxadesobrepeso());
+            ppStmt.setInt(4,tipodesalto.getPessoas());
+            ppStmt.setInt(5,tipodesalto.getIdTipoDeSalto());
             ppStmt.execute();
             ppStmt.close();
  
@@ -73,12 +85,15 @@ public class TipoDeSaltoDAO {
     }
     
     protected TipoDeSaltoTO getTipoDeSalto(ResultSet rs) throws SQLException{
-        TipoDeSaltoTO c = new TipoDeSaltoTO();
-        c.setNome(rs.getString("nome"));
-        c.setValor(rs.getDouble("valor"));
-        c.setIdTipoDeSalto(rs.getInt("idtipodesalto"));            
-        return c;
+        TipoDeSaltoTO tposalt = new TipoDeSaltoTO();
+        tposalt.setNome(rs.getString("nome"));
+        tposalt.setValor(rs.getDouble("valor"));
+        tposalt.setTaxadesobrepeso(rs.getString("taxadesobrepeso"));
+        tposalt.setPessoas(rs.getInt("pessoas"));
+        tposalt.setIdTipoDeSalto(rs.getInt("idtipodesalto"));            
+        return tposalt;
     }
+    
     public void excluir(TipoDeSaltoTO c){
         try{
             PreparedStatement ppStmt = conn.prepareStatement("DELETE FROM tipodesalto WHERE idtipodesalto=?");

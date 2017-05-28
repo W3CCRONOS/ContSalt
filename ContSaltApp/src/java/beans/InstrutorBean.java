@@ -11,10 +11,7 @@ import classTO.InstrutorTO;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -29,23 +26,12 @@ public class InstrutorBean implements Serializable {
     private InstrutorBO cBO;
     private InstrutorDAO cDAO ;
     private Date data;
-    private String s;
 
     public InstrutorBean() {
         this.setCTO(new InstrutorTO());
         this.setcBO(new InstrutorBO());
         this.setcDAO(new InstrutorDAO());
         this.setData(new Date());
-        this.setS(new String());
-
-    }
-
-    public String getS() {
-        return s;
-    }
-
-    public void setS(String s) {
-        this.s = s;
     }
 
     public  void salvar(){

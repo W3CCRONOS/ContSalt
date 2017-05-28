@@ -33,7 +33,7 @@ public class InstrutorDAO {
             ppStmt.setDate(3, i.getAdmissao());            
             ppStmt.setString(4,i.getPresenca());
             ppStmt.execute();
-         //   ppStmt.close();
+            ppStmt.close();
         }
         
         catch(SQLException ex){         
@@ -49,7 +49,7 @@ public class InstrutorDAO {
             ppStmt.setString(4,i.getPresenca());
             ppStmt.setInt(5, i.getIdInstrutor());
             ppStmt.execute();
-         //   ppStmt.close();
+            ppStmt.close();
         }catch(SQLException EX){
             EX.printStackTrace();
         }        
