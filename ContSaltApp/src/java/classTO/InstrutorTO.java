@@ -13,8 +13,8 @@ import java.sql.Date;
  */
 public class InstrutorTO {
     private int idInstrutor;
-    private String nome;
-    Date admissao;
+    private String nome;    
+    private Date admissao;
     private String cpf;
     private String presenca = "false";
     

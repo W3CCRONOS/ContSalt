@@ -32,7 +32,7 @@ public class TaxaSobrepesoBean implements Serializable {
        // this.setValue1(new Boolean("false"));
     }
     
-      public  void salvar(){
+    public  void salvar(){
         CTO.setValor(removerMascara(valor));        
         cDAO.salvar(CTO); 
         CTO = new TaxaSobrepesoTO();

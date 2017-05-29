@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package beans;
-
-import classBO.InstrutorBO;
 import classDAO.InstrutorDAO;
 import classTO.InstrutorTO;
 import javax.inject.Named;
@@ -13,57 +11,121 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import utilitarios.ConversorDeDatas;
 
 /**
- *
+ *Classe de conexão das páginas .xhtml com o objeto instrutor.
  * @author Almir
+ * @version 1.0
+ * @see InstrutorTO
+ * @see InstrutorDAO
  */
 @Named(value = "instrutorBean")
 @SessionScoped
 public class InstrutorBean implements Serializable {
 
     private InstrutorTO CTO;
-    private InstrutorBO cBO;
     private InstrutorDAO cDAO ;
-    private Date data;
+    /* O atributo "admissão" do objeto InstrutorTO é do tipo java.sql.Date, por isso,
+    se torna necessário converter o valor da data que vem da página .xhtml, pois ela envia os
+    dados da data em formato java.util.Date. Por sua vez, também é necessário
+    fazer a conversão contrária quando os dados veem do banco de dados, porque O banco de dados utiliza 
+    o formato java.sql.Date.
+     */
+    private Date dataUtil;
+    private ConversorDeDatas alteraData;
 
+    /**
+    * Método construtor. Neste métodos as variáveis
+    * são inicializadas.
+    */
     public InstrutorBean() {
+        //Inicialização de variáveis.
         this.setCTO(new InstrutorTO());
-        this.setcBO(new InstrutorBO());
         this.setcDAO(new InstrutorDAO());
-        this.setData(new Date());
+        this.setDataUtil(new Date());
+        this.setAlteraData(new ConversorDeDatas());
     }
-
+    /**
+    * Método que cria um registro no banco de dados. Antes, ele converte a
+    * data no formato util.Date para o formato sql.Date.
+    * Depois da conversão ele envia o objeto instanciado para ser salvo no banco de dados.
+    * Por fim, reinicializa as variáveis.
+    * @see InstrutorTO
+    * @see InstrutorDAO
+    * @see ConversorDeDatas
+    */
     public  void salvar(){
-        this.setCTO(cBO.passarDataUtilParaDataSql(CTO, data));
+        CTO.setAdmissao(alteraData.passarDataUtilParaDataSql(dataUtil));
         cDAO.salvar(CTO);
         CTO = new InstrutorTO();
-        data = new Date();
+        dataUtil = new Date();
     }
-      
+    
+    /**
+    * Método que retorna uma lista de registro dos instrutore armazenados
+    * no banco de dados.
+    * @return List - Lista de instrutores, objetos InstrutorTO.  
+    * @see InstrutorTO
+    * @see InstrutorDAO
+    */
     public List<InstrutorTO> getInstrutores(){       
         return cDAO.getInstrutores();
     }
     
-     public void excluir(InstrutorTO c){ 
-        cDAO.excluir(c);
-    }
-     
-    public  void preparaAlteracao(InstrutorTO c){
-        /*Passar a data que está em um formato SQL para o formato Util*/
-        this.setData(cBO.passarDataSqlParaDataUtil(c));
-        this.setCTO(c);
-    }
-     
-    public void alterar(){ 
-         this.setCTO(cBO.passarDataUtilParaDataSql(CTO, data));
-         cDAO.alterar(CTO);
-         CTO = new InstrutorTO();
-         data = new Date();
+    /**
+    * Método para excluir o registro de um instrutor no banco de dados.
+    * Pode ser necessário, antes excluir os relacionamentos desse instrutor
+    * com os tipos de saltos e as taxas de sobre peso.
+    * @param instrutor InstrutorTO - É um objeto do tipo InstrutorTO.
+    * @see InstrutorTO
+    * @see InstrutorDAO
+    * @see TiposDeSaltosInstrutoresBean
+    * @see TaxasInstrutoresBean
+    */
+     public void excluir(InstrutorTO instrutor){ 
+        cDAO.excluir(instrutor);
     }
     
+    /**
+    * Método que pegar um objeto do tipo InstrutorTO, apresentado dentro de uma 
+    * tabela numa página .xhtml. Antes, ele converte a data no formato sql.Date
+    * para o formato util.Date.
+    * @param instrutor InstrutorTO - É um objeto do tipo InstrutorTO.
+    * @see InstrutorTO
+    * @see ConversorDeDatas
+    */
+    public  void preparaAlteracao(InstrutorTO instrutor){
+       setDataUtil(alteraData.passarDataSqlParaDataUtil(instrutor.getAdmissao()));
+       setCTO(instrutor);
+    }
+    /**
+    * Método que altera um registro no banco de dados. Antes, ele converte a
+    * data no formato util.Date para o formato sql.Date.
+    * Depois da conversão ele envia o objeto instanciado para ser alterado no banco de dados.
+    * Por fim, reinicializa as variáveis.
+    * @see InstrutorTO
+    * @see InstrutorDAO
+    * @see ConversorDeDatas
+    */ 
+    public void alterar(){ 
+         CTO.setAdmissao(alteraData.passarDataUtilParaDataSql(dataUtil));
+         cDAO.alterar(CTO);
+         CTO = new InstrutorTO();
+         dataUtil = new Date();
+    }
+    
+    /**
+    * Método para informar a presença de um instrutor. Para realizar um salto o
+    * sitema precisará verificar quais instrutores estão presentes.
+    * Através deste método o usuário alterar as presenças dos instrutores.
+    * @param instrutor InstrutorTO - É um objeto do tipo InstrutorTO.
+    * @see InstrutorTO
+    * @see InstrutorDAO
+    * @see ConversorDeDatas
+    */ 
     public void presenca(InstrutorTO instrutor){
-        this.setCTO(instrutor);
+        setCTO(instrutor);
         String presenca = instrutor.getPresenca();
         if(presenca.equals("false")){
             CTO.setPresenca("true");
@@ -83,14 +145,6 @@ public class InstrutorBean implements Serializable {
         this.CTO = CTO;
     }
 
-    public InstrutorBO getcBO() {
-        return cBO;
-    }
-
-    public void setcBO(InstrutorBO cBO) {
-        this.cBO = cBO;
-    }
-
     public InstrutorDAO getcDAO() {
         return cDAO;
     }
@@ -99,12 +153,20 @@ public class InstrutorBean implements Serializable {
         this.cDAO = cDAO;
     }
 
-    public Date getData() {
-        return data;
+    public Date getDataUtil() {
+        return dataUtil;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setDataUtil(Date dataUtil) {
+        this.dataUtil = dataUtil;
     }
-  
+
+    public ConversorDeDatas getAlteraData() {
+        return alteraData;
+    }
+
+    public void setAlteraData(ConversorDeDatas alteraData) {
+        this.alteraData = alteraData;
+    }
+
 }

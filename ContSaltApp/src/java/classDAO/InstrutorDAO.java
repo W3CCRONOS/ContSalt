@@ -4,11 +4,15 @@
  * and open the template in the editor.
  */
 package classDAO;
+
 import classTO.InstrutorTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 import utilitarios.Conexao;
@@ -19,7 +23,6 @@ import utilitarios.Conexao;
  */
 public class InstrutorDAO {
     Connection conn;
-
     public InstrutorDAO() {
        conn = new Conexao().conectar();      
     }
@@ -40,7 +43,7 @@ public class InstrutorDAO {
             ex.printStackTrace();
         }
     }
-     public void alterar(InstrutorTO i){
+    public void alterar(InstrutorTO i){
         try {
             PreparedStatement ppStmt = conn.prepareStatement("UPDATE instrutor SET nome =?, cpf =?, admissao =?, presenca =? WHERE idinstrutor =?");
             ppStmt.setString(1, i.getNome());
@@ -68,7 +71,7 @@ public class InstrutorDAO {
     }
     
     public List<InstrutorTO> getInstrutores(){
-            
+ 
             List<InstrutorTO> lstA = new LinkedList<InstrutorTO>();
             ResultSet rs;
             try{

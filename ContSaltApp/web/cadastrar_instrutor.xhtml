@@ -59,8 +59,7 @@ and open the template in the editor.
                             <h:outputLabel for="txtCpf" value="CPF:" style="font-weight:bold" />
                             <p:inputMask id="txtCpf" value="#{instrutorBean.CTO.cpf}" mask="999.999.999-99"/>
                             <p:outputLabel for="txtAdmissao" value="Admissão:" style="font-weight:bold"/>
-                            <p:calendar id="txtAdmissao" value="#{instrutorBean.data}" locale="pt_BR" pattern="dd/MM/yyyy" navigator="true"  showOn="button"/>
-                                
+                            <p:calendar id="txtAdmissao" value="#{instrutorBean.dataUtil}" locale="pt_BR" pattern="dd/MM/yyyy" navigator="true"  showOn="button"/>                                
                             <p:commandButton value="Salvar Novo Registro" action="#{instrutorBean.salvar()}"  ajax="false" />
                             <p:commandButton value="Confirmar Alteração" action="#{instrutorBean.alterar()}" ajax="false" />
                         </h:panelGrid>

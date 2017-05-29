@@ -1,9 +1,7 @@
 
 package classDAO;
 
-import classTO.InstrutorTO;
 import classTO.TaxaSobrepesoTO;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +13,6 @@ import utilitarios.Conexao;
  *Classe que conecta ao banco de dados para criar ou excluir os registros das taxas de sobre peso que os instrutores realizam.
  * @author Almir
  * @version 1.0
- * @see TaxaSobrepesoDAO
  */
 public class TaxasInstrutoresDAO extends TaxaSobrepesoDAO{
 
