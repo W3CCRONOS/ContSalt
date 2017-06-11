@@ -5,6 +5,7 @@
  */
 package classTO;
 
+
 /**
  *Classe que representa um cliente de uma escola/club
  * de paraquedismo.
@@ -18,6 +19,24 @@ public class ClienteTO {
     private String cpf;
     private String celular;
 
+    /*Atributo displayName foi criado para implantar
+    inputs autoComplete em paginas .xhtml utilizando o Prime Face*/ 
+   private String displayName;
+   
+   
+    public ClienteTO() {
+   
+    }
+
+   public ClienteTO(int idCliente, String nome, double peso, String cpf, String celular, String displayName) {
+        this.idCliente = idCliente;
+        this.nome = nome;
+        this.peso = peso;
+        this.cpf = cpf;
+        this.celular = celular;
+        this.displayName = displayName;
+    }   
+    
     public int getIdCliente() {
         return idCliente;
     }
@@ -57,6 +76,25 @@ public class ClienteTO {
     public void setCelular(String celular) {
         this.celular = celular;
     }
+
+   public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;        
+    }
+        
+   
     
     
+    /**
+    * Método para sobrescrever o método toString da classe String.
+    * Este método  foi criado para os inputs autoComplete em paginas .xhtml utilizando o Prime Faces.
+    * @return nome String - nome do cliente.
+    */    
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

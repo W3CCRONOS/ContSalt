@@ -52,8 +52,14 @@ and open the template in the editor.
                         <h:panelGrid columns="2" cellpadding="7">
                             <h:outputLabel for="txtName" value="Name:" style="font-weight:bold" />
                             <p:inputText id="txtName" value="#{tipoDeSaltoBean.CTO.nome}" />
-                            <h:outputLabel for="txtValor" value="Valor:" style="font-weight:bold" />
-                            <p:inputMask id="txtValor" value="#{tipoDeSaltoBean.valor}" mask="R$999,99"/>                        
+                            
+                            <h:outputLabel for="txtValor" value="Valor:" style="font-weight:bold" />                                                      
+                            <h:inputText id="txtValor" value="#{tipoDeSaltoBean.CTO.valor}"
+				size="20" required="true" >
+				<!-- display in at least 2 decimal points -->
+                                <f:convertNumber minFractionDigits="2" currencyCode="BRL" type="currency" />
+                            </h:inputText>                           
+                            
                             <h:outputText value="Recebe taxa de sobre peso: " style="font-weight:bold" />
                             <p:selectBooleanButton id="value1" value="#{tipoDeSaltoBean.CTO.taxadesobrepeso}" onLabel="Sim" offLabel="Não" style="width:60px" />
                             <h:outputLabel for="txtPessoas" value="Informe a Quantidade de Pessoas:" style="font-weight:bold" />
@@ -67,7 +73,9 @@ and open the template in the editor.
                                 <h:outputText value="#{dados.nome}"/>
                             </p:column>
                             <p:column headerText="Valor">
-                                <h:outputText value="#{dados.valor}"/>
+                                <h:outputText value="#{dados.valor}">
+                                    <f:convertNumber minFractionDigits="2" currencyCode="BRL" type="currency" />
+                                </h:outputText>
                             </p:column>
                             <p:column headerText="Pessoas">
                                 <h:outputText value="#{dados.pessoas}"/>

@@ -22,29 +22,17 @@ public class TaxaSobrepesoBean implements Serializable {
     
     private TaxaSobrepesoTO CTO;
     private TaxaSobrepesoDAO cDAO;
-    private String valor;
-    private boolean value1;
 
     public TaxaSobrepesoBean() {
         this.setCTO(new TaxaSobrepesoTO());
         this.setcDAO(new TaxaSobrepesoDAO());
-        this.setValor(new String());
-       // this.setValue1(new Boolean("false"));
     }
     
-    public  void salvar(){
-        CTO.setValor(removerMascara(valor));        
+    public  void salvar(){        
         cDAO.salvar(CTO); 
         CTO = new TaxaSobrepesoTO();
-        valor = new String();
     }
-    
-    public double removerMascara(String str){
-        double y=0;
-        y=Double.parseDouble(str.replaceAll("\\D", ""));
-        return y * 0.01;               
-    }
-    
+  
     public List<TaxaSobrepesoTO> getTaxasSobrepesos(){
         return cDAO.getTaxasSobrepesos();
     }
@@ -57,11 +45,9 @@ public class TaxaSobrepesoBean implements Serializable {
          this.setCTO(c);
     }
      
-    public void alterar(){
-        CTO.setValor(removerMascara(valor));        
+    public void alterar(){    
         cDAO.alterar(CTO); 
-        CTO = new TaxaSobrepesoTO();
-        valor = new String();           
+        CTO = new TaxaSobrepesoTO();           
     }
 
     public TaxaSobrepesoTO getCTO() {
@@ -72,14 +58,6 @@ public class TaxaSobrepesoBean implements Serializable {
         this.CTO = CTO;
     }
 
-    public String getValor() {
-        return valor;
-    }
-
-    public void setValor(String valor) {
-        this.valor = valor;
-    }
-
     public TaxaSobrepesoDAO getcDAO() {
         return cDAO;
     }
@@ -87,13 +65,4 @@ public class TaxaSobrepesoBean implements Serializable {
     public void setcDAO(TaxaSobrepesoDAO cDAO) {
         this.cDAO = cDAO;
     } 
-
-    public boolean isValue1() {
-        return value1;
-    }
-
-    public void setValue1(boolean value1) {
-        this.value1 = value1;
-    }
-    
 }

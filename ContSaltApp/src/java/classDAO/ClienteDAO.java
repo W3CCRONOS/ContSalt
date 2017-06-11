@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 import utilitarios.Conexao;
 
 /**
@@ -48,6 +50,37 @@ public class ClienteDAO {
             ex.printStackTrace();
         }
     }
+     
+     
+         /** 
+    * Método para buscar clientes pelo nome. Este método busca todos os saltos relalizados
+    * em uma determinada data.
+    * @param dataDoSalto Date - É data referente a busca.
+    * @return List - O retorno é uma lista de objetos do tipo SaltoTO.
+    */    
+    public List<ClienteTO> getClientes(){
+            
+            List<ClienteTO> lstA = new LinkedList<ClienteTO>();
+            ResultSet rs;
+            
+            try{
+                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM cliente");
+                rs = ppStmt.executeQuery();
+                while(rs.next()){
+                    lstA.add(getCliente(rs));
+                }
+                ppStmt.close();
+	        rs.close();
+            }
+            catch(SQLException ex){
+                ex.printStackTrace();
+            }
+            return lstA;
+    }
+    
+
+
+    
     /** 
     * Método para montar um objeto cliente. Este método recebe um resultado do banco
     * e preenche os atributos de um objeto.
@@ -61,6 +94,7 @@ public class ClienteDAO {
         client.setCpf(rs.getString("cpf"));
         client.setPeso(rs.getDouble("peso"));
         client.setCelular(rs.getString("celular"));
+        client.setDisplayName(rs.getString("nome").toLowerCase());
         return client;
     }
 }

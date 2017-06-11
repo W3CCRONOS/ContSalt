@@ -25,16 +25,7 @@ public class TipoDeSaltoDAO {
        conn = new Conexao().conectar();      
     }
         
-    public void salvar(TipoDeSaltoTO tipodesalto){
-        System.out.println(tipodesalto.getNome());
-        System.out.println(tipodesalto.getValor());
-         System.out.println(tipodesalto.getTaxadesobrepeso());
-          System.out.println(tipodesalto.getPessoas());
-          System.out.println("dsfadsf");
-           System.out.println("dsfadsf");
-            System.out.println("dsfadsf");
-            
- 
+    public void salvar(TipoDeSaltoTO tipodesalto){    
         try{
             PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO tipodesalto (nome,valor,taxadesobrepeso,pessoas) VALUES (?,?,?,?)");
             ppStmt.setString(1,tipodesalto.getNome());
@@ -90,7 +81,7 @@ public class TipoDeSaltoDAO {
         tposalt.setValor(rs.getDouble("valor"));
         tposalt.setTaxadesobrepeso(rs.getString("taxadesobrepeso"));
         tposalt.setPessoas(rs.getInt("pessoas"));
-        tposalt.setIdTipoDeSalto(rs.getInt("idtipodesalto"));            
+        tposalt.setIdTipoDeSalto(rs.getInt("idtipodesalto")); 
         return tposalt;
     }
     

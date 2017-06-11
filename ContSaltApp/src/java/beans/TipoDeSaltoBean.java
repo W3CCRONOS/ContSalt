@@ -23,28 +23,19 @@ import java.util.List;
 public class TipoDeSaltoBean implements Serializable {
 
    private TipoDeSaltoTO CTO;
-   private String valor;
    private TipoDeSaltoDAO cDAO;
+
     
     public TipoDeSaltoBean() {
         this.setCTO(new TipoDeSaltoTO());
-        this.setValor(new String());
         this.setcDAO(new TipoDeSaltoDAO());
     }
-    
+   
     public  void salvar(){
-        CTO.setValor(removerMascara(valor));      
         cDAO.salvar(CTO);
         CTO = new TipoDeSaltoTO();
-        valor = new String();
     }
-    
-    public double removerMascara(String str){
-        double y=0;
-        y=Double.parseDouble(str.replaceAll("\\D", ""));
-        return y * 0.01;               
-    }
-   
+
     public List<TipoDeSaltoTO> getTiposDeSaltos(){
         return cDAO.getTiposDeSaltos();
     }
@@ -57,19 +48,9 @@ public class TipoDeSaltoBean implements Serializable {
          this.setCTO(c);
     }
      
-    public void alterar(){
-        CTO.setValor(removerMascara(valor));        
+    public void alterar(){       
         cDAO.alterar(CTO); 
         CTO = new TipoDeSaltoTO();
-        valor = new String();
-    }
-    
-    public String getValor() {
-        return valor;
-    }
-
-    public void setValor(String valor) {
-        this.valor = valor;
     }
 
     public TipoDeSaltoTO getCTO() {
@@ -87,5 +68,5 @@ public class TipoDeSaltoBean implements Serializable {
     public void setcDAO(TipoDeSaltoDAO cDAO) {
         this.cDAO = cDAO;
     }
-   
+ 
  }

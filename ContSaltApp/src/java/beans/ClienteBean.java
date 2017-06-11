@@ -10,6 +10,8 @@ import classTO.ClienteTO;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.List;
+//import javax.annotation.PostConstruct;
 
 /**
  *Classe de conexão das páginas .xhtml com o objeto cliente.
@@ -23,16 +25,25 @@ import java.io.Serializable;
 public class ClienteBean implements Serializable {
 
 
-    private ClienteTO cTO;
-    private ClienteDAO cDAO ;
+    private ClienteTO clienteTO;
+    private ClienteDAO clienteDAO ;
+    private String nomeCliente;
+    private List<ClienteTO> listClientes;
     
     /**
     * Método construtor. Neste métodos as variáveis
     * são inicializadas.
     */
     public ClienteBean() {
-        this.setcTO(new ClienteTO());
-        this.setcDAO(new ClienteDAO());        
+        this.setClienteTO(new ClienteTO());
+        this.setClienteDAO(new ClienteDAO());
+    }
+      
+    public List<ClienteTO> getClientes() {
+        return listClientes;
+    } 
+     public List<ClienteTO> completeCompany(){
+        return clienteDAO.getClientes();
     }
     
      /**
@@ -43,24 +54,37 @@ public class ClienteBean implements Serializable {
     * @see ClienteDAO
     */
     public  void salvar(){
-        cDAO.salvar(cTO);
-        cTO = new ClienteTO();
+        clienteDAO.salvar(clienteTO);
+        clienteTO = new ClienteTO();
+    }
+        
+  /*  public List<ClienteTO> getClientes(){
+        return clienteDAO.getClientes();
+    } 
+   */  
+
+    public ClienteTO getClienteTO() {
+        return clienteTO;
     }
 
-    public ClienteTO getcTO() {
-        return cTO;
+    public void setClienteTO(ClienteTO clienteTO) {
+        this.clienteTO = clienteTO;
     }
 
-    public void setcTO(ClienteTO cTO) {
-        this.cTO = cTO;
+    public ClienteDAO getClienteDAO() {
+        return clienteDAO;
     }
 
-    public ClienteDAO getcDAO() {
-        return cDAO;
+    public void setClienteDAO(ClienteDAO clienteDAO) {
+        this.clienteDAO = clienteDAO;
     }
 
-    public void setcDAO(ClienteDAO cDAO) {
-        this.cDAO = cDAO;
+    public String getNomeCliente() {
+        return nomeCliente;
+    }
+
+    public void setNomeCliente(String nomeCliente) {
+        this.nomeCliente = nomeCliente;
     }
     
 }

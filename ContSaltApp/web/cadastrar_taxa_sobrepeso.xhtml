@@ -49,27 +49,28 @@ and open the template in the editor.
                 <p:layoutUnit position="center">
                     <h:form>
                        <h2>Cadastro das Taxas de Sobrepeso</h2>
-                        <h:panelGrid columns="2" cellpadding="6">
-                            <h:outputLabel for="txtCodigo" value="Codigo:" style="font-weight:bold" />
-                            <p:inputText id="txtCodigo" value="#{taxaSobrepesoBean.CTO.codigo}" />                            
+                        <h:panelGrid columns="2" cellpadding="6">                          
                             <h:outputLabel for="txtDescricao" value="Descrição:" style="font-weight:bold" />
                             <p:inputText id="txtDescricao" value="#{taxaSobrepesoBean.CTO.descricao}" />
-                            
-                            <h:outputLabel for="txtValor" value="Valor:" style="font-weight:bold" />
-                            <p:inputMask id="txtValor" value="#{taxaSobrepesoBean.valor}" mask="R$999,99"/>
+                            <h:outputLabel for="txtValor" value="Valor:" style="font-weight:bold" />                                                      
+                            <h:inputText id="txtValor" value="#{taxaSobrepesoBean.CTO.valor}"
+				size="20" required="true" >
+				<!-- display in at least 2 decimal points
+                                veja ISO 4217 para valores monetarios-->
+                                <f:convertNumber minFractionDigits="2" currencyCode="BRL" type="currency" />
+                            </h:inputText>                           
                             <p:commandButton value="Salvar Novo Registro" action="#{taxaSobrepesoBean.salvar()}"  ajax="false" />
                             <p:commandButton value="Confirmar Alteração" action="#{taxaSobrepesoBean.alterar()}" ajax="false" />
                         </h:panelGrid>
                        <center><h2>Taxas de Sobrepeso</h2></center>
                         <p:dataTable var="dados" value="#{taxaSobrepesoBean.taxasSobrepesos}" >
-                            <p:column headerText="Código">
-                                <h:outputText value="#{dados.codigo}"/>
-                            </p:column>
                              <p:column headerText="Descrição">
                                  <h:outputText value="#{dados.descricao}"/>
                             </p:column>
                             <p:column headerText="Valor">
-                                <h:outputText value="#{dados.valor}"/>
+                                <h:outputText value="#{dados.valor}">
+                                    <f:convertNumber minFractionDigits="2" currencyCode="BRL" type="currency" />
+                                </h:outputText>
                             </p:column>
                             <p:column>
                                 <p:commandButton value="Alterar" action="#{taxaSobrepesoBean.preparaAlteracao(dados)}" ajax="false" />

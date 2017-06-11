@@ -14,7 +14,7 @@ public class TipoDeSaltoTO {
     
     private int idTipoDeSalto;
     private String nome;
-    private double valor;
+    private double valor = 0.0;
     private String taxadesobrepeso = "false";
     private int pessoas = 0;
     
