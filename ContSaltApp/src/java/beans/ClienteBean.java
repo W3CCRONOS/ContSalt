@@ -20,6 +20,7 @@ import java.util.List;
  * @see ClienteTO
  * @see ClienteDAO
  */
+//sadfs
 @Named(value = "clienteBean")
 @SessionScoped
 public class ClienteBean implements Serializable {
