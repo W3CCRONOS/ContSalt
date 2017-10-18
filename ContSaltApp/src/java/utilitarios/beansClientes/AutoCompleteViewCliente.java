@@ -5,6 +5,8 @@
  */
 package utilitarios.beansClientes;
 
+
+import classDAO.ClienteDAO;
 import classTO.ClienteTO;
 
 import java.util.ArrayList;
@@ -25,33 +27,29 @@ import org.primefaces.event.SelectEvent;
 public class AutoCompleteViewCliente {
     private ClienteTO clienteTO;
     private List<ClienteTO> selectedClientes;
+    
     @ManagedProperty("#{clienteService}")
     private ClienteService service;  
-
-    public AutoCompleteViewCliente() {
-        this.clienteTO = new ClienteTO();
-        this.selectedClientes = new LinkedList<>();
-        this.service = new ClienteService();
-    }
-    
    
-    public List<ClienteTO> completeCliente(String query) {        
-        List<ClienteTO> allThemes = service.getClientesService();                
-        List<ClienteTO> filteredThemes = new ArrayList<>();
+    public List<ClienteTO> completeCliente(String query) {               
+        List<ClienteTO> allClientes = service.getClientesService();  
+
+        List<ClienteTO> filteredClientes = new ArrayList<ClienteTO>();
          
-        for (int i = 0; i < allThemes.size(); i++) {
-            ClienteTO skin = allThemes.get(i);
+        for (int i = 0; i < allClientes.size(); i++) {
+            ClienteTO skin = allClientes.get(i);
             if(skin.getNome().toLowerCase().startsWith(query)) {
-                filteredThemes.add(skin);
+                filteredClientes.add(skin);
             }
         }
          
-        return filteredThemes;
+        return filteredClientes;
     }
      
     public void onItemSelect(SelectEvent event) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Item Selected", event.getObject().toString()));
     }
+    
 
     public ClienteTO getClienteTO() {
         return clienteTO;
@@ -68,6 +66,7 @@ public class AutoCompleteViewCliente {
     public void setSelectedClientes(List<ClienteTO> selectedClientes) {
         this.selectedClientes = selectedClientes;
     }
+    
 
     public ClienteService getService() {
         return service;
@@ -77,5 +76,4 @@ public class AutoCompleteViewCliente {
         this.service = service;
     }
     
-     
 }

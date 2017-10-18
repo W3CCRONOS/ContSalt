@@ -47,6 +47,7 @@ public class ClienteBean implements Serializable {
         return clienteDAO.getClientes();
     }
     
+    
      /**
     * Método que cria um registro no banco de dados. Ele envia o objeto instanciado
     * para ser salvo no banco de dados.

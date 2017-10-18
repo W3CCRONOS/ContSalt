@@ -32,7 +32,7 @@ public class ClienteService {
     public void init() {
         listClientesServivce = new ArrayList<>();
         clienteDAO = new ClienteDAO();
-        listClientesServivce = clienteDAO.getClientes();
+       listClientesServivce = clienteDAO.getClientes();
     }
 
     public ClienteDAO getClienteDAO() {

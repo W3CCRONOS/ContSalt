@@ -56,8 +56,8 @@ and open the template in the editor.
                         <p:clock id="data" pattern="dd.MM.yyyy"  />  
                         <br/><br/><br/>                         
                         <p:outputLabel value="Cliente:" for="itemTip" style="font-weight:bold" />
-                        <p:autoComplete id="itemTip" value="#{autoCompleteViewCliente.clienteTO}" completeMethod="#{autoCompleteViewCliente.completeCliente}"
-                                        var="theme" itemLabel="#{theme.nome}" itemValue="#{theme}" converter="clienteConverter" forceSelection="true" rendered="true">
+                        <p:autoComplete id="itemTip" value="#{saltoBean.cliente}" completeMethod="#{autoCompleteViewCliente.completeCliente}"
+                                        var="theme" itemLabel="#{theme.nome}" itemValue="#{theme}"  converter="clienteConverter" forceSelection="true" >
                             <f:facet name="itemtip">
                                 <h:panelGrid columns="2" cellpadding="5">
                                     <f:facet name="header">
@@ -71,6 +71,7 @@ and open the template in the editor.
                                     <h:outputText value="#{theme.celular}" />
                                 </h:panelGrid>
                             </f:facet>
+                            <p:ajax event="itemSelect"/>
                         </p:autoComplete>
                         <br/><br/>
                         <p:outputLabel value="Tipo de Salto:" for="tiposDeSaltos" style="font-weight:bold" />
@@ -83,6 +84,7 @@ and open the template in the editor.
                         <p:selectOneRadio id="taxaSobrePeso" value="#{taxasInstrutoresBean.idTaxasSobrepeso}">                          
                             <f:selectItems var="taxas" value="#{taxaSobrepesoBean.taxasSobrepesos}" itemLabel="#{taxas.descricao}" itemValue="#{taxas.idTaxaSobrepeso}" />                                
                         </p:selectOneRadio>
+                        <p:commandButton value="Salvar Novo Registro" action="#{saltoBean.salvar()}"  ajax="true" />
                     </h:form>
                 </p:layoutUnit>
             </p:layout>

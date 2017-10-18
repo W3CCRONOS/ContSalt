@@ -55,12 +55,37 @@ public class ClienteDAO {
          /** 
     * Método para buscar clientes pelo nome. Este método busca todos os saltos relalizados
     * em uma determinada data.
-    * @param dataDoSalto Date - É data referente a busca.
-    * @return List - O retorno é uma lista de objetos do tipo SaltoTO.
+    * @param sql - É a String para busca pelas letras iniciais do nome.
+    * @return List - O retorno é uma lista de objetos do tipo ClienteTO.
+    */    
+    public List<ClienteTO> getClientesNome(String sql){
+            
+            List<ClienteTO> lstA = new LinkedList<>();
+            ResultSet rs;
+            
+            try{
+                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM cliente WHERE nome LIKE '?%'");
+                ppStmt.setString(1, sql);
+                rs = ppStmt.executeQuery();
+                while(rs.next()){
+                    lstA.add(getCliente(rs));
+                }
+                ppStmt.close();
+	        rs.close();
+            }
+            catch(SQLException ex){
+                ex.printStackTrace();
+            }
+            return lstA;
+    }
+    /** 
+    * Método para buscar todos os clientes. Este método busca todos os saltos relalizados
+    * em uma determinada data.
+    * @return List - O retorno é uma lista de objetos do tipo ClienteTO.
     */    
     public List<ClienteTO> getClientes(){
             
-            List<ClienteTO> lstA = new LinkedList<ClienteTO>();
+            List<ClienteTO> lstA = new LinkedList<>();
             ResultSet rs;
             
             try{

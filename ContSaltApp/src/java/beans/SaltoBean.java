@@ -6,6 +6,7 @@
 package beans;
 
 import classDAO.SaltoDAO;
+import classTO.ClienteTO;
 import classTO.SaltoTO;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -25,16 +26,21 @@ public class SaltoBean implements Serializable {
     
     private SaltoTO salt;
     private SaltoDAO saltDAO;
+    private ClienteTO cliente;
      
     public SaltoBean() {
         this.setSalt(new SaltoTO());
+        this.setCliente(new ClienteTO());
         this.setSaltDAO(new SaltoDAO());
     }
     
     public  void salvar(){
-        Date d = new Date();      
+       /* Date d = new Date();      
         java.sql.Date dataSql = new java.sql.Date(d.getTime());
         saltDAO.salvar(salt);
+        */
+       salt.setIdCliente(cliente.getIdCliente());
+        System.out.println(salt.getIdCliente());
     }
     
     public SaltoTO getSalt() {
@@ -51,6 +57,14 @@ public class SaltoBean implements Serializable {
 
     public void setSaltDAO(SaltoDAO saltDAO) {
         this.saltDAO = saltDAO;
+    }
+
+    public ClienteTO getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ClienteTO cliente) {
+        this.cliente = cliente;
     }
     
 }
