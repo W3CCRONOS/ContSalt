@@ -38,46 +38,17 @@ public class ClienteDAO {
     */
      public void salvar(ClienteTO client){ 
         try{
-            PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO cliente (nome,cpf,peso,celular) VALUES (?,?,?,?)");
+            PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO cliente (nome,cpf,peso) VALUES (?,?,?)");
             ppStmt.setString(1, client.getNome());
             ppStmt.setString(2,client.getCpf()); 
-            ppStmt.setDouble(3,client.getPeso());
-            ppStmt.setString(4,client.getCelular());            
+            ppStmt.setDouble(3,client.getPeso());           
             ppStmt.execute();
             ppStmt.close();
         }       
         catch(SQLException ex){         
             ex.printStackTrace();
         }
-    }
-     
-     
-         /** 
-    * Método para buscar clientes pelo nome. Este método busca todos os saltos relalizados
-    * em uma determinada data.
-    * @param sql - É a String para busca pelas letras iniciais do nome.
-    * @return List - O retorno é uma lista de objetos do tipo ClienteTO.
-    */    
-    public List<ClienteTO> getClientesNome(String sql){
-            
-            List<ClienteTO> lstA = new LinkedList<>();
-            ResultSet rs;
-            
-            try{
-                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM cliente WHERE nome LIKE '?%'");
-                ppStmt.setString(1, sql);
-                rs = ppStmt.executeQuery();
-                while(rs.next()){
-                    lstA.add(getCliente(rs));
-                }
-                ppStmt.close();
-	        rs.close();
-            }
-            catch(SQLException ex){
-                ex.printStackTrace();
-            }
-            return lstA;
-    }
+    }           
     /** 
     * Método para buscar todos os clientes. Este método busca todos os saltos relalizados
     * em uma determinada data.
@@ -103,9 +74,6 @@ public class ClienteDAO {
             return lstA;
     }
     
-
-
-    
     /** 
     * Método para montar um objeto cliente. Este método recebe um resultado do banco
     * e preenche os atributos de um objeto.
@@ -118,8 +86,32 @@ public class ClienteDAO {
         client.setNome(rs.getString("nome"));  
         client.setCpf(rs.getString("cpf"));
         client.setPeso(rs.getDouble("peso"));
-        client.setCelular(rs.getString("celular"));
-        client.setDisplayName(rs.getString("nome").toLowerCase());
         return client;
+    }
+     public void excluir(ClienteTO c){
+        try{
+            PreparedStatement ppStmt = conn.prepareStatement("DELETE FROM cliente WHERE idcliente=?");
+            ppStmt.setInt(1,c.getIdCliente());
+            ppStmt.execute();
+            ppStmt.close();
+        }
+        catch(SQLException EX){
+            EX.printStackTrace();
+        }
+    }
+     
+     public void alterar(ClienteTO cliente){
+        try {
+            PreparedStatement ppStmt = conn.prepareStatement("UPDATE cliente SET nome=?, cpf=?, peso=? WHERE idcliente=?");
+            ppStmt.setString(1, cliente.getNome());
+            ppStmt.setString(2, cliente.getCpf());
+            ppStmt.setDouble(3, cliente.getPeso());
+            ppStmt.setInt(4,cliente.getIdCliente());
+            ppStmt.execute();
+            ppStmt.close();
+ 
+        }catch(SQLException EX){
+             EX.printStackTrace();
+        }        
     }
 }

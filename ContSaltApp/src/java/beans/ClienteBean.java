@@ -11,8 +11,6 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
-//import javax.annotation.PostConstruct;
-
 /**
  *Classe de conexão das páginas .xhtml com o objeto cliente.
  * @author Almir
@@ -28,8 +26,6 @@ public class ClienteBean implements Serializable {
 
     private ClienteTO clienteTO;
     private ClienteDAO clienteDAO ;
-    private String nomeCliente;
-    private List<ClienteTO> listClientes;
     
     /**
     * Método construtor. Neste métodos as variáveis
@@ -38,16 +34,7 @@ public class ClienteBean implements Serializable {
     public ClienteBean() {
         this.setClienteTO(new ClienteTO());
         this.setClienteDAO(new ClienteDAO());
-    }
-      
-    public List<ClienteTO> getClientes() {
-        return listClientes;
     } 
-     public List<ClienteTO> completeCompany(){
-        return clienteDAO.getClientes();
-    }
-    
-    
      /**
     * Método que cria um registro no banco de dados. Ele envia o objeto instanciado
     * para ser salvo no banco de dados.
@@ -59,11 +46,23 @@ public class ClienteBean implements Serializable {
         clienteDAO.salvar(clienteTO);
         clienteTO = new ClienteTO();
     }
-        
-  /*  public List<ClienteTO> getClientes(){
+
+    public List<ClienteTO> getClientes(){
         return clienteDAO.getClientes();
-    } 
-   */  
+    }
+    
+     public void excluir(ClienteTO c){ 
+        clienteDAO.excluir(c);
+    }
+     
+    public  void preparaAlteracao(ClienteTO c){
+         this.setClienteTO(c);
+    }
+     
+    public void alterar(){       
+        clienteDAO.alterar(clienteTO); 
+        clienteTO = new ClienteTO();
+    }
 
     public ClienteTO getClienteTO() {
         return clienteTO;
@@ -81,12 +80,4 @@ public class ClienteBean implements Serializable {
         this.clienteDAO = clienteDAO;
     }
 
-    public String getNomeCliente() {
-        return nomeCliente;
-    }
-
-    public void setNomeCliente(String nomeCliente) {
-        this.nomeCliente = nomeCliente;
-    }
-    
 }
