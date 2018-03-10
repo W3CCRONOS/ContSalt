@@ -6,6 +6,7 @@
 package beans;
 
 import classDAO.TipoDeSaltoDAO;
+import classTO.ClienteTO;
 import classTO.TipoDeSaltoTO;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -24,13 +25,16 @@ public class TipoDeSaltoBean implements Serializable {
 
    private TipoDeSaltoTO CTO;
    private TipoDeSaltoDAO cDAO;
+   private SaltoBean tipoDeSalto;
 
     
     public TipoDeSaltoBean() {
         this.setCTO(new TipoDeSaltoTO());
         this.setcDAO(new TipoDeSaltoDAO());
+        this.setTipoDeSalto(new SaltoBean());
     }
    
+    
     public  void salvar(){
         cDAO.salvar(CTO);
         CTO = new TipoDeSaltoTO();
@@ -52,7 +56,7 @@ public class TipoDeSaltoBean implements Serializable {
         cDAO.alterar(CTO); 
         CTO = new TipoDeSaltoTO();
     }
-
+       
     public TipoDeSaltoTO getCTO() {
         return CTO;
     }
@@ -68,5 +72,15 @@ public class TipoDeSaltoBean implements Serializable {
     public void setcDAO(TipoDeSaltoDAO cDAO) {
         this.cDAO = cDAO;
     }
- 
+
+    public SaltoBean getTipoDeSalto() {
+        return tipoDeSalto;
+    }
+
+    public void setTipoDeSalto(SaltoBean tipoDeSalto) {
+        this.tipoDeSalto = tipoDeSalto;
+    }
+
+   
+    
  }

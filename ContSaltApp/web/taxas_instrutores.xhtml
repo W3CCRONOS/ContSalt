@@ -58,7 +58,7 @@ and open the template in the editor.
                                 <f:selectItems var="inst" value="#{instrutorBean.instrutores}" itemLabel="#{inst.nome}" itemValue="#{inst.idInstrutor}" />
                             </p:selectOneMenu>                            
                             <p:selectManyCheckbox value="#{taxasInstrutoresBean.idTaxasSobrepeso}">
-                                <f:selectItems var="taxas" value="#{taxaSobrepesoBean.taxasSobrepesos}" itemLabel="#{taxas.descricao}" itemValue="#{taxas.idTaxaSobrepeso}" />                                
+                                <f:selectItems var="taxas" value="#{taxaSobrepesoBean.taxasSobrepesos}" itemLabel="#{taxas.peso}" itemValue="#{taxas.idTaxaSobrepeso}" />                                
                             </p:selectManyCheckbox>                  
                             <p:commandButton value="Alterar" action="#{taxasInstrutoresBean.taxasDeSobrepesoDoInstrutor()}" ajax="false" />
                         </h:panelGrid>                       
@@ -71,7 +71,7 @@ and open the template in the editor.
                             <p:column>
                                 <p:dataTable var="taxas" value="#{taxasInstrutoresBean.getTaxasDeSobrepesoPorInstrutor(dados.idInstrutor)}">
                                     <p:column headerText="Taxas">
-                                        <h:outputText value="#{taxas.descricao}"/>
+                                        <h:outputText value="#{taxas.peso}"/>
                                     </p:column>
                                 </p:dataTable>
                             </p:column>                                     

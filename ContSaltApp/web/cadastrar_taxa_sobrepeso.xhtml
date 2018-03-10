@@ -50,8 +50,8 @@ and open the template in the editor.
                     <h:form>
                        <h2>Cadastro das Taxas de Sobrepeso</h2>
                         <h:panelGrid columns="2" cellpadding="6">                          
-                            <h:outputLabel for="txtDescricao" value="Descrição:" style="font-weight:bold" />
-                            <p:inputText id="txtDescricao" value="#{taxaSobrepesoBean.CTO.descricao}" />
+                            <h:outputLabel for="txtPeso" value="Peso:" style="font-weight:bold" />                                                                                  
+                            <p:inputMask id="txtPeso" value="#{taxaSobrepesoBean.CTO.peso}" mask="999.99"/> 
                             <h:outputLabel for="txtValor" value="Valor:" style="font-weight:bold" />                                                      
                             <h:inputText id="txtValor" value="#{taxaSobrepesoBean.CTO.valor}"
 				size="20" required="true" >
@@ -64,8 +64,8 @@ and open the template in the editor.
                         </h:panelGrid>
                        <center><h2>Taxas de Sobrepeso</h2></center>
                         <p:dataTable var="dados" value="#{taxaSobrepesoBean.taxasSobrepesos}" >
-                             <p:column headerText="Descrição">
-                                 <h:outputText value="#{dados.descricao}"/>
+                             <p:column headerText="Peso">
+                                 <h:outputText value="#{dados.peso}"/>
                             </p:column>
                             <p:column headerText="Valor">
                                 <h:outputText value="#{dados.valor}">

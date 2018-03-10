@@ -10,6 +10,7 @@ import classTO.ClienteTO;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 /**
  *Classe de conexão das páginas .xhtml com o objeto cliente.
@@ -26,6 +27,7 @@ public class ClienteBean implements Serializable {
 
     private ClienteTO clienteTO;
     private ClienteDAO clienteDAO ;
+    private SaltoBean clienteSalto;
     
     /**
     * Método construtor. Neste métodos as variáveis
@@ -34,6 +36,7 @@ public class ClienteBean implements Serializable {
     public ClienteBean() {
         this.setClienteTO(new ClienteTO());
         this.setClienteDAO(new ClienteDAO());
+        this.setClienteSalto(new SaltoBean());
     } 
      /**
     * Método que cria um registro no banco de dados. Ele envia o objeto instanciado
@@ -43,6 +46,9 @@ public class ClienteBean implements Serializable {
     * @see ClienteDAO
     */
     public  void salvar(){
+        System.out.println(clienteTO.getNome());
+        System.out.println(clienteTO.getPeso());
+        System.out.println(clienteTO.getCpf());
         clienteDAO.salvar(clienteTO);
         clienteTO = new ClienteTO();
     }
@@ -58,10 +64,15 @@ public class ClienteBean implements Serializable {
     public  void preparaAlteracao(ClienteTO c){
          this.setClienteTO(c);
     }
-     
+       
     public void alterar(){       
         clienteDAO.alterar(clienteTO); 
         clienteTO = new ClienteTO();
+    }
+    
+     public List<ClienteTO> completeText(String query) {
+               
+        return clienteDAO.getNomesClientes(query);
     }
 
     public ClienteTO getClienteTO() {
@@ -80,4 +91,12 @@ public class ClienteBean implements Serializable {
         this.clienteDAO = clienteDAO;
     }
 
+    public SaltoBean getClienteSalto() {
+        return clienteSalto;
+    }
+
+    public void setClienteSalto(SaltoBean clienteSalto) {
+        this.clienteSalto = clienteSalto;
+    }
+    
 }

@@ -64,7 +64,7 @@ and open the template in the editor.
                             <p:commandButton value="Salvar Novo Registro" action="#{clienteBean.salvar()}"  ajax="false" />
                             <p:commandButton value="Confirmar Alteração" action="#{clienteBean.alterar()}" ajax="false" />
                         </h:panelGrid>
-                        <center><h2>Instrutores</h2></center>
+                        <center><h2>Clientes</h2></center>
                         <p:dataTable var="dados" value="#{clienteBean.clientes}" >
                             <p:column headerText="Nome">
                                 <h:outputText value="#{dados.nome}"/>

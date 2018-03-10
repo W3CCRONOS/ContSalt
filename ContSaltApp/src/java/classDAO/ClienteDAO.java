@@ -39,7 +39,7 @@ public class ClienteDAO {
      public void salvar(ClienteTO client){ 
         try{
             PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO cliente (nome,cpf,peso) VALUES (?,?,?)");
-            ppStmt.setString(1, client.getNome());
+            ppStmt.setString(1,client.getNome());
             ppStmt.setString(2,client.getCpf()); 
             ppStmt.setDouble(3,client.getPeso());           
             ppStmt.execute();
@@ -114,4 +114,24 @@ public class ClienteDAO {
              EX.printStackTrace();
         }        
     }
+    
+   public List<ClienteTO> getNomesClientes(String texto){
+            
+            List<ClienteTO> lstA = new LinkedList<>();
+            ResultSet rs;
+            try{
+                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM cliente WHERE nome LIKE '?%'");
+                ppStmt.setString(1, texto);
+                rs = ppStmt.executeQuery();
+                while(rs.next()){
+                    lstA.add(getCliente(rs));
+                }
+                ppStmt.close();
+	        rs.close();
+            }
+            catch(SQLException ex){
+                ex.printStackTrace();
+            }
+            return lstA;
+    }  
 }

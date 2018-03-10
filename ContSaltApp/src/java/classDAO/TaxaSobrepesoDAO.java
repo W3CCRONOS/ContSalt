@@ -28,9 +28,9 @@ public class TaxaSobrepesoDAO {
     public void salvar(TaxaSobrepesoTO taxa){
  
         try{
-            PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO taxasobrepeso (valor,descricao) VALUES (?,?)");
+            PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO taxasobrepeso (valor,peso) VALUES (?,?)");
             ppStmt.setDouble(1,taxa.getValor());
-            ppStmt.setString(2,taxa.getDescricao());
+            ppStmt.setDouble(2,taxa.getPeso());
             ppStmt.execute();
             ppStmt.close();
         }
@@ -41,9 +41,9 @@ public class TaxaSobrepesoDAO {
     }
      public void alterar(TaxaSobrepesoTO taxa){
         try {
-            PreparedStatement ppStmt = conn.prepareStatement("UPDATE taxasobrepeso SET valor =? ,descricao =? WHERE idtaxasobrepeso =?");
+            PreparedStatement ppStmt = conn.prepareStatement("UPDATE taxasobrepeso SET valor =? ,peso =? WHERE idtaxasobrepeso =?");
             ppStmt.setDouble(1, taxa.getValor());
-            ppStmt.setString(2,taxa.getDescricao());
+            ppStmt.setDouble(2,taxa.getPeso());
             ppStmt.setInt(3, taxa.getIdTaxaSobrepeso());
             ppStmt.execute();
             ppStmt.close(); 
@@ -74,7 +74,7 @@ public class TaxaSobrepesoDAO {
         TaxaSobrepesoTO t = new TaxaSobrepesoTO();
         t.setValor(rs.getDouble("valor"));
         t.setIdTaxaSobrepeso(rs.getInt("idtaxasobrepeso"));    
-        t.setDescricao(rs.getString("descricao"));
+        t.setPeso(rs.getDouble("peso"));
         return t;
     }
     

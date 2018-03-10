@@ -51,40 +51,33 @@ and open the template in the editor.
                 </p:layoutUnit>
                 <p:layoutUnit position="center">
                     <h:form>                        
-                        <h2>Criar Saltos</h2> 
-                        <h:outputLabel for="data" value="Data: " style="font-weight:bold" />
-                        <p:clock id="data" pattern="dd.MM.yyyy"  />  
-                        <br/><br/><br/>                         
-                        <p:outputLabel value="Cliente:" for="itemTip" style="font-weight:bold" />
-                        <p:autoComplete id="itemTip" value="#{saltoBean.cliente}" completeMethod="#{autoCompleteViewCliente.completeCliente}"
-                                        var="theme" itemLabel="#{theme.nome}" itemValue="#{theme}"  converter="clienteConverter" forceSelection="true" >
-                            <f:facet name="itemtip">
-                                <h:panelGrid columns="2" cellpadding="5">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{theme.nome}" style="margin-left:50px" />
-                                    </f:facet>
-
-                                    <h:outputText value="CPF:" />
-                                    <h:outputText value="#{theme.cpf}" />
-
-                                    <h:outputText value="Celular" />
-                                    <h:outputText value="#{theme.celular}" />
-                                </h:panelGrid>
-                            </f:facet>
-                            <p:ajax event="itemSelect"/>
-                        </p:autoComplete>
-                        <br/><br/>
-                        <p:outputLabel value="Tipo de Salto:" for="tiposDeSaltos" style="font-weight:bold" />
-                        <p:selectOneRadio id="tiposDeSaltos" value="#{tiposDeSaltosInstrutoresBean.idTiposDeSaltos}">
-                            <f:selectItems var="saltos" value="#{tipoDeSaltoBean.tiposDeSaltos}" itemLabel="#{saltos.nome}" itemValue="#{saltos.idTipoDeSalto}" />                                
-                        </p:selectOneRadio>
-                        <br/><br/>
-                        <p:outputLabel value="Selecione a Taxa de Sobrepeso." for="taxaSobrePeso" style="font-weight:bold" />
-                        <p:outputLabel for="itemTip" value="Peso do cliente: #{theme.peso}"/>
-                        <p:selectOneRadio id="taxaSobrePeso" value="#{taxasInstrutoresBean.idTaxasSobrepeso}">                          
-                            <f:selectItems var="taxas" value="#{taxaSobrepesoBean.taxasSobrepesos}" itemLabel="#{taxas.descricao}" itemValue="#{taxas.idTaxaSobrepeso}" />                                
-                        </p:selectOneRadio>
-                        <p:commandButton value="Salvar Novo Registro" action="#{saltoBean.salvar()}"  ajax="true" />
+                        <h2>Criar Saltos</h2>
+                                               <center><h2>Selecionar o cliente</h2></center>
+                        <p:dataTable var="cliente" value="#{clienteBean.clientes}" >
+                            <p:column headerText="ID">
+                                <h:outputText value="#{cliente.idCliente}"/>                                
+                            </p:column>
+                            <p:column headerText="Nome">
+                                <h:outputText value="#{cliente.nome}"/>
+                            </p:column>
+                             <p:column>
+                                 <p:commandButton value="Seleciona" action="#{saltoBean.selCliente(cliente)}" ajax="false" />                               
+                            </p:column>
+                        </p:dataTable>
+                                                <center><h2>Selecionar o tipo de salto</h2></center>
+                        <p:dataTable var="tipodeSalto" value="#{tipoDeSaltoBean.tiposDeSaltos}" >
+                            <p:column headerText="ID">
+                                <h:outputText value="#{tipodeSalto.idTipoDeSalto}"/>                                
+                            </p:column>
+                            <p:column headerText="Nome">
+                                <h:outputText value="#{tipodeSalto.nome}"/>
+                            </p:column>
+                             <p:column>
+                                 <p:commandButton value="Seleciona" action="#{saltoBean.selTipoDesalto(tipodeSalto)}" ajax="false" />                               
+                            </p:column>
+                        </p:dataTable>
+                                               
+                        <p:commandButton value="Salvar Novo Registro" action="#{saltoBean.salvar(c)}"  ajax="true" />
                     </h:form>
                 </p:layoutUnit>
             </p:layout>
