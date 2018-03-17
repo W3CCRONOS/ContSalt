@@ -6,6 +6,7 @@
 package classDAO;
 
 import classTO.InstrutorTO;
+import classTO.TipoDeSaltoTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -104,6 +105,25 @@ public class InstrutorDAO {
            }catch(SQLException EX){
                EX.printStackTrace();
            }
+    }
+    
+    public List<InstrutorTO> getInstrutoresPorTipoDeSalto(TipoDeSaltoTO salto){
+ 
+            List<InstrutorTO> lstA = new LinkedList<InstrutorTO>();
+            ResultSet rs;
+            try{
+                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM instrutor");
+                rs = ppStmt.executeQuery();
+                while(rs.next()){
+                    lstA.add(getIntrutor(rs));
+                }
+                ppStmt.close();
+	        rs.close();
+            }
+            catch(SQLException ex){
+                ex.printStackTrace();
+            }
+            return lstA;
     }
   
  }

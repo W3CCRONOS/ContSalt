@@ -30,7 +30,7 @@ public class TaxasInstrutoresDAO extends TaxaSobrepesoDAO{
         /*Verifico se o registro ainda não existe para então salvá-lo*/
         if (verificarSeExisteRegistro(idInstrutor, idTaxaSobrepeso) == 0){                    
             try{
-               PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO instrutor_has_taxasobrepeso (instrutor_idinstrutor,taxasobrepeso_idtaxasobrepeso) VALUES (?,?)");
+               PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO instrutor_has_taxasobrepeso (idinstrutor,idtaxadesobrepeso) VALUES (?,?)");
                 ppStmt.setInt(1,idInstrutor);
                 ppStmt.setInt(2,idTaxaSobrepeso);
                 ppStmt.execute();
@@ -52,7 +52,7 @@ public class TaxasInstrutoresDAO extends TaxaSobrepesoDAO{
         /*Verifico se o registro existe para depois deleta-lo*/
         if (verificarSeExisteRegistro(idInstrutor, idTaxaSobrepeso) != 0){
             try{
-                PreparedStatement ppStmt =  conn.prepareStatement("DELETE FROM instrutor_has_taxasobrepeso WHERE instrutor_idinstrutor = ? AND taxasobrepeso_idtaxasobrepeso = ?");
+                PreparedStatement ppStmt =  conn.prepareStatement("DELETE FROM instrutor_has_taxasobrepeso WHERE idinstrutor = ? AND idtaxadesobrepeso = ?");
                 ppStmt.setInt(1,idInstrutor);
                 ppStmt.setInt(2,idTaxaSobrepeso);
                 ppStmt.execute();
@@ -76,7 +76,7 @@ public class TaxasInstrutoresDAO extends TaxaSobrepesoDAO{
         int total = 0;
         ResultSet rs;
         try{ 
-            PreparedStatement ppStmt =  conn.prepareStatement("SELECT COUNT(instrutor_idinstrutor) AS quantidadeDeRegistros FROM instrutor_has_taxasobrepeso WHERE instrutor_idinstrutor = ? AND taxasobrepeso_idtaxasobrepeso = ? ");
+            PreparedStatement ppStmt =  conn.prepareStatement("SELECT COUNT(idinstrutor) AS quantidadeDeRegistros FROM instrutor_has_taxasobrepeso WHERE idinstrutor = ? AND idtaxadesobrepeso = ? ");
             ppStmt.setInt(1,idInstrutor);
             ppStmt.setInt(2,idTaxaSobrepeso);
             rs = ppStmt.executeQuery();
@@ -106,11 +106,11 @@ public class TaxasInstrutoresDAO extends TaxaSobrepesoDAO{
         ResultSet rs;
         int taxas[] = new int[contarTaxasDeSobrePesoArmazenadas()];
         try{ 
-            PreparedStatement ppStmt =  conn.prepareStatement("SELECT taxasobrepeso_idtaxasobrepeso FROM instrutor_has_taxasobrepeso WHERE instrutor_idinstrutor = ?");
+            PreparedStatement ppStmt =  conn.prepareStatement("SELECT idtaxadesobrepeso FROM instrutor_has_taxasobrepeso WHERE idinstrutor = ?");
             ppStmt.setInt(1,idInstrutor);
             rs = ppStmt.executeQuery();
             for(int i = 0; rs.next(); i++ ){                
-                taxas[i]=rs.getInt("taxasobrepeso_idtaxasobrepeso");
+                taxas[i]=rs.getInt("idtaxadesobrepeso");
             }
             ppStmt.close();
 	    rs.close(); 

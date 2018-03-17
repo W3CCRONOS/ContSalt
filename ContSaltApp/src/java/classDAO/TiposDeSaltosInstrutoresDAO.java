@@ -32,7 +32,7 @@ public class TiposDeSaltosInstrutoresDAO extends TipoDeSaltoDAO{
         /*Verifico se o registro ainda não existe para então salvá-lo*/
         if (verificarSeExisteRegistro(idInstrutor, idTipoDeSalto) == 0){                    
             try{
-               PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO instrutor_has_tipodesalto (instrutor_idinstrutor,tipodesalto_idtipodesalto) VALUES (?,?)");
+               PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO instrutor_has_tipodesalto (idinstrutor,idtipodesalto) VALUES (?,?)");
                 ppStmt.setInt(1,idInstrutor);
                 ppStmt.setInt(2,idTipoDeSalto);
                 ppStmt.execute();
@@ -54,7 +54,7 @@ public class TiposDeSaltosInstrutoresDAO extends TipoDeSaltoDAO{
         /*Verifico se o registro existe para depois deleta-lo*/
         if (verificarSeExisteRegistro(idInstrutor, idTipoDeSalto) != 0){
             try{
-                PreparedStatement ppStmt =  conn.prepareStatement("DELETE FROM instrutor_has_tipodesalto WHERE instrutor_idinstrutor = ? AND tipodesalto_idtipodesalto = ?");
+                PreparedStatement ppStmt =  conn.prepareStatement("DELETE FROM instrutor_has_tipodesalto WHERE idinstrutor = ? AND idtipodesalto = ?");
                 ppStmt.setInt(1,idInstrutor);
                 ppStmt.setInt(2,idTipoDeSalto);
                 ppStmt.execute();
@@ -78,7 +78,7 @@ public class TiposDeSaltosInstrutoresDAO extends TipoDeSaltoDAO{
         int total = 0;
         ResultSet rs;
         try{ 
-            PreparedStatement ppStmt =  conn.prepareStatement("SELECT COUNT(instrutor_idinstrutor) AS quantidadeDeRegistros FROM instrutor_has_tipodesalto WHERE instrutor_idinstrutor = ? AND tipodesalto_idtipodesalto = ? ");
+            PreparedStatement ppStmt =  conn.prepareStatement("SELECT COUNT(idinstrutor) AS quantidadeDeRegistros FROM instrutor_has_tipodesalto WHERE idinstrutor = ? AND idtipodesalto = ? ");
             ppStmt.setInt(1,idInstrutor);
             ppStmt.setInt(2,idTipoDeSalto);
             rs = ppStmt.executeQuery();
@@ -98,8 +98,8 @@ public class TiposDeSaltosInstrutoresDAO extends TipoDeSaltoDAO{
     }    
     /** 
     * Método para buscar os tipos de saltos que um instrutor realizar.
-    * Este método recebe o número de identificação de um instrutor e faz uma busca 
-    * sobre quais tipos de saltos o instrutor está cadastrado para fazer.
+    * Este método recebe a identificação de um instrutor e faz uma busca 
+    * procurando quais os tipos de saltos o instrutor realiza.
     * @param idInstrutor int - É o número da chave extrangeira de um instrutor.
     * @return int[] - O retorno é um vetor que contém os números de identificação
     * dos tipos de saltos que o instrutor realiza.
@@ -108,11 +108,11 @@ public class TiposDeSaltosInstrutoresDAO extends TipoDeSaltoDAO{
         ResultSet rs;
         int taxas[] = new int[contarTaxasDeSobrePesoArmazenadas()];
         try{ 
-            PreparedStatement ppStmt =  conn.prepareStatement("SELECT tipodesalto_idtipodesalto FROM instrutor_has_tipodesalto WHERE instrutor_idinstrutor = ?");
+            PreparedStatement ppStmt =  conn.prepareStatement("SELECT idtipodesalto FROM instrutor_has_tipodesalto WHERE idinstrutor = ?");
             ppStmt.setInt(1,idInstrutor);
             rs = ppStmt.executeQuery();
             for(int i = 0; rs.next(); i++ ){                
-                taxas[i]=rs.getInt("tipodesalto_idtipodesalto");
+                taxas[i]=rs.getInt("idtipodesalto");
             }
             ppStmt.close();
 	    rs.close(); 
