@@ -32,29 +32,27 @@ public class TaxasInstrutoresBean implements Serializable {
         this.setIdInstrutor(idInstrutor = 0);
         this.setTiDAO( new TaxasInstrutoresDAO());
         this.settDAO(new TaxaSobrepesoDAO());
-        /*O vetor é inicializado com a quantidade de taxas de sobrepeso registradas no banco*/
+       /*O vetor é inicializado com a quantidade de registros das taxas de sobrepeso armazenadas no banco*/
         this.setIdTaxasSobrepeso(idTaxasSobrepeso = new int[tDAO.contarTaxasDeSobrePesoArmazenadas()]);
   
      }
 
     public void taxasDeSobrepesoDoInstrutor(){
-        /*A lista com todas as taxas de sobre peso armazenadas no banco.*/
-        List<TaxaSobrepesoTO> list = tiDAO.getTaxasSobrepesos();
-        /* É possivel saber o tamanho do espaço reservado na memória para o vetor idTaxasSobrepeso,
-        mas não é possível saber quantos espaços estão ocupados, então foi utilizado .length .*/       
+        /*Lista com todas as taxas de sobre peso armazenadas no banco.*/
+        List<TaxaSobrepesoTO> list = tDAO.getTaxasSobrepesos();
+        /* .length, informa o comprimento do vetor idTaxasSobrepeso.*/       
         for (int i = 0; i < idTaxasSobrepeso.length ; i++) { 
             tiDAO.salvarTaxaDoInstrutor(idInstrutor, idTaxasSobrepeso[i]);               
             for(TaxaSobrepesoTO taxa : list){
-                /*Se na lista(listTaxas) houver uma ou mais taxas com as identifcações(IdTaxaSobrepeso) iguais as identificações das taxas selecionadas pelo usuário,
-                estas taxas seram removidas da lista(listTaxas)*/
+                /*As taxas selecionadas pelo usuário seram removidas da lista*/
                 if(taxa.getIdTaxaSobrepeso()==idTaxasSobrepeso[i]){
                     list.remove(taxa);
                     break;
                 }
             }
         }
-        /*Após as taxas serem removidas da lista, a lista resultante é das taxas que o intrutor não faz.
-        Então, caso estejão cadastradas, será desfeito o relacionamento com o instrutor*/
+        /* A lista resultante possui os taxas que o intrutor não realiza.
+        Caso existam registros no banco, serão apagados os registros de relacionamentos com o instrutor*/
         for(TaxaSobrepesoTO taxa : list){
             tiDAO.excluirTaxaDoInstrutor(idInstrutor, taxa.getIdTaxaSobrepeso());
         }

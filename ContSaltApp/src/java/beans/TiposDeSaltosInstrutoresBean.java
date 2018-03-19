@@ -21,9 +21,7 @@ import java.util.List;
 @SessionScoped
 public class TiposDeSaltosInstrutoresBean implements Serializable {
 
-    //idInstrutor armazenará a identificação do instrutor selecionado.
     private int idInstrutor;
-    //idTaxasSobrepeso e um vetor que armazenará as identificações das taxas selecionadas.
     private int idTiposDeSaltos[];
     private TiposDeSaltosInstrutoresDAO tiDAO; 
     private TipoDeSaltoDAO tDAO;
@@ -32,28 +30,27 @@ public class TiposDeSaltosInstrutoresBean implements Serializable {
         this.setIdInstrutor(idInstrutor = 0);
         this.setTiDAO( new TiposDeSaltosInstrutoresDAO());
         this.settDAO(new TipoDeSaltoDAO());
-        /*O vetor é inicializado com a quantidade de tipos de saltos registrados no banco*/
+        /*O vetor é inicializado com a quantidade de registros de tipos de saltos armazenados no banco*/
         this.setIdTiposDeSaltos(idTiposDeSaltos = new int[tDAO.contarTaxasDeSobrePesoArmazenadas()]);
     }
     
     public void tiposDeSaltosDoInstrutor(){
-        /*A lista com todas os tipos de saltos armazenados no banco.*/
-        List<TipoDeSaltoTO> list = tiDAO.getTiposDeSaltos();
-        /* É possivel saber o tamanho do espaço reservado na memória para o vetor idTiposDeSaltos,
-        mas não é possível saber quantos espaços estão ocupados, então foi utilizado .length .*/       
+        /*Lista com todas os tipos de saltos armazenados no banco.*/
+        List<TipoDeSaltoTO> list = tDAO.getTiposDeSaltos();
+        /* .length, informa o comprimento do vetor idTiposDeSaltos.*/       
         for (int i = 0; i < idTiposDeSaltos.length ; i++) { 
-            tiDAO.salvarTipoDeSaltoDoInstrutor(idInstrutor, idTiposDeSaltos[i]);               
-            for(TipoDeSaltoTO salto : list){
-                /*Se na lista(list) houver uma ou mais tipos de saltos com as identifcações(IdTipoSDeSaltos) iguais as identificações dos saltos selecionadas pelo usuário,
-                estas saltos seram removidas da lista(list)*/
+            tiDAO.salvarTipoDeSaltoDoInstrutor(idInstrutor, idTiposDeSaltos[i]);
+            /*Os tipos de saltos selecionados pelo usuário
+            seram removidas da lista(list)*/
+            for(TipoDeSaltoTO salto : list){                
                 if(salto.getIdTipoDeSalto()==idTiposDeSaltos[i]){
                     list.remove(salto);
                     break;
                 }
             }
         }
-        /*Após as taxas serem removidas da lista, a lista resultante é das taxas que o intrutor não faz.
-        Então, caso estejão cadastradas, será desfeito o relacionamento com o instrutor*/
+        /* A lista resultante possui os tipos de salto que o intrutor não realiza.
+        Caso existam registros no banco, serão apagados os registros de relacionamentos com o instrutor*/
         for(TipoDeSaltoTO salto : list){
             tiDAO.excluirTipoDeSaltoDoInstrutor(idInstrutor, salto.getIdTipoDeSalto());
         }

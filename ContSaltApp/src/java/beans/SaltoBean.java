@@ -61,7 +61,7 @@ public class SaltoBean implements Serializable {
         this.setTipoDeSalto(d);
         System.out.println(d.getIdTipoDeSalto());        
         List<InstrutorTO> list = new LinkedList<>();
-        list = tipSaltInstrDao.getInstrutoresPorTiposDeSaltos(d.getIdTipoDeSalto());
+        list = tipSaltInstrDao.getInstrutoresPorTipoDeSalto(d.getIdTipoDeSalto());
         for (InstrutorTO obj : list){                     
             System.out.println(obj.getNome());
             System.out.println(obj.getIdInstrutor());
