@@ -7,7 +7,9 @@ package beans;
 
 import classBO.Filtros;
 import classDAO.SaltoDAO;
+import classDAO.TiposDeSaltosInstrutoresDAO;
 import classTO.ClienteTO;
+import classTO.InstrutorTO;
 import classTO.SaltoTO;
 import classTO.TaxaSobrepesoTO;
 import classTO.TipoDeSaltoTO;
@@ -17,6 +19,8 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *Classe de conexão com a página cadastrar_salto.xhtml.
@@ -32,6 +36,7 @@ public class SaltoBean implements Serializable {
     private ClienteTO cliente;
     private TipoDeSaltoTO tipoDeSalto;
     private TaxaSobrepesoTO taxaSobrepeso;
+    private TiposDeSaltosInstrutoresDAO tipSaltInstrDao;
     private Filtros filtros;
      
     public SaltoBean() {
@@ -41,6 +46,7 @@ public class SaltoBean implements Serializable {
         this.setTipoDeSalto(new TipoDeSaltoTO());
         this.setTaxaSobrepeso(new TaxaSobrepesoTO());
         this.setFiltros(new Filtros());
+        this.setTipSaltInstrDao(new TiposDeSaltosInstrutoresDAO());
     }
     public void selCliente(ClienteTO c){
         /* Date d = new Date();      
@@ -53,7 +59,18 @@ public class SaltoBean implements Serializable {
     }
     public void selTipoDesalto(TipoDeSaltoTO d){           
         this.setTipoDeSalto(d);
-        System.out.println(d.getIdTipoDeSalto());
+        System.out.println(d.getIdTipoDeSalto());        
+        List<InstrutorTO> list = new LinkedList<>();
+        list = tipSaltInstrDao.getInstrutoresPorTiposDeSaltos(d.getIdTipoDeSalto());
+        for (InstrutorTO obj : list){                     
+            System.out.println(obj.getNome());
+            System.out.println(obj.getIdInstrutor());
+            System.out.println(obj.getCpf());
+            System.out.println(obj.getAdmissao());
+            System.out.println(obj.getPresenca());
+            System.out.println("======================");
+        }
+        
     }
     public void selTaxaDeSobrepeso(TaxaSobrepesoTO ts){        
         this.setTaxaSobrepeso(ts);
@@ -91,15 +108,17 @@ public class SaltoBean implements Serializable {
     }
     public void setTaxaSobrepeso(TaxaSobrepesoTO taxaSobrepeso) {
         this.taxaSobrepeso = taxaSobrepeso;
-    } 
-
+    }
     public Filtros getFiltros() {
         return filtros;
     }
-
     public void setFiltros(Filtros filtros) {
         this.filtros = filtros;
     }
-    
-    
+    public TiposDeSaltosInstrutoresDAO getTipSaltInstrDao() {
+        return tipSaltInstrDao;
+    }
+    public void setTipSaltInstrDao(TiposDeSaltosInstrutoresDAO tipSaltInstrDao) {
+        this.tipSaltInstrDao = tipSaltInstrDao;
+    } 
 }

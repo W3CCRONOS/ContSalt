@@ -87,7 +87,7 @@ public class InstrutorDAO {
             return lstA;
     }
     
-    private InstrutorTO getIntrutor(ResultSet rs) throws SQLException{
+    public InstrutorTO getIntrutor(ResultSet rs) throws SQLException{
         InstrutorTO i = new InstrutorTO();
         i.setIdInstrutor(rs.getInt("idinstrutor"));
         i.setNome(rs.getString("nome"));  

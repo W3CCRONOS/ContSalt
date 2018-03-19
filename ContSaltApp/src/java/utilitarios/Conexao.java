@@ -9,9 +9,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- *
- * @author Administrador
+/**Classe responsável pela conexão do sistema com o banco de dados.
+ * @author Almir
+ * @version 1.0
  */
 public class Conexao 
 {
@@ -19,7 +19,10 @@ public class Conexao
     final private String url = "jdbc:mysql://localhost/escolapqd";
     final private String usuario = "root";
     final private String senha = "";
-  
+    /**
+    * Método para conectar o servidor do banco.
+    * @return Connection - Retorna a conexao.
+    */ 
     public Connection conectar()
     {
         Connection conn = null;

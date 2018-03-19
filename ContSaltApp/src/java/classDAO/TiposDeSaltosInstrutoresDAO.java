@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package classDAO;
 
+import classTO.InstrutorTO;
 import classTO.TipoDeSaltoTO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,22 +11,26 @@ import java.util.List;
 import utilitarios.Conexao;
 
 /**
- *
+ * Classe do padrão DAO.
+ * Cria objetos responsáveis por acessar os dados dos tipos de saltos e instrutores.
  * @author Almir
+ * @version 1.0
  */
 public class TiposDeSaltosInstrutoresDAO extends TipoDeSaltoDAO{
-
+    
+    private InstrutorDAO iDao;
     public TiposDeSaltosInstrutoresDAO() {
+        this.setiDao(new InstrutorDAO());
         conn = new Conexao().conectar();
     }
-     /**
- *Método para salvar registros no banco. Este metodo faz uma verificação se não existe
- * registro de tipos de saltos ligados ao instrutor. Se não houver um registro ele salva no banco.
- * @param idInstrutor int - número da chave extrangeira de um instrutor.
- * @param idTipoDeSalto int - número da chave extrangeira de um tipo de salto.
- */    
+    /**
+    * Método para salvar registros no banco.
+    * O método verifica se ainda não existe um registro do tipo de salto ligado
+    * ao instrutor. Se não houver um registro ele cria um no banco.
+    * @param idInstrutor int - número da chave extrangeira de um instrutor.
+    * @param idTipoDeSalto int - número da chave extrangeira de um tipo de salto.
+    */    
     public void salvarTipoDeSaltoDoInstrutor(int idInstrutor, int idTipoDeSalto){
-        /*Verifico se o registro ainda não existe para então salvá-lo*/
         if (verificarSeExisteRegistro(idInstrutor, idTipoDeSalto) == 0){                    
             try{
                PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO instrutor_has_tipodesalto (idinstrutor,idtipodesalto) VALUES (?,?)");
@@ -45,13 +46,12 @@ public class TiposDeSaltosInstrutoresDAO extends TipoDeSaltoDAO{
     }
   
     /** 
-    * Método para excluir registros no banco. Este método faz uma verificação se existe
-    * registros de tipo de saltos  ligados ao instrutor. Se houver um registro ele exclui do banco.
+    * Método para excluir registro no banco.
+    * O método verifica se existe registro do tipo de salto ligados ao instrutor. Se houver um registro ele o exclui do banco.
     * @param idInstrutor int - É o número da chave extrangeira de um instrutor.
     * @param idTipoDeSalto int - É o número da chave extrangeira de um tipo de salto.
     */
     public void excluirTipoDeSaltoDoInstrutor(int idInstrutor, int idTipoDeSalto){
-        /*Verifico se o registro existe para depois deleta-lo*/
         if (verificarSeExisteRegistro(idInstrutor, idTipoDeSalto) != 0){
             try{
                 PreparedStatement ppStmt =  conn.prepareStatement("DELETE FROM instrutor_has_tipodesalto WHERE idinstrutor = ? AND idtipodesalto = ?");
@@ -68,11 +68,9 @@ public class TiposDeSaltosInstrutoresDAO extends TipoDeSaltoDAO{
     
     /** 
     * Método para verificar se exite um registros no banco de um instrutor com uma tipo de salto.
-    * Se existir um registro, tipo de salto ligado a um instrutor,
-    * este método retornará um valor diferente de zero.
     * @param idInstrutor int - É o número da chave extrangeira de um instrutor.
     * @param idTipoDeSalto int - É o número da chave extrangeira de uma tipo de salto.
-    * @return total int - Se não for encontrado nenhum registro retornará zero.    
+    * @return total int - Retorna a quantidade de registros.    
     */
     private int verificarSeExisteRegistro(int idInstrutor, int idTipoDeSalto){
         int total = 0;
@@ -133,7 +131,7 @@ public class TiposDeSaltosInstrutoresDAO extends TipoDeSaltoDAO{
                     ppStmt.setInt(1,idTiposdeSaltos[i]);
                     rs = ppStmt.executeQuery();
                     while(rs.next()){
-                        list.add(getTipoDeSalto(rs));
+                        list.add(getTipoDeSalto(rs));                        
                     }
                     ppStmt.close();
                     rs.close(); 
@@ -144,4 +142,41 @@ public class TiposDeSaltosInstrutoresDAO extends TipoDeSaltoDAO{
             }            
             return list;
     }
+    
+    /** 
+    * Método para buscar os instrutores que executam um determinado tipo de salto.
+    * Este método recebe a identificação de um tipo de salto e faz uma busca no banco
+    * por quais instrutores o realizam. Ele retorna uma lista com os instrutores.
+    * @param idTipodeSalto int - É o número de identificação de um tipo de salto.
+    * @return List - Uma lista com intrutores.
+    */
+     public List<InstrutorTO> getInstrutoresPorTiposDeSaltos(int idTipodeSalto){
+        System.out.println(idTipodeSalto);
+        List<InstrutorTO> list = new LinkedList<>();
+        ResultSet rs;
+        try{ 
+            PreparedStatement ppStmt =  conn.prepareStatement("SELECT i.idinstrutor, i.nome, i.cpf, i.admissao, i.presenca FROM instrutor i JOIN instrutor_has_tipodesalto a ON a.idinstrutor = i.idinstrutor AND a.idtipodesalto = ?");
+            ppStmt.setInt(1,idTipodeSalto);
+            rs = ppStmt.executeQuery();
+            while(rs.next()){
+                       list.add(iDao.getIntrutor(rs));
+            }
+            ppStmt.close();
+	    rs.close(); 
+        }       
+        catch(SQLException ex){         
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
+    public InstrutorDAO getiDao() {
+        return iDao;
+    }
+
+    public void setiDao(InstrutorDAO iDao) {
+        this.iDao = iDao;
+    }
+     
+     
 }
