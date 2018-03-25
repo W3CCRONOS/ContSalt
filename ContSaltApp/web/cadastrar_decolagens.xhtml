@@ -14,7 +14,7 @@ and open the template in the editor.
         <h:head>
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>ContSalt/Tipos de Saltos dos Instrutores</title>             
+                <title>ContSalt/Instrutor</title>             
             </f:facet>
                 <script src="JavaScript/Calendario.js"></script>
             </h:head>
@@ -32,17 +32,13 @@ and open the template in the editor.
                         </p:submenu>
                     </p:panelMenu>
                     <p:panelMenu style="width:175px">
-                        <p:submenu label="Decolagens">
-                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_decolagens.xhtml" />
-                        </p:submenu>
-                    </p:panelMenu>
-                    <p:panelMenu style="width:175px">
                     <p:submenu label="Instrutores">
                         <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_instrutor.xhtml" />
-                        <p:menuitem value="Presença" url="http://localhost:8080/ContSaltApp/faces/presenca_instrutores.xhtml" />                                               
+                        <p:menuitem value="Presença" url="http://localhost:8080/ContSaltApp/faces/presenca_instrutores.xhtml" />
                         <p:menuitem value="Taxas" url="http://localhost:8080/ContSaltApp/faces/taxas_instrutores.xhtml" />
+                        <p:menuitem value="Tipos de Saltos" url="http://localhost:8080/ContSaltApp/faces/tipos_de_saltos_instrutores.xhtml" />
                     </p:submenu>
-                </p:panelMenu>
+                    </p:panelMenu>
                     <p:panelMenu style="width:175px">
                         <p:submenu label="Saltos">
                             <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_salto.xhtml" />
@@ -62,30 +58,8 @@ and open the template in the editor.
                 </p:layoutUnit>
                 <p:layoutUnit position="center">
                     <h:form>
-                        <h2>Cadastro dos Tipos de Saltos dos Instrutores</h2>
-                        <h:panelGrid columns="2" cellpadding="4">
-                            <p:selectOneMenu value="#{tiposDeSaltosInstrutoresBean.idInstrutor}">
-                                <f:selectItems var="inst" value="#{instrutorBean.instrutores}" itemLabel="#{inst.nome}" itemValue="#{inst.idInstrutor}" />
-                            </p:selectOneMenu>                            
-                            <p:selectManyCheckbox value="#{tiposDeSaltosInstrutoresBean.idTiposDeSaltos}">
-                                <f:selectItems var="saltos" value="#{tipoDeSaltoBean.tiposDeSaltos}" itemLabel="#{saltos.nome}" itemValue="#{saltos.idTipoDeSalto}" />                                
-                            </p:selectManyCheckbox>                  
-                            <p:commandButton value="Alterar" action="#{tiposDeSaltosInstrutoresBean.tiposDeSaltosDoInstrutor()}" ajax="false" />
-                        </h:panelGrid>                       
-                                                   
-                        <center><h2>Tipos de Saltos por Instrutor</h2></center>
-                        <p:dataTable var="dados" value="#{instrutorBean.instrutores}" > 
-                            <p:column headerText="Instrutor">
-                                <h:outputText value="#{dados.nome}"/>
-                            </p:column>
-                            <p:column>
-                                <p:dataTable var="saltos" value="#{tiposDeSaltosInstrutoresBean.getTiposDeSaltosPorInstrutor(dados.idInstrutor)}">
-                                    <p:column headerText="Saltos">
-                                        <h:outputText value="#{saltos.nome}"/>
-                                    </p:column>
-                                </p:dataTable>
-                            </p:column>                                     
-                        </p:dataTable>
+                        <h2>Cadastro de Decolagens</h2>
+                        
                     </h:form>
                 </p:layoutUnit>
             </p:layout>

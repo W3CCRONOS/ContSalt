@@ -56,7 +56,7 @@ public class InstrutorDAO {
         }        
     }
      
-      public void presenca(InstrutorTO i){
+    public void presenca(InstrutorTO i){
         try {
             PreparedStatement ppStmt = conn.prepareStatement("UPDATE instrutor SET presenca =? WHERE idinstrutor =?");
             ppStmt.setString(1,i.getPresenca());

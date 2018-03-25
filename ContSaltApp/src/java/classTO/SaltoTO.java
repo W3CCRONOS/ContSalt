@@ -4,9 +4,7 @@ package classTO;
 import java.sql.Date;
 
 /**
- *Classe que representa um salto realizado por instrutor(es) e cliente na escola/club
- * de paraquedismo. Também é levado em conta o tipo de salto e qual taxa de 
- * sobre peso está vinculada a este salto.
+ *Classe para estanciar os saltos.
  * @author Almir
  * @version 1.0
  */

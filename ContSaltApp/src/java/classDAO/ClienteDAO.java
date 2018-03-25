@@ -15,7 +15,7 @@ import java.util.List;
 import utilitarios.Conexao;
 
 /**
- *Classe que conecta-se ao banco de dados para criar, alterar, excluir ou visualizar os registros dos clientes.
+ *Classe que conecta-se ao banco de dados para acessar os registros dos clientes.
  * @author Almir
  * @version 1.0
  * @see ClienteTO

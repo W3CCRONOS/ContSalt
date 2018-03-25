@@ -7,8 +7,7 @@ package classTO;
 
 
 /**
- *Classe que representa um cliente de uma escola/club
- * de paraquedismo.
+ *Classe estanciar os clientes.
  * @author Almir
  * @version 1.0
  */
