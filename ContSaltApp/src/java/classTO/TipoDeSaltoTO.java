@@ -15,8 +15,7 @@ public class TipoDeSaltoTO {
     private int idTipoDeSalto;
     private String nome;
     private double valor = 0.0;
-    private String taxadesobrepeso = "false";
-    private int pessoas = 0;
+
     
     public int getIdTipoDeSalto() {
         return idTipoDeSalto;
@@ -41,21 +40,5 @@ public class TipoDeSaltoTO {
     public void setValor(double valor) {
         this.valor = valor;
     }        
-
-    public String getTaxadesobrepeso() {
-        return taxadesobrepeso;
-    }
-
-    public void setTaxadesobrepeso(String taxadesobrepeso) {
-        this.taxadesobrepeso = taxadesobrepeso;
-    }
-
-    public int getPessoas() {
-        return pessoas;
-    }
-
-    public void setPessoas(int pessoas) {
-        this.pessoas = pessoas;
-    }
     
 }

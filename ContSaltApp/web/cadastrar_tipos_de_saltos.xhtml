@@ -39,7 +39,6 @@ and open the template in the editor.
                             <p:submenu label="Instrutores">
                                 <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_instrutor.xhtml" />
                                 <p:menuitem value="Presença" url="http://localhost:8080/ContSaltApp/faces/presenca_instrutores.xhtml" />
-                                <p:menuitem value="Taxas" url="http://localhost:8080/ContSaltApp/faces/taxas_instrutores.xhtml" />
                                 <p:menuitem value="Tipos de Saltos" url="http://localhost:8080/ContSaltApp/faces/tipos_de_saltos_instrutores.xhtml" />
                             </p:submenu>
                         </p:panelMenu>
@@ -55,25 +54,18 @@ and open the template in the editor.
                             </p:submenu>
                         </p:panelMenu>                   
                 </p:layoutUnit>
-
                 <p:layoutUnit position="center">
                     <h:form>
                         <h2>Cadastro de Tipos de Saltos</h2>
                         <h:panelGrid columns="2" cellpadding="7">
                             <h:outputLabel for="txtName" value="Name:" style="font-weight:bold" />
-                            <p:inputText id="txtName" value="#{tipoDeSaltoBean.CTO.nome}" />
-                            
+                            <p:inputText id="txtName" value="#{tipoDeSaltoBean.CTO.nome}" />                            
                             <h:outputLabel for="txtValor" value="Valor:" style="font-weight:bold" />                                                      
                             <h:inputText id="txtValor" value="#{tipoDeSaltoBean.CTO.valor}"
 				size="20" required="true" >
 				<!-- display in at least 2 decimal points -->
                                 <f:convertNumber minFractionDigits="2" currencyCode="BRL" type="currency" />
-                            </h:inputText>                           
-                            
-                            <h:outputText value="Recebe taxa de sobre peso: " style="font-weight:bold" />
-                            <p:selectBooleanButton id="value1" value="#{tipoDeSaltoBean.CTO.taxadesobrepeso}" onLabel="Sim" offLabel="Não" style="width:60px" />
-                            <h:outputLabel for="txtPessoas" value="Informe a Quantidade de Pessoas:" style="font-weight:bold" />
-                            <p:inputText id="txtPessoas" value="#{tipoDeSaltoBean.CTO.pessoas}" type="number"/>
+                            </h:inputText>                                                                                
                             <p:commandButton value="Salvar Novo Registro" action="#{tipoDeSaltoBean.salvar()}" ajax="false" />
                             <p:commandButton value="Confirmar Alteração" action="#{tipoDeSaltoBean.alterar()}" ajax="false" />
                         </h:panelGrid>
@@ -87,19 +79,11 @@ and open the template in the editor.
                                     <f:convertNumber minFractionDigits="2" currencyCode="BRL" type="currency" />
                                 </h:outputText>
                             </p:column>
-                            <p:column headerText="Pessoas">
-                                <h:outputText value="#{dados.pessoas}"/>
-                            </p:column>
-                            <p:column headerText="Taxa de Sobrepeso">
-                                <p:selectBooleanCheckbox value="#{dados.taxadesobrepeso}" disabled="true"  >
-                                </p:selectBooleanCheckbox>                                
-                            </p:column>
                             <p:column>
                                 <p:commandButton value="Alterar" action="#{tipoDeSaltoBean.preparaAlteracao(dados)}" ajax="false" />
                                 <p:commandButton value="Excluir" action="#{tipoDeSaltoBean.excluir(dados)}" ajax="false" />
                             </p:column>
-                        </p:dataTable>
-                        
+                        </p:dataTable>                        
                     </h:form>
                 </p:layoutUnit>
             </p:layout>

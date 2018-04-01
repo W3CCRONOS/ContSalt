@@ -60,7 +60,7 @@ public class ClienteDAO {
             ResultSet rs;
             
             try{
-                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM cliente");
+                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM cliente ORDER BY nome");
                 rs = ppStmt.executeQuery();
                 while(rs.next()){
                     lstA.add(getCliente(rs));

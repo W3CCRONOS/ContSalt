@@ -27,11 +27,9 @@ public class TipoDeSaltoDAO {
         
     public void salvar(TipoDeSaltoTO tipodesalto){    
         try{
-            PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO tipodesalto (nome,valor,taxadesobrepeso,pessoas) VALUES (?,?,?,?)");
+            PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO tipodesalto (nome,valor) VALUES (?,?)");
             ppStmt.setString(1,tipodesalto.getNome());
             ppStmt.setDouble(2,tipodesalto.getValor());
-            ppStmt.setString(3,tipodesalto.getTaxadesobrepeso());
-            ppStmt.setInt(4,tipodesalto.getPessoas());
             ppStmt.execute();
             ppStmt.close(); 
         }
@@ -42,12 +40,10 @@ public class TipoDeSaltoDAO {
     }
      public void alterar(TipoDeSaltoTO tipodesalto){
         try {
-            PreparedStatement ppStmt = conn.prepareStatement("UPDATE tipodesalto SET nome =?, valor=?, taxadesobrepeso=?, pessoas=? WHERE idtipodesalto=?");
+            PreparedStatement ppStmt = conn.prepareStatement("UPDATE tipodesalto SET nome =?, valor=? WHERE idtipodesalto=?");
             ppStmt.setString(1, tipodesalto.getNome());
             ppStmt.setDouble(2, tipodesalto.getValor());
-            ppStmt.setString(3, tipodesalto.getTaxadesobrepeso());
-            ppStmt.setInt(4,tipodesalto.getPessoas());
-            ppStmt.setInt(5,tipodesalto.getIdTipoDeSalto());
+            ppStmt.setInt(3,tipodesalto.getIdTipoDeSalto());
             ppStmt.execute();
             ppStmt.close();
  
@@ -61,7 +57,7 @@ public class TipoDeSaltoDAO {
             List<TipoDeSaltoTO> lstA = new LinkedList<TipoDeSaltoTO>();
             ResultSet rs;
             try{
-                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM tipodesalto");
+                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM tipodesalto ORDER BY nome");
                 rs = ppStmt.executeQuery();
                 while(rs.next()){
                     lstA.add(getTipoDeSalto(rs));
@@ -79,8 +75,6 @@ public class TipoDeSaltoDAO {
         TipoDeSaltoTO tposalt = new TipoDeSaltoTO();
         tposalt.setNome(rs.getString("nome"));
         tposalt.setValor(rs.getDouble("valor"));
-        tposalt.setTaxadesobrepeso(rs.getString("taxadesobrepeso"));
-        tposalt.setPessoas(rs.getInt("pessoas"));
         tposalt.setIdTipoDeSalto(rs.getInt("idtipodesalto")); 
         return tposalt;
     }

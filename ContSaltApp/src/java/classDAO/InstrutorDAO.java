@@ -6,7 +6,6 @@
 package classDAO;
 
 import classTO.InstrutorTO;
-import classTO.TipoDeSaltoTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,11 +27,12 @@ public class InstrutorDAO {
     public void salvar(InstrutorTO i){
  
         try{
-            PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO instrutor (nome,cpf,admissao,presenca) VALUES (?,?,?,?)");
+            PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO instrutor (nome,cpf,admissao,presenca,peso) VALUES (?,?,?,?,?)");
             ppStmt.setString(1,i.getNome());
             ppStmt.setString(2,i.getCpf());
             ppStmt.setDate(3, i.getAdmissao());            
             ppStmt.setString(4,i.getPresenca());
+            ppStmt.setDouble(5, i.getPeso());
             ppStmt.execute();
             ppStmt.close();
         }
@@ -43,12 +43,13 @@ public class InstrutorDAO {
     }
     public void alterar(InstrutorTO i){
         try {
-            PreparedStatement ppStmt = conn.prepareStatement("UPDATE instrutor SET nome =?, cpf =?, admissao =?, presenca =? WHERE idinstrutor =?");
+            PreparedStatement ppStmt = conn.prepareStatement("UPDATE instrutor SET nome =?, cpf =?, admissao =?, presenca =?, peso =? WHERE idinstrutor =?");
             ppStmt.setString(1, i.getNome());
             ppStmt.setString(2, i.getCpf());
             ppStmt.setDate(3,i.getAdmissao());
             ppStmt.setString(4,i.getPresenca());
-            ppStmt.setInt(5, i.getIdInstrutor());
+            ppStmt.setDouble(5, i.getPeso());
+            ppStmt.setInt(6, i.getIdInstrutor());
             ppStmt.execute();
             ppStmt.close();
         }catch(SQLException EX){
@@ -77,7 +78,7 @@ public class InstrutorDAO {
             List<InstrutorTO> lstA = new LinkedList<InstrutorTO>();
             ResultSet rs;
             try{
-                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM instrutor");
+                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM instrutor ORDER BY nome");
                 rs = ppStmt.executeQuery();
                 while(rs.next()){
                     lstA.add(getIntrutor(rs));
@@ -97,12 +98,12 @@ public class InstrutorDAO {
     */
     public List<InstrutorTO> getInstrutoresDecolagem(int iddecolagem){
  
-            List<InstrutorTO> lstA = new LinkedList<InstrutorTO>();
+            List<InstrutorTO> lstA = new LinkedList<>();
             ResultSet rs;
             try{
-                PreparedStatement ppStmt = conn.prepareStatement("SELECT i.idinstrutor, i.nome, i.cpf, i.admissao, i.presenca FROM instrutor i\n" +
+                PreparedStatement ppStmt = conn.prepareStatement("SELECT i.idinstrutor, i.nome, i.cpf, i.admissao, i.presenca, i.peso FROM instrutor i\n" +
                                                                  "INNER JOIN salto s ON s.idinstrutor = i.idinstrutor\n" +
-                                                                 "INNER JOIN decolagem d ON s.iddecolagem = ?;");
+                                                                 "INNER JOIN decolagem d ON s.iddecolagem = ? ORDER BY admissao");
                 ppStmt.setInt(1,iddecolagem);
                 rs = ppStmt.executeQuery();
                 while(rs.next()){
@@ -127,6 +128,7 @@ public class InstrutorDAO {
         i.setCpf(rs.getString("cpf"));
         i.setAdmissao(rs.getDate("admissao"));
         i.setPresenca(rs.getString("presenca"));
+         i.setPeso(rs.getDouble("peso"));
         return i;
     }
     public void excluir(InstrutorTO i){
@@ -138,25 +140,5 @@ public class InstrutorDAO {
            }catch(SQLException EX){
                EX.printStackTrace();
            }
-    }
-    
-    public List<InstrutorTO> getInstrutoresPorTipoDeSalto(TipoDeSaltoTO salto){
- 
-            List<InstrutorTO> lstA = new LinkedList<InstrutorTO>();
-            ResultSet rs;
-            try{
-                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM instrutor");
-                rs = ppStmt.executeQuery();
-                while(rs.next()){
-                    lstA.add(getIntrutor(rs));
-                }
-                ppStmt.close();
-	        rs.close();
-            }
-            catch(SQLException ex){
-                ex.printStackTrace();
-            }
-            return lstA;
-    }
-  
+    }  
  }

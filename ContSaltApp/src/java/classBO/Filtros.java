@@ -5,7 +5,6 @@
 package classBO;
 
 import classDAO.InstrutorDAO;
-import classDAO.TaxasInstrutoresDAO;
 import classDAO.TiposDeSaltosInstrutoresDAO;
 import classTO.InstrutorTO;
 import java.util.LinkedList;
@@ -18,22 +17,10 @@ import java.util.List;
 public class Filtros {
     private InstrutorDAO intrutorDao;
     private TiposDeSaltosInstrutoresDAO tipSaltInstDao;
-    private TaxasInstrutoresDAO taxasInstDao;
 
     public Filtros() {
         this.setIntrutorDao(new InstrutorDAO());
         this.setTipSaltInstDao(new TiposDeSaltosInstrutoresDAO());
-        this.setTaxasInstDao(new TaxasInstrutoresDAO());
-    }
-    
-    /** Método que retorna uma lista dos intrutores que execultam um salto de acordo com a
-    * taxa de sobrepeso.
-    * @param idTaxa int - É o número de identificação de um tipo de salto.  
-    * @return List  - Instrutores*/
-    public List<InstrutorTO> filtraInstruoresPorTaxa(int idTaxa){
-        List<InstrutorTO> lstA = new LinkedList<>();
-        lstA = taxasInstDao.getInstrutoresPorTaxa(idTaxa);        
-        return lstA;
     }
     
      /** Método que retorna uma lista dos instrutores que estão em uma decolagem.
@@ -92,14 +79,5 @@ public class Filtros {
 
     public void setTipSaltInstDao(TiposDeSaltosInstrutoresDAO tipSaltInstDao) {
         this.tipSaltInstDao = tipSaltInstDao;
-    }
-
-    public TaxasInstrutoresDAO getTaxasInstDao() {
-        return taxasInstDao;
-    }
-
-    public void setTaxasInstDao(TaxasInstrutoresDAO taxasInstDao) {
-        this.taxasInstDao = taxasInstDao;
-    }
-    
+    }   
 }

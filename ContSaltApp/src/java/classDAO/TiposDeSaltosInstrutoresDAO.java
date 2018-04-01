@@ -110,7 +110,7 @@ public class TiposDeSaltosInstrutoresDAO{
         List<InstrutorTO> list = new LinkedList<>();
         ResultSet rs;
         try{ 
-            PreparedStatement ppStmt =  conn.prepareStatement("SELECT i.idinstrutor, i.nome, i.cpf, i.admissao, i.presenca FROM instrutor i JOIN instrutor_has_tipodesalto a ON a.idinstrutor = i.idinstrutor AND a.idtipodesalto = ?");
+            PreparedStatement ppStmt =  conn.prepareStatement("SELECT i.idinstrutor, i.nome, i.cpf, i.admissao, i.presenca FROM instrutor i JOIN instrutor_has_tipodesalto a ON a.idinstrutor = i.idinstrutor AND a.idtipodesalto = ? ORDER BY admissao");
             ppStmt.setInt(1,idTipodeSalto);
             rs = ppStmt.executeQuery();
             while(rs.next()){
@@ -124,6 +124,7 @@ public class TiposDeSaltosInstrutoresDAO{
         }
         return list;
     }
+     
     
     /** 
     * Método para buscar os tipos de saltos que um determinado instrutor pode executar.
@@ -134,7 +135,7 @@ public class TiposDeSaltosInstrutoresDAO{
             List<TipoDeSaltoTO> list = new LinkedList<>();
             ResultSet rs;
             try{
-                PreparedStatement ppStmt = conn.prepareStatement("SELECT i.idtipodesalto, i.nome, i.valor, i.pessoas, i.taxadesobrepeso FROM tipodesalto i JOIN instrutor_has_tipodesalto a ON a.idtipodesalto = i.idtipodesalto AND a.idinstrutor = ?");
+                PreparedStatement ppStmt = conn.prepareStatement("SELECT i.idtipodesalto, i.nome, i.valor FROM tipodesalto i JOIN instrutor_has_tipodesalto a ON a.idtipodesalto = i.idtipodesalto AND a.idinstrutor = ?");
                 ppStmt.setInt(1,idInstrutor);
                 rs = ppStmt.executeQuery();
                 while(rs.next()){

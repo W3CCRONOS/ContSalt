@@ -17,6 +17,7 @@ public class InstrutorTO {
     private Date admissao;
     private String cpf;
     private String presenca = "false";
+    private double peso = 0.0;
     
     
     public int getIdInstrutor() {
@@ -60,5 +61,13 @@ public class InstrutorTO {
     public void setPresenca(String presenca) {
         this.presenca = presenca;
     }
-  
+
+    public double getPeso() {
+        return peso;
+    }
+
+    public void setPeso(double peso) {
+        this.peso = peso;
+    }
+    
 }

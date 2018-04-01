@@ -53,10 +53,10 @@ public class TaxaSobrepesoDAO {
     }
     
     public List<TaxaSobrepesoTO> getTaxasSobrepesos(){           
-            List<TaxaSobrepesoTO> lstA = new LinkedList<TaxaSobrepesoTO>();
+            List<TaxaSobrepesoTO> lstA = new LinkedList<>();
             ResultSet rs;
             try{
-                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM taxasobrepeso");
+                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM taxasobrepeso ORDER BY peso");
                 rs = ppStmt.executeQuery();
                 while(rs.next()){
                     lstA.add(getTaxaSobrepeso(rs));
