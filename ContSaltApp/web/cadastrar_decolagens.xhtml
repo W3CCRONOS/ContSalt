@@ -59,7 +59,30 @@ and open the template in the editor.
                 <p:layoutUnit position="center">
                     <h:form>
                         <h2>Cadastro de Decolagens</h2>
-                        
+                         <h:panelGrid columns="2" cellpadding="2">
+                            <h:outputLabel for="txtNumero" value="Número da decolagem:" style="font-weight:bold" />
+                            <p:inputText id="txtNumero" value="#{decolagemBean.CTO.numero}" />
+                            <p:commandButton value="Salvar" action="#{decolagemBean.salvar()}"  ajax="false" />
+                        </h:panelGrid>
+                        <center><h2>Decolagens</h2></center>
+                        <p:dataTable var="dados" value="#{decolagemBean.decolagens}" >
+                            <p:column headerText="Data">
+                                <h:outputText value="#{dados.data}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Número">
+                                <h:outputText value="#{dados.numero}"/>
+                            </p:column>
+                            <p:column headerText="Status" style="text-align: center;">
+                                <p:selectBooleanCheckbox value="#{dados.status}"   >
+                                    <p:ajax listener="#{decolagemBean.status(dados)}"/>
+                                </p:selectBooleanCheckbox>                                
+                            </p:column>
+                            <p:column>
+                                <p:commandButton value="Excluir" action="#{decolagemBean.excluir(dados)}" ajax="false" />
+                            </p:column>
+                        </p:dataTable> 
                     </h:form>
                 </p:layoutUnit>
             </p:layout>

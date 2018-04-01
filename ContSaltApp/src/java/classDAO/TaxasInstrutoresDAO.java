@@ -107,7 +107,7 @@ public class TaxasInstrutoresDAO {
     * @param idTaxa int - É o número de identificação de uma taxa de sobrepeso.
     * @return List - Uma lista com intrutores.
     */
-     public List<InstrutorTO> getInstrutoresPorTipoDeSalto(int idTaxa){
+     public List<InstrutorTO> getInstrutoresPorTaxa(int idTaxa){
         List<InstrutorTO> list = new LinkedList<>();
         ResultSet rs;
         try{ 

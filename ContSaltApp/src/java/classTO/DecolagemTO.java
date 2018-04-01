@@ -5,6 +5,8 @@
  */
 package classTO;
 
+import java.sql.Date;
+
 /**
  * Classe para estanciar as decolagens.
  * @author Almir
@@ -14,6 +16,7 @@ public class DecolagemTO {
     private int iddecolagem;
     private int numero;
     private String status = "false";
+     private Date data;
 
     public int getIddecolagem() {
         return iddecolagem;
@@ -37,6 +40,14 @@ public class DecolagemTO {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
     }
 
     

@@ -5,6 +5,8 @@
 package classBO;
 
 import classDAO.InstrutorDAO;
+import classDAO.TaxasInstrutoresDAO;
+import classDAO.TiposDeSaltosInstrutoresDAO;
 import classTO.InstrutorTO;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,12 +17,45 @@ import java.util.List;
  */
 public class Filtros {
     private InstrutorDAO intrutorDao;
+    private TiposDeSaltosInstrutoresDAO tipSaltInstDao;
+    private TaxasInstrutoresDAO taxasInstDao;
 
     public Filtros() {
         this.setIntrutorDao(new InstrutorDAO());
+        this.setTipSaltInstDao(new TiposDeSaltosInstrutoresDAO());
+        this.setTaxasInstDao(new TaxasInstrutoresDAO());
     }
     
-    /** Método para retorno de uma lista com os intrutores que estão presentes.
+    /** Método que retorna uma lista dos intrutores que execultam um salto de acordo com a
+    * taxa de sobrepeso.
+    * @param idTaxa int - É o número de identificação de um tipo de salto.  
+    * @return List  - Instrutores*/
+    public List<InstrutorTO> filtraInstruoresPorTaxa(int idTaxa){
+        List<InstrutorTO> lstA = new LinkedList<>();
+        lstA = taxasInstDao.getInstrutoresPorTaxa(idTaxa);        
+        return lstA;
+    }
+    
+     /** Método que retorna uma lista dos instrutores que estão em uma decolagem.
+    * @param iddecolagem int - É o número de identificação de uma decolagem.
+    * @return List - Uma lista com intrutores.
+    */
+    public List<InstrutorTO> getInstrutoresDecolagem(int iddecolagem){
+        List<InstrutorTO> lstA = new LinkedList<>();
+        lstA = intrutorDao.getInstrutoresDecolagem(iddecolagem);
+        return lstA;
+    }
+    
+    /** Método que retorna uma lista dos intrutores que execultam um determindo tipo de salto.
+    * @param idTipodeSalto int - É o número de identificação de um tipo de salto.  
+    * @return List  - Instrutores*/
+    public List<InstrutorTO> filtraInstruoresPorTipodeSalto(int idTipodeSalto){
+        List<InstrutorTO> lstA = new LinkedList<>();
+        lstA = tipSaltInstDao.getInstrutoresPorTipoDeSalto(idTipodeSalto);        
+        return lstA;
+    }
+    
+    /** Método que retorna uma lista com os intrutores presentes.
     *   @return List  - Instrutores presentes */
     public List<InstrutorTO> filtraPresenca(){
         List<InstrutorTO> lstA = new LinkedList<>();
@@ -32,11 +67,39 @@ public class Filtros {
         }
         return lstA;
     }
+    
+    /** Método que ordena uma lista de intrutores. Os isntrutore
+    são odenados pela suas datas de admissão.
+    *@param lstA List - Lista com instrutores.   
+    *@return List  - Lista de instrutores ordenada*/
+    public List<InstrutorTO> OrdenaInstrutores(List<InstrutorTO> lstA){
+        List<InstrutorTO> lstB = new LinkedList<>();
+        
+        return lstA;
+    }
+    
+    
     public InstrutorDAO getIntrutorDao() {
         return intrutorDao;
     }
     public void setIntrutorDao(InstrutorDAO intrutorDao) {
         this.intrutorDao = intrutorDao;
+    }
+
+    public TiposDeSaltosInstrutoresDAO getTipSaltInstDao() {
+        return tipSaltInstDao;
+    }
+
+    public void setTipSaltInstDao(TiposDeSaltosInstrutoresDAO tipSaltInstDao) {
+        this.tipSaltInstDao = tipSaltInstDao;
+    }
+
+    public TaxasInstrutoresDAO getTaxasInstDao() {
+        return taxasInstDao;
+    }
+
+    public void setTaxasInstDao(TaxasInstrutoresDAO taxasInstDao) {
+        this.taxasInstDao = taxasInstDao;
     }
     
 }

@@ -10,7 +10,9 @@ import classTO.DecolagemTO;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
+import utilitarios.ConversorDeDatas;
 
 /**
  *Classe de conexão das páginas .xhtml com o objeto decolagem.
@@ -25,19 +27,26 @@ public class DecolagemBean implements Serializable {
 
     private DecolagemTO CTO;
     private DecolagemDAO cDAO;
+    private Date dataUtil;
+    private ConversorDeDatas alteraData;
+    
     public DecolagemBean() {
                 //Inicialização de variáveis.
         this.setCTO(new  DecolagemTO());
         this.setcDAO(new DecolagemDAO());
+        this.setDataUtil(new Date());
+        this.setAlteraData(new ConversorDeDatas());
     }
  /**
     * Método que cria um registro de decolagem no banco de dados.
     * @see DecolagemTO
     * @see DecolagemDAO
     */
-    public  void salvar(){    
+    public  void salvar(){ 
+        CTO.setData(alteraData.passarDataUtilParaDataSql(dataUtil));
         cDAO.salvar(CTO);
-        CTO = new DecolagemTO();
+        CTO = new DecolagemTO(); 
+        dataUtil = new Date();         
     }
     /**
     * Método que retorna uma lista de registro das decolagens.
@@ -45,8 +54,9 @@ public class DecolagemBean implements Serializable {
     * @see DecolagemTO
     * @see DecolagemDAO
     */
-    public List<DecolagemTO> getInstrutores(){       
-        return cDAO.getDecolagens();
+    public List<DecolagemTO> getDecolagens(){      
+        java.sql.Date dataSql = new java.sql.Date(dataUtil.getTime());
+        return cDAO.getDecolagens(dataSql);
     }
     
     /**
@@ -60,12 +70,12 @@ public class DecolagemBean implements Serializable {
     }
     
     /**
-    * Método para informar que um salto foi finalizado. 
+    * Método para informar que uma decolagem foi finalizado. 
     * @param deco DecolagemTO - É um objeto do tipo InstrutorTO.
     * @see DecolagemTO
     * @see DecolagemDAO
     */ 
-    public void presenca(DecolagemTO deco){
+    public void status(DecolagemTO deco){
         setCTO(deco);
         if(deco.getStatus().equals("false")){
             CTO.setStatus("true");
@@ -90,6 +100,22 @@ public class DecolagemBean implements Serializable {
 
     public void setcDAO(DecolagemDAO cDAO) {
         this.cDAO = cDAO;
+    }
+
+    public Date getDataUtil() {
+        return dataUtil;
+    }
+
+    public void setDataUtil(Date dataUtil) {
+        this.dataUtil = dataUtil;
+    }
+
+    public ConversorDeDatas getAlteraData() {
+        return alteraData;
+    }
+
+    public void setAlteraData(ConversorDeDatas alteraData) {
+        this.alteraData = alteraData;
     }
     
 }

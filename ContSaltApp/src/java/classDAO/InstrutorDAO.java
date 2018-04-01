@@ -67,6 +67,10 @@ public class InstrutorDAO {
             EX.printStackTrace();
         }        
     }
+    /** 
+    * Método para buscar os instrutores.
+    * @return List - Uma lista com intrutores.
+    */
     
     public List<InstrutorTO> getInstrutores(){
  
@@ -86,7 +90,36 @@ public class InstrutorDAO {
             }
             return lstA;
     }
-    
+    /** 
+    * Método para buscar os instrutores que estão em uma decolagem.
+    * @param iddecolagem int - É o número de identificação de uma decolagem.
+    * @return List - Uma lista com intrutores.
+    */
+    public List<InstrutorTO> getInstrutoresDecolagem(int iddecolagem){
+ 
+            List<InstrutorTO> lstA = new LinkedList<InstrutorTO>();
+            ResultSet rs;
+            try{
+                PreparedStatement ppStmt = conn.prepareStatement("SELECT i.idinstrutor, i.nome, i.cpf, i.admissao, i.presenca FROM instrutor i\n" +
+                                                                 "INNER JOIN salto s ON s.idinstrutor = i.idinstrutor\n" +
+                                                                 "INNER JOIN decolagem d ON s.iddecolagem = ?;");
+                ppStmt.setInt(1,iddecolagem);
+                rs = ppStmt.executeQuery();
+                while(rs.next()){
+                    lstA.add(getIntrutor(rs));
+                }
+                ppStmt.close();
+	        rs.close();
+            }
+            catch(SQLException ex){
+                ex.printStackTrace();
+            }
+            return lstA;
+    }
+    /** 
+    * Método para montar um objeto do tipo instrutor.
+    * @return InstrutorTO - Um intrutor.
+    */
     public InstrutorTO getIntrutor(ResultSet rs) throws SQLException{
         InstrutorTO i = new InstrutorTO();
         i.setIdInstrutor(rs.getInt("idinstrutor"));

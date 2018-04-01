@@ -7,6 +7,7 @@ package classDAO;
 
 import classTO.DecolagemTO;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,9 +35,10 @@ public class DecolagemDAO {
     */
      public void salvar(DecolagemTO deco){ 
         try{
-            PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO decolagem (numero,status) VALUES (?,?)");
+            PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO decolagem (numero,status,data) VALUES (?,?,?)");
             ppStmt.setInt(1,deco.getNumero());
-            ppStmt.setString(2,deco.getStatus());       
+            ppStmt.setString(2,deco.getStatus());
+            ppStmt.setDate(3,deco.getData());
             ppStmt.execute();
             ppStmt.close();
         }       
@@ -48,13 +50,14 @@ public class DecolagemDAO {
     * Método para buscar todas as decolagens registradas no banco.
     * @return List - O retorno é uma lista com decolagens.
     */    
-    public List<DecolagemTO> getDecolagens(){
+    public List<DecolagemTO> getDecolagens(Date deco){
             
             List<DecolagemTO> lstA = new LinkedList<>();
             ResultSet rs;
             
             try{
-                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM decolagem");
+                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM decolagem WHERE data = ?");
+                ppStmt.setDate(1,deco);
                 rs = ppStmt.executeQuery();
                 while(rs.next()){
                     lstA.add(getDecolagem(rs));
@@ -79,6 +82,7 @@ public class DecolagemDAO {
         decolagem.setIddecolagem(rs.getInt("iddecolagem"));
         decolagem.setNumero(rs.getInt("numero"));  
         decolagem.setStatus(rs.getString("status"));
+        decolagem.setData(rs.getDate("data"));
         return decolagem;
     }
     
