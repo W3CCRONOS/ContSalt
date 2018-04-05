@@ -78,7 +78,7 @@ public class InstrutorDAO {
             List<InstrutorTO> lstA = new LinkedList<InstrutorTO>();
             ResultSet rs;
             try{
-                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM instrutor ORDER BY nome");
+                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM instrutor ORDER BY admissao");
                 rs = ppStmt.executeQuery();
                 while(rs.next()){
                     lstA.add(getIntrutor(rs));
@@ -117,6 +117,9 @@ public class InstrutorDAO {
             }
             return lstA;
     }
+    
+
+    
     /** 
     * Método para montar um objeto do tipo instrutor.
     * @return InstrutorTO - Um intrutor.
@@ -128,9 +131,10 @@ public class InstrutorDAO {
         i.setCpf(rs.getString("cpf"));
         i.setAdmissao(rs.getDate("admissao"));
         i.setPresenca(rs.getString("presenca"));
-         i.setPeso(rs.getDouble("peso"));
+        i.setPeso(rs.getDouble("peso"));
         return i;
     }
+    
     public void excluir(InstrutorTO i){
            try {
                PreparedStatement ppStmt = conn.prepareStatement("DELETE FROM instrutor WHERE idinstrutor=?");

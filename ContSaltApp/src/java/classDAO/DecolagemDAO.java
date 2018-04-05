@@ -24,9 +24,11 @@ import utilitarios.Conexao;
  */
 public class DecolagemDAO {
     Connection conn;
+    private DecolagemTO decoTO;
 
     public DecolagemDAO() {
-        conn = new Conexao().conectar(); 
+        conn = new Conexao().conectar();
+        this.setDecoTO(new DecolagemTO());
     }
     /**
     * Método para salvar registros no banco. Este método salva uma nova decolagem
@@ -48,13 +50,12 @@ public class DecolagemDAO {
     }           
     /** 
     * Método para buscar todas as decolagens registradas no banco.
+    * @param deco Date - data.
     * @return List - O retorno é uma lista com decolagens.
     */    
-    public List<DecolagemTO> getDecolagens(Date deco){
-            
+    public List<DecolagemTO> getDecolagens(Date deco){            
             List<DecolagemTO> lstA = new LinkedList<>();
-            ResultSet rs;
-            
+            ResultSet rs;            
             try{
                 PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM decolagem WHERE data = ?");
                 ppStmt.setDate(1,deco);
@@ -71,6 +72,28 @@ public class DecolagemDAO {
             return lstA;
     }
     
+    /** 
+    * Método para buscar a última decolagem registradas no banco.
+    * @return List - O retorno é uma lista com decolagens.
+    */    
+    public List<DecolagemTO> getDecolagem(){            
+            List<DecolagemTO> lstA = new LinkedList<>();
+            ResultSet rs;            
+            try{
+                PreparedStatement ppStmt = conn.prepareStatement("select * from decolagem where iddecolagem = (select max(iddecolagem) from decolagem)");                             
+                rs = ppStmt.executeQuery();
+                while(rs.next()){
+                    lstA.add(getDecolagem(rs));
+                }
+                ppStmt.close();
+	        rs.close();
+            }
+            catch(SQLException ex){
+                ex.printStackTrace();
+            }
+            return lstA;
+    }
+        
     /** 
     * Método para montar um objeto decolagem. Este método recebe um resultado do banco
     * e preenche os atributos de um objeto.
@@ -127,5 +150,13 @@ public class DecolagemDAO {
             EX.printStackTrace();
         }        
     }
-    
+
+    public DecolagemTO getDecoTO() {
+        return decoTO;
+    }
+
+    public void setDecoTO(DecolagemTO decoTO) {
+        this.decoTO = decoTO;
+    }
+     
 }

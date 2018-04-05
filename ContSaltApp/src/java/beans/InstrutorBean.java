@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package beans;
+import classBO.Filtros;
 import classDAO.InstrutorDAO;
 import classTO.InstrutorTO;
 import javax.inject.Named;
@@ -26,34 +27,23 @@ public class InstrutorBean implements Serializable {
 
     private InstrutorTO CTO;
     private InstrutorDAO cDAO ;
-    /* O atributo "admissão" do objeto InstrutorTO é do tipo java.sql.Date, por isso,
-    se torna necessário converter o valor da data que vem da página .xhtml, pois ela envia os
-    dados da data em formato java.util.Date. Por sua vez, também é necessário
-    fazer a conversão contrária quando os dados veem do banco de dados, porque O banco de dados utiliza 
-    o formato java.sql.Date.
-     */
     private Date dataUtil;
     private ConversorDeDatas alteraData;
+    private Filtros filtro;
 
-    /**
-    * Método construtor. Neste métodos as variáveis
-    * são inicializadas.
-    */
     public InstrutorBean() {
         //Inicialização de variáveis.
         this.setCTO(new InstrutorTO());
         this.setcDAO(new InstrutorDAO());
         this.setDataUtil(new Date());
         this.setAlteraData(new ConversorDeDatas());
+        this.setFiltro(new Filtros());
     }
     /**
     * Método que cria um registro no banco de dados. Antes, ele converte a
     * data no formato util.Date para o formato sql.Date.
     * Depois da conversão ele envia o objeto instanciado para ser salvo no banco de dados.
     * Por fim, reinicializa as variáveis.
-    * @see InstrutorTO
-    * @see InstrutorDAO
-    * @see ConversorDeDatas
     */
     public  void salvar(){
         CTO.setAdmissao(alteraData.passarDataUtilParaDataSql(dataUtil));
@@ -66,12 +56,11 @@ public class InstrutorBean implements Serializable {
     * Método que retorna uma lista de registro dos instrutore armazenados
     * no banco de dados.
     * @return List - Lista de instrutores, objetos InstrutorTO.  
-    * @see InstrutorTO
-    * @see InstrutorDAO
     */
     public List<InstrutorTO> getInstrutores(){       
         return cDAO.getInstrutores();
     }
+
     
     /**
     * Método para excluir o registro de um instrutor no banco de dados.
@@ -169,4 +158,12 @@ public class InstrutorBean implements Serializable {
         this.alteraData = alteraData;
     }
 
+    public Filtros getFiltro() {
+        return filtro;
+    }
+
+    public void setFiltro(Filtros filtro) {
+        this.filtro = filtro;
+    }
+    
 }

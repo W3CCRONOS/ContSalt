@@ -6,7 +6,10 @@ package classBO;
 
 import classDAO.InstrutorDAO;
 import classDAO.TiposDeSaltosInstrutoresDAO;
+import classTO.ClienteTO;
+import classTO.DecolagemTO;
 import classTO.InstrutorTO;
+import classTO.TipoDeSaltoTO;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,13 +20,19 @@ import java.util.List;
 public class Filtros {
     private InstrutorDAO intrutorDao;
     private TiposDeSaltosInstrutoresDAO tipSaltInstDao;
+    private ClienteTO client;
+    private DecolagemTO deco;
+    private TipoDeSaltoTO tipSalt;
 
     public Filtros() {
         this.setIntrutorDao(new InstrutorDAO());
         this.setTipSaltInstDao(new TiposDeSaltosInstrutoresDAO());
+        this.setClient(new ClienteTO());
+        this.setDeco(new DecolagemTO());
+        this.setTipSalt(new TipoDeSaltoTO());
     }
     
-     /** Método que retorna uma lista dos instrutores que estão em uma decolagem.
+    /** Método que retorna uma lista dos instrutores que estão em uma decolagem.
     * @param iddecolagem int - É o número de identificação de uma decolagem.
     * @return List - Uma lista com intrutores.
     */
@@ -65,6 +74,11 @@ public class Filtros {
         return lstA;
     }
     
+    public List<InstrutorTO> getInstrutores(){
+        List<InstrutorTO> lstA = new LinkedList<>();
+        
+        return lstA;
+    }
     
     public InstrutorDAO getIntrutorDao() {
         return intrutorDao;
@@ -79,5 +93,30 @@ public class Filtros {
 
     public void setTipSaltInstDao(TiposDeSaltosInstrutoresDAO tipSaltInstDao) {
         this.tipSaltInstDao = tipSaltInstDao;
-    }   
+    }
+
+    public ClienteTO getClient() {
+        return client;
+    }
+
+    public void setClient(ClienteTO client) {
+        this.client = client;
+    }
+
+    public DecolagemTO getDeco() {
+        return deco;
+    }
+
+    public void setDeco(DecolagemTO deco) {
+        this.deco = deco;
+    }
+
+    public TipoDeSaltoTO getTipSalt() {
+        return tipSalt;
+    }
+
+    public void setTipSalt(TipoDeSaltoTO tipSalt) {
+        this.tipSalt = tipSalt;
+    }
+    
 }

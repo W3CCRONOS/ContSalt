@@ -6,7 +6,6 @@
 package beans;
 
 import classDAO.TipoDeSaltoDAO;
-import classTO.ClienteTO;
 import classTO.TipoDeSaltoTO;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;

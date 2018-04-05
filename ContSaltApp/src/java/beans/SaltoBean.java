@@ -6,9 +6,10 @@
 package beans;
 
 import classBO.Filtros;
+import classDAO.InstrutorDAO;
 import classDAO.SaltoDAO;
-import classDAO.TiposDeSaltosInstrutoresDAO;
 import classTO.ClienteTO;
+import classTO.DecolagemTO;
 import classTO.InstrutorTO;
 import classTO.SaltoTO;
 import classTO.TaxaSobrepesoTO;
@@ -33,51 +34,65 @@ public class SaltoBean implements Serializable {
     
     private SaltoTO salt;
     private SaltoDAO saltDAO;
+    private InstrutorDAO intrutorDao;
     private ClienteTO cliente;
     private TipoDeSaltoTO tipoDeSalto;
+    private DecolagemTO decolagem;
     private TaxaSobrepesoTO taxaSobrepeso;
-    private TiposDeSaltosInstrutoresDAO tipSaltInstrDao;
     private Filtros filtros;
      
     public SaltoBean() {
-        this.setSalt(new SaltoTO());
-        this.setCliente(new ClienteTO());
+        this.setSalt(new SaltoTO());        
         this.setSaltDAO(new SaltoDAO());
+        this.setCliente(new ClienteTO());
         this.setTipoDeSalto(new TipoDeSaltoTO());
+        this.setDecolagem(new DecolagemTO());
         this.setTaxaSobrepeso(new TaxaSobrepesoTO());
         this.setFiltros(new Filtros());
-        this.setTipSaltInstrDao(new TiposDeSaltosInstrutoresDAO());
+        this.setIntrutorDao(new InstrutorDAO());
     }
-    public void selCliente(ClienteTO c){
-        /* Date d = new Date();      
-        java.sql.Date dataSql = new java.sql.Date(d.getTime());
-        saltDAO.salvar(salt);
-        */
+    public void selCliente(ClienteTO c){        
         this.setCliente(c);
-        System.out.println(c.getIdCliente());
-        filtros.filtraPresenca();
-    }
-    public void selTipoDesalto(TipoDeSaltoTO d){           
-        this.setTipoDeSalto(d);
-        System.out.println(d.getIdTipoDeSalto());        
-        List<InstrutorTO> list = new LinkedList<>();
-        list = tipSaltInstrDao.getInstrutoresPorTipoDeSalto(d.getIdTipoDeSalto());
-        for (InstrutorTO obj : list){                     
-            System.out.println(obj.getNome());
-            System.out.println(obj.getIdInstrutor());
-            System.out.println(obj.getCpf());
-            System.out.println(obj.getAdmissao());
-            System.out.println(obj.getPresenca());
-            System.out.println("======================");
-        }
-        
     }
     public void selTaxaDeSobrepeso(TaxaSobrepesoTO ts){        
         this.setTaxaSobrepeso(ts);
-        System.out.println(ts.getIdTaxaSobrepeso());    
-    } 
+        
+    }
+    public void selTipoDesalto(TipoDeSaltoTO tipSalt){           
+        this.setTipoDeSalto(tipSalt);        
+    }
     
-    
+    public void selDecolagem(DecolagemTO d){             
+        this.setDecolagem(d);
+    }
+        
+    /**
+    * Método que retorna uma lista de instrutores. 
+    * @return List - Lista de instrutores, objetos InstrutorTO.  
+    */
+    public List<InstrutorTO> getInstrutores(){       
+        
+      //  List<InstrutorTO> listInstPorSalt = new LinkedList<>();
+       // listInstPorSalt=filtros.filtraInstruoresPorTipodeSalto(tipoDeSalto.getIdTipoDeSalto());
+        
+        List<InstrutorTO> listInstPorPeso = new LinkedList<>();
+        listInstPorPeso= intrutorDao.getInstrutores();      
+        
+        if(cliente!=null){ 
+            for(int i = 0; i < listInstPorPeso.size();i++){             
+                if(listInstPorPeso.get(i).getPeso()<cliente.getPeso()){
+                    listInstPorPeso.remove(i);                    
+                }
+            }
+                 
+        }
+         return listInstPorPeso;
+       // return listInstPorSalt;
+    }
+
+    public void selInstrutor(InstrutorTO d){           
+        
+    }   
     
     public SaltoTO getSalt() {
         return salt;
@@ -115,10 +130,22 @@ public class SaltoBean implements Serializable {
     public void setFiltros(Filtros filtros) {
         this.filtros = filtros;
     }
-    public TiposDeSaltosInstrutoresDAO getTipSaltInstrDao() {
-        return tipSaltInstrDao;
+
+    public DecolagemTO getDecolagem() {
+        return decolagem;
     }
-    public void setTipSaltInstrDao(TiposDeSaltosInstrutoresDAO tipSaltInstrDao) {
-        this.tipSaltInstrDao = tipSaltInstrDao;
-    } 
+
+    public void setDecolagem(DecolagemTO decolagem) {
+        this.decolagem = decolagem;
+    }
+
+    public InstrutorDAO getIntrutorDao() {
+        return intrutorDao;
+    }
+
+    public void setIntrutorDao(InstrutorDAO intrutorDao) {
+        this.intrutorDao = intrutorDao;
+    }
+    
+    
 }

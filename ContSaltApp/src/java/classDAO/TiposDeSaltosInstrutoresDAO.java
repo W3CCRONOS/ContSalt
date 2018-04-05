@@ -110,7 +110,7 @@ public class TiposDeSaltosInstrutoresDAO{
         List<InstrutorTO> list = new LinkedList<>();
         ResultSet rs;
         try{ 
-            PreparedStatement ppStmt =  conn.prepareStatement("SELECT i.idinstrutor, i.nome, i.cpf, i.admissao, i.presenca FROM instrutor i JOIN instrutor_has_tipodesalto a ON a.idinstrutor = i.idinstrutor AND a.idtipodesalto = ? ORDER BY admissao");
+            PreparedStatement ppStmt =  conn.prepareStatement("SELECT i.idinstrutor, i.nome, i.cpf, i.admissao, i.presenca, i.peso FROM instrutor i JOIN instrutor_has_tipodesalto a ON a.idinstrutor = i.idinstrutor AND a.idtipodesalto = ? ORDER BY admissao");
             ppStmt.setInt(1,idTipodeSalto);
             rs = ppStmt.executeQuery();
             while(rs.next()){

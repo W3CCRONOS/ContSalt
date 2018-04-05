@@ -58,6 +58,15 @@ public class DecolagemBean implements Serializable {
         java.sql.Date dataSql = new java.sql.Date(dataUtil.getTime());
         return cDAO.getDecolagens(dataSql);
     }
+    /**
+    * Método que retorna uma lista de registro das decolagens.
+    * @return List - Lista de decolagens.
+    * @see DecolagemTO
+    * @see DecolagemDAO
+    */
+    public List<DecolagemTO> getDecolagem(){      
+        return cDAO.getDecolagem();
+    }
     
     /**
     * Método para excluir o registro de uma decolagem no banco de dados.
