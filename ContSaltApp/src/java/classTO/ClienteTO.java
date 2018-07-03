@@ -11,11 +11,9 @@ package classTO;
  * @author Almir
  * @version 1.0
  */
-public class ClienteTO {
+public class ClienteTO extends PessoaTO{
     private int idCliente;
-    private String nome;
     private double peso=0.0;
-    private String cpf;
 
     public ClienteTO() {
    
@@ -36,13 +34,6 @@ public class ClienteTO {
         this.idCliente = idCliente;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
 
     public double getPeso() {
         return peso;
@@ -50,14 +41,6 @@ public class ClienteTO {
 
     public void setPeso(double peso) {
         this.peso = peso;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 
 }

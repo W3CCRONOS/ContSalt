@@ -6,6 +6,7 @@
 package beans;
 
 import classBO.Filtros;
+import classDAO.ClienteDAO;
 import classDAO.InstrutorDAO;
 import classDAO.SaltoDAO;
 import classTO.ClienteTO;
@@ -17,11 +18,14 @@ import classTO.TipoDeSaltoTO;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 /**
  *Classe de conexão com a página cadastrar_salto.xhtml.
@@ -34,8 +38,11 @@ public class SaltoBean implements Serializable {
     
     private SaltoTO salt;
     private SaltoDAO saltDAO;
-    private InstrutorDAO intrutorDao;
     private ClienteTO cliente;
+    private ClienteDAO clienteDAo;
+    private InstrutorDAO intrutorDao;
+    
+    
     private TipoDeSaltoTO tipoDeSalto;
     private DecolagemTO decolagem;
     private TaxaSobrepesoTO taxaSobrepeso;
@@ -45,15 +52,54 @@ public class SaltoBean implements Serializable {
         this.setSalt(new SaltoTO());        
         this.setSaltDAO(new SaltoDAO());
         this.setCliente(new ClienteTO());
+        this.setClienteDAo(new ClienteDAO());
+        
         this.setTipoDeSalto(new TipoDeSaltoTO());
         this.setDecolagem(new DecolagemTO());
         this.setTaxaSobrepeso(new TaxaSobrepesoTO());
         this.setFiltros(new Filtros());
         this.setIntrutorDao(new InstrutorDAO());
     }
+    
     public void selCliente(ClienteTO c){        
-        this.setCliente(c);
+       clienteDAo.getClientes();
+        System.out.println(cliente.getNome());
     }
+    
+    public List<ClienteTO> sugerirCliente(String consulta) {
+        List<ClienteTO> ClientesSugeridos = new ArrayList<>();
+        List<ClienteTO> allClientes = clienteDAo.getClientes();        
+        for (ClienteTO c : allClientes) {
+            if (c.getNome().toLowerCase().startsWith(consulta.toLowerCase())) {
+               ClientesSugeridos.add(c);
+            }
+        }
+        
+        return ClientesSugeridos;
+    }
+ 
+
+    public void selecionarCliente() {
+    	if (cliente != null) {
+            System.out.println(cliente.getIdCliente());
+            System.out.println(cliente.getNome());
+            System.out.println(cliente.getPeso());
+    	} else {
+    		System.out.println("Vazio");
+    	}
+
+        
+    }
+    
+  
+     
+     
+     
+     
+     
+     
+     
+    
     public void selTaxaDeSobrepeso(TaxaSobrepesoTO ts){        
         this.setTaxaSobrepeso(ts);
         
@@ -112,6 +158,16 @@ public class SaltoBean implements Serializable {
     public void setCliente(ClienteTO cliente) {
         this.cliente = cliente;
     }
+
+    public ClienteDAO getClienteDAo() {
+        return clienteDAo;
+    }
+
+    public void setClienteDAo(ClienteDAO clienteDAo) {
+        this.clienteDAo = clienteDAo;
+    }
+    
+    
     public TipoDeSaltoTO getTipoDeSalto() {
         return tipoDeSalto;
     }

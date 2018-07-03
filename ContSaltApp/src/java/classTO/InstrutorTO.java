@@ -11,11 +11,9 @@ import java.sql.Date;
  *
  * @author Almir
  */
-public class InstrutorTO {
-    private int idInstrutor;
-    private String nome;    
+public class InstrutorTO extends PessoaTO{
+    private int idInstrutor;   
     private Date admissao;
-    private String cpf;
     private String presenca = "false";
     private double peso = 0.0;
     
@@ -27,25 +25,6 @@ public class InstrutorTO {
     public void setIdInstrutor(int idInstrutor) {
         this.idInstrutor = idInstrutor;
     }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
- 
-
     public Date getAdmissao() {
         return admissao;
     }

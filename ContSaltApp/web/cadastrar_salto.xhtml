@@ -62,20 +62,20 @@ and open the template in the editor.
                     <h:form>                        
                         <h2>Criar Saltos</h2>
                         <center><h2>Selecionar o Cliente</h2></center>
-                        <p:dataTable var="cliente" value="#{clienteBean.clientes}" >
-                            <p:column headerText="Nome">
-                                <h:outputText value="#{cliente.nome}"/>
-                            </p:column>
-                            <p:column headerText="CPF">
-                                <h:outputText value="#{cliente.cpf}"/>                                
-                            </p:column>
-                            <p:column headerText="Peso Kg">
-                                <h:outputText value="#{cliente.peso}"/>
-                            </p:column>
-                             <p:column>
-                                 <p:commandButton value="Seleciona" action="#{saltoBean.selCliente(cliente)}" ajax="false" />                               
-                            </p:column>
-                        </p:dataTable>
+ 
+                        
+                        <p:outputLabel value="Pojo:" for="cliente" />
+                        <p:autoComplete id="cliente" value="#{saltoBean.cliente}"
+                                        completeMethod="#{saltoBean.sugerirCliente}"
+                                        forceSelection="true" converter="clienteconverter"
+                                        var="c" itemLabel="#{c.nome}" itemValue="#{c}" />
+ 
+                        
+                        <p:commandButton value="Atualizar" action="#{saltoBean.selecionarCliente()}" ajax="false" />
+                        
+                        
+                        
+                        
                         <center><h2>Selecionar a Taxa de Sobrepeso</h2></center>
                         <p:dataTable var="taxaSobrepeso" value="#{taxaSobrepesoBean.taxasSobrepesos}" >
                             <p:column headerText="Peso Kg">
