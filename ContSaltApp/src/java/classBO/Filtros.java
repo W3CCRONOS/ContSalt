@@ -38,7 +38,7 @@ public class Filtros {
     */
     public List<InstrutorTO> getInstrutoresDecolagem(int iddecolagem){
         List<InstrutorTO> lstA = new LinkedList<>();
-        lstA = intrutorDao.getInstrutoresDecolagem(iddecolagem);
+        //lstA = intrutorDao.getInstrutoresDecolagem(iddecolagem);
         return lstA;
     }
     

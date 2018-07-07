@@ -6,7 +6,7 @@
 package classTO;
 
 /**
- *Classe super Pessoa.
+ * Classe pai.
  * @author Almir
  * @version 1.0
  */

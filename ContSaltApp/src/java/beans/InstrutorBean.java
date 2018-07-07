@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package beans;
-import classBO.Filtros;
 import classDAO.InstrutorDAO;
 import classTO.InstrutorTO;
 import javax.inject.Named;
@@ -29,7 +28,6 @@ public class InstrutorBean implements Serializable {
     private InstrutorDAO cDAO ;
     private Date dataUtil;
     private ConversorDeDatas alteraData;
-    private Filtros filtro;
 
     public InstrutorBean() {
         //Inicialização de variáveis.
@@ -37,7 +35,6 @@ public class InstrutorBean implements Serializable {
         this.setcDAO(new InstrutorDAO());
         this.setDataUtil(new Date());
         this.setAlteraData(new ConversorDeDatas());
-        this.setFiltro(new Filtros());
     }
     /**
     * Método que cria um registro no banco de dados. Antes, ele converte a
@@ -63,14 +60,10 @@ public class InstrutorBean implements Serializable {
 
     
     /**
-    * Método para excluir o registro de um instrutor no banco de dados.
-    * Pode ser necessário, antes excluir os relacionamentos desse instrutor
-    * com os tipos de saltos e as taxas de sobre peso.
+    * Método para excluir o registro de um instrutor.
     * @param instrutor InstrutorTO - É um objeto do tipo InstrutorTO.
     * @see InstrutorTO
     * @see InstrutorDAO
-    * @see TiposDeSaltosInstrutoresBean
-    * @see TaxasInstrutoresBean
     */
      public void excluir(InstrutorTO instrutor){ 
         cDAO.excluir(instrutor);
@@ -156,14 +149,5 @@ public class InstrutorBean implements Serializable {
 
     public void setAlteraData(ConversorDeDatas alteraData) {
         this.alteraData = alteraData;
-    }
-
-    public Filtros getFiltro() {
-        return filtro;
-    }
-
-    public void setFiltro(Filtros filtro) {
-        this.filtro = filtro;
-    }
-    
+    }    
 }

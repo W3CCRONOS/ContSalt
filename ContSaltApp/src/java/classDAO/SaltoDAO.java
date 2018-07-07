@@ -11,23 +11,29 @@ import java.util.List;
 import utilitarios.Conexao;
 
 /**
- *Classe que conecta-se ao banco de dados para criar, alterar, excluir e visualizar os registros dos saltos.
+ * Classe que mantém os registros no banco de dados.
+ * A classe mantém os registros dos clientes.
  * @author Almir
  * @version 1.0
+ * @see SaltoTO
  * @see Conexao
  */
 
 public class SaltoDAO {
      Connection conn;
 
+    /**
+    * Método construtor. 
+    * No método inicializa a variável, realizando a conexão com o banco de dados. 
+    */
     public SaltoDAO() {
         this.conn =  new Conexao().conectar();
     }
     
     /**
-    * Método para salvar registros no banco. Este método salva um novo salto
-    * no banco.
-    * @param salt SaltoTO - Objeto que representa um salto, que será registrado no banco.
+    * Método para criar um registros. 
+    * O método salva o registro de um salto no banco de dados.
+    * @param salt - salto que será registrado no banco.
     */
      public void salvar(SaltoTO salt){ 
         try{
@@ -84,10 +90,10 @@ public class SaltoDAO {
     }
     
     /** 
-    * Método para buscar saltos. Este método busca todos os saltos relalizados
-    * em uma determinada data.
-    * @param dataDoSalto Date - É data referente a busca.
-    * @return List - O retorno é uma lista de objetos do tipo SaltoTO.
+    * Método de busca. 
+    * O método busca todos os saltos relalizados em uma determinada data.
+    * @param dataDoSalto Date - data referente a busca.
+    * @return List - o retorno é uma lista com saltos.
     */    
     public List<SaltoTO> getSaltosPorData(Date dataDoSalto){
             

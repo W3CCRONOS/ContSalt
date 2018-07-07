@@ -31,15 +31,20 @@ public class TiposDeSaltosInstrutoresBean implements Serializable {
         this.setTiDAO( new TiposDeSaltosInstrutoresDAO());
         this.settDAO(new TipoDeSaltoDAO());
         /*O vetor é inicializado com a quantidade de registros de tipos de saltos armazenados no banco*/
-        this.setIdTiposDeSaltos(idTiposDeSaltos = new int[tDAO.contarTaxasDeSobrePesoArmazenadas()]);
+        this.setIdTiposDeSaltos(idTiposDeSaltos = new int[tDAO.contarTiposDeSaltosArmazenados()]);
     }
     
+    /** 
+    * Método que registra os tipos de saltos dos instrutores.
+    * O método registra quais são os tipos de saltos que um instrutor realiza.
+    */     
     public void tiposDeSaltosDoInstrutor(){
-        /*Lista com todas os tipos de saltos armazenados no banco.*/
-        List<TipoDeSaltoTO> list = tDAO.getTiposDeSaltos();
-        /* .length, informa o comprimento do vetor idTiposDeSaltos.*/       
+        List<TipoDeSaltoTO> list = tDAO.getTiposDeSaltos();       
         for (int i = 0; i < idTiposDeSaltos.length ; i++) { 
-            tiDAO.salvarTipoDeSaltoDoInstrutor(idInstrutor, idTiposDeSaltos[i]);
+            /*Se ainda não houver um registro no banco, será criado um novo registro*/
+            if(tiDAO.verificarSeExisteRegistro(idInstrutor, idTiposDeSaltos[i]) == 0){ 
+                tiDAO.salvarTipoDeSaltoDoInstrutor(idInstrutor, idTiposDeSaltos[i]);
+            }
             /*Os tipos de saltos selecionados pelo usuário
             seram removidas da lista(list)*/
             for(TipoDeSaltoTO salto : list){                
@@ -49,13 +54,21 @@ public class TiposDeSaltosInstrutoresBean implements Serializable {
                 }
             }
         }
-        /* A lista resultante possui os tipos de salto que o intrutor não realiza.
-        Caso existam registros no banco, serão apagados os registros de relacionamentos com o instrutor*/
-        for(TipoDeSaltoTO salto : list){
-            tiDAO.excluirTipoDeSaltoDoInstrutor(idInstrutor, salto.getIdTipoDeSalto());
+        /* A lista (list) resultante possui os tipos de salto que o intrutor não realiza.*/        
+        for(TipoDeSaltoTO tipSalt : list){
+             /*Se houver registro no banco, excluí-lo-ei*/
+             if(tiDAO.verificarSeExisteRegistro(idInstrutor, tipSalt.getIdTipoDeSalto()) != 0){
+                tiDAO.excluirTipoDeSaltoDoInstrutor(idInstrutor, tipSalt.getIdTipoDeSalto());
+            }
         }
         
     }
+        /** 
+    * Método que informa os tipos de saltos de um instrutor.
+    * O método retona uma lista com todos os tipos de saltos que um instrutor realiza.
+    * @param idInstrutor int - É identificado(chave primária no banco de dados) de um instrutor.
+    * @return List - O retorno é uma lista de todos os tipos de saltos que o instrutor realiza.
+    */  
    public List<TipoDeSaltoTO> getTiposDeSaltosPorInstrutor(int idInstrutor){
         return tiDAO.getTiposDeSaltosPorInstrutor(idInstrutor);
     }

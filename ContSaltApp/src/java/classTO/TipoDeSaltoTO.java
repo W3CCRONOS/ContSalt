@@ -15,6 +15,7 @@ public class TipoDeSaltoTO {
     private int idTipoDeSalto;
     private String nome;
     private double valor = 0.0;
+    private String taxaDeSobrePeso = "false";
 
     
     public int getIdTipoDeSalto() {
@@ -40,5 +41,14 @@ public class TipoDeSaltoTO {
     public void setValor(double valor) {
         this.valor = valor;
     }        
+
+    public String getTaxaDeSobrePeso() {
+        return taxaDeSobrePeso;
+    }
+
+    public void setTaxaDeSobrePeso(String taxaDeSobrePeso) {
+        this.taxaDeSobrePeso = taxaDeSobrePeso;
+    }
+    
     
 }

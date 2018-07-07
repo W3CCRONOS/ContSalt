@@ -7,6 +7,7 @@ package classDAO;
 
 import classTO.InstrutorTO;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,15 +16,29 @@ import java.util.List;
 import utilitarios.Conexao;
 
 /**
- *
+ * Classe que mantém os registros no banco de dados.
+ * A classe mantém os registros dos intrutores.
  * @author Almir
+ * @version 1.0
+ * @see InstrutorTO
+ * @see Conexao
  */
 public class InstrutorDAO {
     Connection conn;
+    
+    /**
+    * Método construtor. 
+    * No método inicializa a variável, realizando a conexão com o banco de dados. 
+    */
     public InstrutorDAO() {
        conn = new Conexao().conectar();      
     }
-        
+    
+   /**
+    * Método para criar um registros. 
+    * O método salva o registro de um instrutor no banco de dados.
+    * @param i - instrutor que será registrado no banco.
+    */    
     public void salvar(InstrutorTO i){
  
         try{
@@ -41,6 +56,12 @@ public class InstrutorDAO {
             ex.printStackTrace();
         }
     }
+    
+    /** 
+    * Método para alterar um registro. 
+    * O método altera os registros de um instruto no banco de dados.
+    * @param i - instrutor que terá uma alteração no seu registro no banco.
+    */ 
     public void alterar(InstrutorTO i){
         try {
             PreparedStatement ppStmt = conn.prepareStatement("UPDATE instrutor SET nome =?, cpf =?, admissao =?, presenca =?, peso =? WHERE idinstrutor =?");
@@ -56,7 +77,12 @@ public class InstrutorDAO {
             EX.printStackTrace();
         }        
     }
-     
+    
+    /** 
+    * Método para alterar um registro. 
+    * O método altera o registro sobre a presença de um instrutor no banco de dados.
+    * @param i - instrutor que terá uma alteração no seu registro no banco.
+    */
     public void presenca(InstrutorTO i){
         try {
             PreparedStatement ppStmt = conn.prepareStatement("UPDATE instrutor SET presenca =? WHERE idinstrutor =?");
@@ -68,11 +94,12 @@ public class InstrutorDAO {
             EX.printStackTrace();
         }        
     }
-    /** 
-    * Método para buscar os instrutores.
-    * @return List - Uma lista com intrutores.
-    */
     
+    /** 
+    * Método de busca. 
+    * O método busca todos os registros dos instrutores armazenados no banco de dados.
+    * @return List - o retorno é uma lista com instrutores.
+    */
     public List<InstrutorTO> getInstrutores(){
  
             List<InstrutorTO> lstA = new LinkedList<InstrutorTO>();
@@ -91,12 +118,8 @@ public class InstrutorDAO {
             }
             return lstA;
     }
-    /** 
-    * Método para buscar os instrutores que estão em uma decolagem.
-    * @param iddecolagem int - É o número de identificação de uma decolagem.
-    * @return List - Uma lista com intrutores.
-    */
-    public List<InstrutorTO> getInstrutoresDecolagem(int iddecolagem){
+
+    public List<InstrutorTO> getInstrutoresDecolagem(int iddecolagem, Date data){
  
             List<InstrutorTO> lstA = new LinkedList<>();
             ResultSet rs;
@@ -105,6 +128,7 @@ public class InstrutorDAO {
                                                                  "INNER JOIN salto s ON s.idinstrutor = i.idinstrutor\n" +
                                                                  "INNER JOIN decolagem d ON s.iddecolagem = ? ORDER BY admissao");
                 ppStmt.setInt(1,iddecolagem);
+                 ppStmt.setDate(2,data);
                 rs = ppStmt.executeQuery();
                 while(rs.next()){
                     lstA.add(getIntrutor(rs));
@@ -121,9 +145,11 @@ public class InstrutorDAO {
 
     
     /** 
-    * Método para montar um objeto do tipo instrutor.
-    * @return InstrutorTO - Um intrutor.
-    */
+    * Método para montar um objeto. 
+    * O método recebe um resultado do banco e preenche os atributos de um objeto.
+    * @param rs - é o resultado de uma solicitação feita ao banco de dados.
+    * @return - o retorno é um objeto do tipo InstrutorTO.
+    */  
     public InstrutorTO getIntrutor(ResultSet rs) throws SQLException{
         InstrutorTO i = new InstrutorTO();
         i.setIdInstrutor(rs.getInt("idinstrutor"));
@@ -135,6 +161,11 @@ public class InstrutorDAO {
         return i;
     }
     
+    /** 
+    * Método de exclusão. 
+    * O método exclui um registro do banco de dados..
+    * @param i - instrutor que terá os registros excluídos do banco.
+    */
     public void excluir(InstrutorTO i){
            try {
                PreparedStatement ppStmt = conn.prepareStatement("DELETE FROM instrutor WHERE idinstrutor=?");

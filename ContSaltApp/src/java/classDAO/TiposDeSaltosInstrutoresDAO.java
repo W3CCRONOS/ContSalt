@@ -12,9 +12,10 @@ import java.util.List;
 import utilitarios.Conexao;
 
 /**
- * Classe para acessar os dados dos tipos de saltos e instrutores.
+ *Classe que conecta-se ao banco de dados para acessar os registros dos clientes.
  * @author Almir
  * @version 1.0
+ * @see Conexao
  */
 public class TiposDeSaltosInstrutoresDAO{
     
@@ -23,15 +24,19 @@ public class TiposDeSaltosInstrutoresDAO{
     private InstrutorDAO iDao;
     private TipoDeSaltoDAO tipSaltDao;
     
+    /**
+    * Método construtor. 
+    * Neste método é realizado a conexão com o banco de dados e inicialização das
+    * variáveis. 
+    */
     public TiposDeSaltosInstrutoresDAO() {
         this.setiDao(new InstrutorDAO());
         this.setTipSaltDao(new TipoDeSaltoDAO());
         conn = new Conexao().conectar();
     }
     /**
-    * O método para salvar registros no banco.
-    * Ele verifica se não há um registro especifico de relacionamento, entre um tipo de salto e um instrutor.
-    * Se não houver, ele cria.
+    * O método para criar um registros no banco.
+    * O método registra o relacionamento, entre um tipo de salto e um instrutor.
     * @param idInstrutor int - número da chave extrangeira de um instrutor.
     * @param idTipoDeSalto int - número da chave extrangeira de um tipo de salto.
     */    
@@ -53,12 +58,12 @@ public class TiposDeSaltosInstrutoresDAO{
   
     /** 
     * Método para excluir registro no banco.
-    * O método verifica se existe um registro de relacionamento do tipo de salto ligado ao instrutor. Se houver, ele o exclui.
+    * O método esclui um registro de relacionamento de um tipo de salto ligado a um
+    * determinado instrutor.
     * @param idInstrutor int - É o número da chave extrangeira de um instrutor.
     * @param idTipoDeSalto int - É o número da chave extrangeira de um tipo de salto.
     */
     public void excluirTipoDeSaltoDoInstrutor(int idInstrutor, int idTipoDeSalto){
-        if (verificarSeExisteRegistro(idInstrutor, idTipoDeSalto) != 0){
             try{
                 PreparedStatement ppStmt =  conn.prepareStatement("DELETE FROM instrutor_has_tipodesalto WHERE idinstrutor = ? AND idtipodesalto = ?");
                 ppStmt.setInt(1,idInstrutor);
@@ -68,8 +73,7 @@ public class TiposDeSaltosInstrutoresDAO{
             }
             catch(SQLException ex){         
                 ex.printStackTrace();
-            }                
-        } 
+            }                 
     }
     
     /** 
@@ -78,7 +82,7 @@ public class TiposDeSaltosInstrutoresDAO{
     * @param idTipoDeSalto int - É o número da chave extrangeira de uma tipo de salto.
     * @return total int - Retorna 0(zero) para ausência de registro ou 1(um) se houver registro.    
     */
-    private int verificarSeExisteRegistro(int idInstrutor, int idTipoDeSalto){
+    public int verificarSeExisteRegistro(int idInstrutor, int idTipoDeSalto){
         int total = 0;
         ResultSet rs;
         try{ 
@@ -135,7 +139,7 @@ public class TiposDeSaltosInstrutoresDAO{
             List<TipoDeSaltoTO> list = new LinkedList<>();
             ResultSet rs;
             try{
-                PreparedStatement ppStmt = conn.prepareStatement("SELECT i.idtipodesalto, i.nome, i.valor FROM tipodesalto i JOIN instrutor_has_tipodesalto a ON a.idtipodesalto = i.idtipodesalto AND a.idinstrutor = ?");
+                PreparedStatement ppStmt = conn.prepareStatement("SELECT i.idtipodesalto, i.nome, i.valor, i.taxadesobrepeso FROM tipodesalto i JOIN instrutor_has_tipodesalto a ON a.idtipodesalto = i.idtipodesalto AND a.idinstrutor = ?");
                 ppStmt.setInt(1,idInstrutor);
                 rs = ppStmt.executeQuery();
                 while(rs.next()){

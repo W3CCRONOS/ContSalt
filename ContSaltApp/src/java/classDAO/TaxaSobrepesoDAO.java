@@ -15,16 +15,29 @@ import java.util.List;
 import utilitarios.Conexao;
 
 /**
- *
- * @author Skydive
+ * Classe que mantém os registros no banco de dados.
+ * A classe mantém os registros dos clientes.
+ * @author Almir
+ * @version 1.0
+ * @see TaxaSobrepesoTO
+ * @see Conexao
  */
 public class TaxaSobrepesoDAO {
             Connection conn;
 
+    /**
+    * Método construtor. 
+    * No método inicializa a variável, realizando a conexão com o banco de dados. 
+    */
     public TaxaSobrepesoDAO() {
        conn = new Conexao().conectar();      
     }
-        
+    
+    /**
+    * Método para criar um registros. 
+    * O método salva o registro de uma taxa de sobrepeso no banco de dados.
+    * @param taxa - taxa de sobrepeso que será registrado no banco.
+    */
     public void salvar(TaxaSobrepesoTO taxa){
  
         try{
@@ -39,6 +52,12 @@ public class TaxaSobrepesoDAO {
             ex.printStackTrace();
         }
     }
+    
+    /** 
+    * Método para alterar um registro. 
+    * O método altera os registros de uma taxa de sobrepeso no banco de dados.
+    * @param taxa - taxa de sobrepeso que terá uma alteração no seu registro no banco.
+    */
      public void alterar(TaxaSobrepesoTO taxa){
         try {
             PreparedStatement ppStmt = conn.prepareStatement("UPDATE taxasobrepeso SET valor =? ,peso =? WHERE idtaxasobrepeso =?");
@@ -51,7 +70,12 @@ public class TaxaSobrepesoDAO {
              EX.printStackTrace();
         }        
     }
-    
+     
+    /** 
+    * Método de busca. 
+    * O método busca todos os registros dos clientes armazenados no banco de dados.
+    * @return List - o retorno é uma lista com taxa de sobrepeso.
+    */ 
     public List<TaxaSobrepesoTO> getTaxasSobrepesos(){           
             List<TaxaSobrepesoTO> lstA = new LinkedList<>();
             ResultSet rs;
@@ -70,6 +94,12 @@ public class TaxaSobrepesoDAO {
             return lstA;
     }
     
+    /** 
+    * Método para montar um objeto. 
+    * O método recebe um resultado do banco e preenche os atributos de um objeto.
+    * @param rs - é o resultado de uma solicitação feita ao banco de dados.
+    * @return - o retorno é um objeto do tipo TaxaSobrepeTO.
+    */
     protected TaxaSobrepesoTO getTaxaSobrepeso(ResultSet rs) throws SQLException{
         TaxaSobrepesoTO t = new TaxaSobrepesoTO();
         t.setValor(rs.getDouble("valor"));
@@ -78,6 +108,11 @@ public class TaxaSobrepesoDAO {
         return t;
     }
     
+    /** 
+    * Método de exclusão. 
+    * O método exclui um registro do banco de dados..
+    * @param t - taxa de sobrepeso que terá os registros excluídos do banco.
+    */
     public void excluir(TaxaSobrepesoTO t){
         try{
             PreparedStatement ppStmt = conn.prepareStatement("DELETE FROM taxasobrepeso WHERE idtaxasobrepeso=?");
@@ -89,10 +124,11 @@ public class TaxaSobrepesoDAO {
             EX.printStackTrace();
         }
     }
+        
     /** 
-    * Método para contar quantas taxas de sobre peso estão registradas no banco.
-    * @return int - Valor com o total de registro de taxas de sobrepeso armazenados
-    * no banco.
+    * Método para contar registros.
+    * O método conta quantas taxas de sobrepeso estão registradas no banco.
+    * @return int - valor com o total de registros armazenados.
     */
     public int contarTaxasDeSobrePesoArmazenadas(){
         int total=0;

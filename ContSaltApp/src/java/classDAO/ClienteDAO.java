@@ -15,26 +15,28 @@ import java.util.List;
 import utilitarios.Conexao;
 
 /**
- *Classe que conecta-se ao banco de dados para acessar os registros dos clientes.
+ * Classe que mantém os registros no banco de dados.
+ * A classe mantém os registros dos clientes.
  * @author Almir
  * @version 1.0
  * @see ClienteTO
  * @see Conexao
  */
-public class ClienteDAO {
+public class ClienteDAO{
     Connection conn;
     
     /**
-    * Método construtor. Neste métodos as variáveis
-    * são inicializadas.
+    * Método construtor. 
+    * No método inicializa a variável, realizando a conexão com o banco de dados. 
     */
     public ClienteDAO() {
         this.conn =  new Conexao().conectar();
     }
+    
     /**
-    * Método para salvar registros no banco. Este método salva um novo cliente
-    * no banco.
-    * @param client ClienteTO - Objeto que representa um cliente, que será registrado no banco.
+    * Método para criar registros. 
+    * O método salva o registro de um cliente no banco de dados.
+    * @param client - cliente que será registrado no banco.
     */
      public void salvar(ClienteTO client){ 
         try{
@@ -48,11 +50,12 @@ public class ClienteDAO {
         catch(SQLException ex){         
             ex.printStackTrace();
         }
-    }           
+    } 
+     
     /** 
-    * Método para buscar todos os clientes. Este método busca todos os saltos relalizados
-    * em uma determinada data.
-    * @return List - O retorno é uma lista de objetos do tipo ClienteTO.
+    * Método de busca. 
+    * O método busca todos os registros dos clientes armazenados no banco de dados.
+    * @return List - o retorno é uma lista com clientes.
     */    
     public List<ClienteTO> getClientes(){
             
@@ -75,10 +78,10 @@ public class ClienteDAO {
     }
     
     /** 
-    * Método para montar um objeto cliente. Este método recebe um resultado do banco
-    * e preenche os atributos de um objeto.
-    * @param rs ResultSet - É o resultado de uma solicitação feita ao banco de dados, referente a uma busca.
-    * @return ClienteTO - O retorno é um objeto do tipo ClienteTO.
+    * Método para montar um objeto. 
+    * O método recebe um resultado do banco e preenche os atributos de um objeto.
+    * @param rs - é o resultado de uma solicitação feita ao banco de dados.
+    * @return - o retorno é um objeto do tipo ClienteTO.
     */ 
     private ClienteTO getCliente(ResultSet rs) throws SQLException{
         ClienteTO client = new ClienteTO();
@@ -88,10 +91,16 @@ public class ClienteDAO {
         client.setPeso(rs.getDouble("peso"));
         return client;
     }
-     public void excluir(ClienteTO c){
+    
+    /** 
+    * Método de exclusão. 
+    * O método exclui um registro do banco de dados..
+    * @param client - cliente que terá os registros excluídos do banco.
+    */ 
+     public void excluir(ClienteTO client){
         try{
             PreparedStatement ppStmt = conn.prepareStatement("DELETE FROM cliente WHERE idcliente=?");
-            ppStmt.setInt(1,c.getIdCliente());
+            ppStmt.setInt(1,client.getIdCliente());
             ppStmt.execute();
             ppStmt.close();
         }
@@ -100,13 +109,18 @@ public class ClienteDAO {
         }
     }
      
-     public void alterar(ClienteTO cliente){
+    /** 
+    * Método para alterar um registro. 
+    * O método altera os registros de um cliente no banco de dados.
+    * @param client - cliente que terá uma alteração no seu registro no banco.
+    */ 
+     public void alterar(ClienteTO client){
         try {
             PreparedStatement ppStmt = conn.prepareStatement("UPDATE cliente SET nome=?, cpf=?, peso=? WHERE idcliente=?");
-            ppStmt.setString(1, cliente.getNome());
-            ppStmt.setString(2, cliente.getCpf());
-            ppStmt.setDouble(3, cliente.getPeso());
-            ppStmt.setInt(4,cliente.getIdCliente());
+            ppStmt.setString(1, client.getNome());
+            ppStmt.setString(2, client.getCpf());
+            ppStmt.setDouble(3, client.getPeso());
+            ppStmt.setInt(4,client.getIdCliente());
             ppStmt.execute();
             ppStmt.close();
  
@@ -115,23 +129,4 @@ public class ClienteDAO {
         }        
     }
     
-   public List<ClienteTO> getNomesClientes(String texto){
-            
-            List<ClienteTO> lstA = new LinkedList<>();
-            ResultSet rs;
-            try{
-                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM cliente WHERE nome LIKE '?%'");
-                ppStmt.setString(1, texto);
-                rs = ppStmt.executeQuery();
-                while(rs.next()){
-                    lstA.add(getCliente(rs));
-                }
-                ppStmt.close();
-	        rs.close();
-            }
-            catch(SQLException ex){
-                ex.printStackTrace();
-            }
-            return lstA;
-    }  
 }

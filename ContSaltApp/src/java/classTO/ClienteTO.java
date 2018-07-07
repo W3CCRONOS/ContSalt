@@ -7,7 +7,7 @@ package classTO;
 
 
 /**
- *Classe estanciar os clientes.
+ *Classe para estanciar os clientes.
  * @author Almir
  * @version 1.0
  */

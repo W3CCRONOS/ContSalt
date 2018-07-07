@@ -24,11 +24,9 @@ import java.util.List;
 @SessionScoped
 public class ClienteBean implements Serializable {
 
-
     private ClienteTO clienteTO;
     private ClienteDAO clienteDAO ;
-    private SaltoBean clienteSalto;
-    
+       
     /**
     * Método construtor. Neste métodos as variáveis
     * são inicializadas.
@@ -36,7 +34,6 @@ public class ClienteBean implements Serializable {
     public ClienteBean() {
         this.setClienteTO(new ClienteTO());
         this.setClienteDAO(new ClienteDAO());
-        this.setClienteSalto(new SaltoBean());
     } 
      /**
     * Método que cria um registro no banco de dados. Ele envia o objeto instanciado
@@ -46,9 +43,6 @@ public class ClienteBean implements Serializable {
     * @see ClienteDAO
     */
     public  void salvar(){
-        System.out.println(clienteTO.getNome());
-        System.out.println(clienteTO.getPeso());
-        System.out.println(clienteTO.getCpf());
         clienteDAO.salvar(clienteTO);
         clienteTO = new ClienteTO();
     }
@@ -69,11 +63,6 @@ public class ClienteBean implements Serializable {
         clienteDAO.alterar(clienteTO); 
         clienteTO = new ClienteTO();
     }
-    
-     public List<ClienteTO> completeText(String query) {
-               
-        return clienteDAO.getNomesClientes(query);
-    }
 
     public ClienteTO getClienteTO() {
         return clienteTO;
@@ -89,14 +78,5 @@ public class ClienteBean implements Serializable {
 
     public void setClienteDAO(ClienteDAO clienteDAO) {
         this.clienteDAO = clienteDAO;
-    }
-
-    public SaltoBean getClienteSalto() {
-        return clienteSalto;
-    }
-
-    public void setClienteSalto(SaltoBean clienteSalto) {
-        this.clienteSalto = clienteSalto;
-    }
-    
+    } 
 }

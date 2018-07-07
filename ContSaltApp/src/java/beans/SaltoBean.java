@@ -8,24 +8,21 @@ package beans;
 import classBO.Filtros;
 import classDAO.ClienteDAO;
 import classDAO.InstrutorDAO;
-import classDAO.SaltoDAO;
+
 import classTO.ClienteTO;
 import classTO.DecolagemTO;
 import classTO.InstrutorTO;
-import classTO.SaltoTO;
+
 import classTO.TaxaSobrepesoTO;
 import classTO.TipoDeSaltoTO;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+
 import java.util.LinkedList;
 import java.util.List;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
+
 
 /**
  *Classe de conexão com a página cadastrar_salto.xhtml.
@@ -36,36 +33,34 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class SaltoBean implements Serializable {
     
-    private SaltoTO salt;
-    private SaltoDAO saltDAO;
     private ClienteTO cliente;
     private ClienteDAO clienteDAo;
-    private InstrutorDAO intrutorDao;
-    
     
     private TipoDeSaltoTO tipoDeSalto;
+    private int idTiposDeSaltos;
+    
+    private InstrutorDAO intrutorDao;
     private DecolagemTO decolagem;
     private TaxaSobrepesoTO taxaSobrepeso;
     private Filtros filtros;
      
     public SaltoBean() {
-        this.setSalt(new SaltoTO());        
-        this.setSaltDAO(new SaltoDAO());
         this.setCliente(new ClienteTO());
-        this.setClienteDAo(new ClienteDAO());
-        
+        this.setClienteDAo(new ClienteDAO());  
         this.setTipoDeSalto(new TipoDeSaltoTO());
+        this.setIdTiposDeSaltos(idTiposDeSaltos = 0);
         this.setDecolagem(new DecolagemTO());
         this.setTaxaSobrepeso(new TaxaSobrepesoTO());
         this.setFiltros(new Filtros());
         this.setIntrutorDao(new InstrutorDAO());
     }
     
-    public void selCliente(ClienteTO c){        
-       clienteDAo.getClientes();
-        System.out.println(cliente.getNome());
-    }
-    
+    /**
+    * Método para busca de clientes. 
+    * O metodo retorna uma lista de clientes, segundo a digitação realizada no formulário.
+    * @param consulta String - Texto digitado pelo usuário do sistema.
+    * @return List - Lista de clientes.  
+    */
     public List<ClienteTO> sugerirCliente(String consulta) {
         List<ClienteTO> ClientesSugeridos = new ArrayList<>();
         List<ClienteTO> allClientes = clienteDAo.getClientes();        
@@ -78,43 +73,16 @@ public class SaltoBean implements Serializable {
         return ClientesSugeridos;
     }
  
-
-    public void selecionarCliente() {
-    	if (cliente != null) {
-            System.out.println(cliente.getIdCliente());
-            System.out.println(cliente.getNome());
-            System.out.println(cliente.getPeso());
-    	} else {
-    		System.out.println("Vazio");
-    	}
-
+    /**
+    * Método que seleciona um cliente e o tipo de salto. 
+    */
+    public void selecClientTipoDeSalto() {
         
     }
-    
-  
-     
-     
-     
-     
-     
-     
-     
-    
-    public void selTaxaDeSobrepeso(TaxaSobrepesoTO ts){        
-        this.setTaxaSobrepeso(ts);
-        
-    }
-    public void selTipoDesalto(TipoDeSaltoTO tipSalt){           
-        this.setTipoDeSalto(tipSalt);        
-    }
-    
-    public void selDecolagem(DecolagemTO d){             
-        this.setDecolagem(d);
-    }
-        
+      
     /**
     * Método que retorna uma lista de instrutores. 
-    * @return List - Lista de instrutores, objetos InstrutorTO.  
+    * @return List - Lista de instrutores.  
     */
     public List<InstrutorTO> getInstrutores(){       
         
@@ -140,18 +108,6 @@ public class SaltoBean implements Serializable {
         
     }   
     
-    public SaltoTO getSalt() {
-        return salt;
-    }
-    public void setSalt(SaltoTO salt) {
-        this.salt = salt;
-    }
-    public SaltoDAO getSaltDAO() {
-        return saltDAO;
-    }
-    public void setSaltDAO(SaltoDAO saltDAO) {
-        this.saltDAO = saltDAO;
-    }
     public ClienteTO getCliente() {
         return cliente;
     }
@@ -202,6 +158,14 @@ public class SaltoBean implements Serializable {
     public void setIntrutorDao(InstrutorDAO intrutorDao) {
         this.intrutorDao = intrutorDao;
     }
-    
+
+    public int getIdTiposDeSaltos() {
+        return idTiposDeSaltos;
+    }
+
+    public void setIdTiposDeSaltos(int idTiposDeSaltos) {
+        this.idTiposDeSaltos = idTiposDeSaltos;
+    }
+
     
 }

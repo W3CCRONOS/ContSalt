@@ -16,7 +16,8 @@ import java.util.List;
 import utilitarios.Conexao;
 
 /**
- *Classe que conecta-se ao banco de dados para acessar os registros das decolagens.
+ * Classe que mantém os registros no banco de dados.
+ * A classe mantém os registros das decolagens.
  * @author Almir
  * @version 1.0
  * @see DecolagemTO
@@ -25,15 +26,19 @@ import utilitarios.Conexao;
 public class DecolagemDAO {
     Connection conn;
     private DecolagemTO decoTO;
-
+  
+    /**
+    * Método construtor. 
+    * No método inicializa a variável, realizando a conexão com o banco de dados. 
+    */
     public DecolagemDAO() {
         conn = new Conexao().conectar();
-        this.setDecoTO(new DecolagemTO());
     }
+    
     /**
-    * Método para salvar registros no banco. Este método salva uma nova decolagem
-    * no banco.
-    * @param deco DecolagemTO - Objeto que representa uma decolagem.
+    * Método para criar um registros. 
+    * O método salva o registro de uma decolagem no banco de dados.
+    * @param deco - decolagem que será registrado no banco.
     */
      public void salvar(DecolagemTO deco){ 
         try{
@@ -47,18 +52,21 @@ public class DecolagemDAO {
         catch(SQLException ex){         
             ex.printStackTrace();
         }
-    }           
+    }
+     
     /** 
-    * Método para buscar todas as decolagens registradas no banco.
-    * @param deco Date - data.
+    * Método de busca. 
+    * O método busca os registros de algumas decolagens realizadas em uma data
+    * específica.
+    * @param data - data das decolagens.
     * @return List - O retorno é uma lista com decolagens.
-    */    
-    public List<DecolagemTO> getDecolagens(Date deco){            
+    */   
+    public List<DecolagemTO> getDecolagens(Date data){            
             List<DecolagemTO> lstA = new LinkedList<>();
             ResultSet rs;            
             try{
                 PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM decolagem WHERE data = ?");
-                ppStmt.setDate(1,deco);
+                ppStmt.setDate(1,data);
                 rs = ppStmt.executeQuery();
                 while(rs.next()){
                     lstA.add(getDecolagem(rs));
@@ -95,11 +103,11 @@ public class DecolagemDAO {
     }
         
     /** 
-    * Método para montar um objeto decolagem. Este método recebe um resultado do banco
-    * e preenche os atributos de um objeto.
-    * @param rs ResultSet - É o resultado de uma solicitação feita ao banco de dados, referente a uma busca.
-    * @return DecolagemTO - O retorno é um objeto do tipo ClienteTO.
-    */ 
+    * Método para montar um objeto. 
+    * O método recebe um resultado do banco e preenche os atributos de um objeto.
+    * @param rs - é o resultado de uma solicitação feita ao banco de dados.
+    * @return - o retorno é um objeto do tipo DecolagemTO.
+    */  
     private DecolagemTO getDecolagem(ResultSet rs) throws SQLException{
         DecolagemTO decolagem = new DecolagemTO();
         decolagem.setIddecolagem(rs.getInt("iddecolagem"));
@@ -109,6 +117,11 @@ public class DecolagemDAO {
         return decolagem;
     }
     
+    /** 
+    * Método de exclusão. 
+    * O método exclui um registro do banco de dados..
+    * @param c - decolagem que terá os registros excluídos do banco.
+    */
     public void excluir(DecolagemTO c){
         try{
             PreparedStatement ppStmt = conn.prepareStatement("DELETE FROM decolagem WHERE iddecolagem=?");
@@ -121,9 +134,10 @@ public class DecolagemDAO {
         }
     }
     /** 
-    * Método para fazer alterações em uma decolagem. 
-    * @param deco DecolagemTO - Objeto que representa uma decolagem.
-    */ 
+    * Método para alterar um registro. 
+    * O método altera os registros de uma decolagem no banco de dados.
+    * @param deco - decolagem que terá uma alteração no seu registro no banco.
+    */  
      
      public void alterar(DecolagemTO deco){
         try {

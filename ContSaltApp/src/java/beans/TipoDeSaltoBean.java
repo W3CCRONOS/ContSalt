@@ -24,13 +24,11 @@ public class TipoDeSaltoBean implements Serializable {
 
    private TipoDeSaltoTO CTO;
    private TipoDeSaltoDAO cDAO;
-   private SaltoBean tipoDeSalto;
 
     
     public TipoDeSaltoBean() {
         this.setCTO(new TipoDeSaltoTO());
         this.setcDAO(new TipoDeSaltoDAO());
-        this.setTipoDeSalto(new SaltoBean());
     }
    
     
@@ -71,15 +69,5 @@ public class TipoDeSaltoBean implements Serializable {
     public void setcDAO(TipoDeSaltoDAO cDAO) {
         this.cDAO = cDAO;
     }
-
-    public SaltoBean getTipoDeSalto() {
-        return tipoDeSalto;
-    }
-
-    public void setTipoDeSalto(SaltoBean tipoDeSalto) {
-        this.tipoDeSalto = tipoDeSalto;
-    }
-
    
-    
- }
+}

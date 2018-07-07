@@ -6,8 +6,9 @@
 package classTO;
 
 /**
- *
+ * Classe para estanciar as taxas de sobrepeso.
  * @author Almir
+ * @version 1.0
  */
 public class TaxaSobrepesoTO {
     

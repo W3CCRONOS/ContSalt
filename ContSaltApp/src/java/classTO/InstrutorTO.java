@@ -8,8 +8,9 @@ package classTO;
 import java.sql.Date;
 
 /**
- *
+ * Classe para estanciar os instrutores.
  * @author Almir
+ * @version 1.0
  */
 public class InstrutorTO extends PessoaTO{
     private int idInstrutor;   
