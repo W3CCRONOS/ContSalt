@@ -22,39 +22,39 @@ and open the template in the editor.
                     <p:layoutUnit  position="west" size="175" header="Ocultar" visible="true" collapsible="true">
                         <p:panelMenu style="width:175px">
                             <p:submenu label="Home">
-                                <p:menuitem value="Inicio" url="http://localhost:8080/ContSaltApp/faces/index.xhtml" />
+                                <p:menuitem value="Início" url="http://localhost:8080/ContSaltApp/faces/index.xhtml" style=" font-size: 14px" />
                             </p:submenu>
                         </p:panelMenu>
                         <p:panelMenu style="width:175px">
                             <p:submenu label="Clientes">
-                                <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_cliente.xhtml" />
+                                <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_cliente.xhtml" style=" font-size: 14px" />
                             </p:submenu>
                         </p:panelMenu>
                         <p:panelMenu style="width:175px">
                             <p:submenu label="Decolagens">
-                                <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_decolagens.xhtml" />
+                                <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_decolagens.xhtml" style=" font-size: 14px" />
                             </p:submenu>
                         </p:panelMenu>
                         <p:panelMenu style="width:175px">
                             <p:submenu label="Instrutores">
-                                <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_instrutor.xhtml" />
-                                <p:menuitem value="Presença" url="http://localhost:8080/ContSaltApp/faces/presenca_instrutores.xhtml" />
-                                <p:menuitem value="Tipos de Saltos" url="http://localhost:8080/ContSaltApp/faces/tipos_de_saltos_instrutores.xhtml" />
+                                <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_instrutor.xhtml" style=" font-size: 14px" />
+                                <p:menuitem value="Presença" url="http://localhost:8080/ContSaltApp/faces/presenca_instrutores.xhtml"  style=" font-size: 14px" />
+                                <p:menuitem value="Tipos de Saltos" url="http://localhost:8080/ContSaltApp/faces/tipos_de_saltos_instrutores.xhtml" style=" font-size: 14px" />
                             </p:submenu>
                         </p:panelMenu>
                         <p:panelMenu style="width:175px">
                             <p:submenu label="Saltos">                               
-                                <p:menuitem value="Relatório de Saltos" url="" />
+                                <p:menuitem value="Relatório de Saltos" url="" style=" font-size: 14px" />
                             </p:submenu>
                         </p:panelMenu>
                         <p:panelMenu style="width:175px">
                             <p:submenu label="Taxas de Sobrepeso">
-                                <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_taxa_sobrepeso.xhtml" />
+                                <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_taxa_sobrepeso.xhtml"  style=" font-size: 14px" />
                             </p:submenu>
                         </p:panelMenu>                   
                         <p:panelMenu style="width:175px">
                             <p:submenu label="Tipos de Saltos">
-                                <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_tipos_de_saltos.xhtml" />
+                                <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_tipos_de_saltos.xhtml" style=" font-size: 14px" />
                             </p:submenu>
                         </p:panelMenu>
                 </p:layoutUnit>
@@ -62,12 +62,12 @@ and open the template in the editor.
                     <h:form>                        
                         <center><h1>Criar Saltos</h1></center><br/>
                         <h:panelGrid columns="2" cellpadding="4">
-                            <p:outputLabel value="Informe o nome do cliente: " for="cliente" />
+                            <p:outputLabel value="Nome do cliente: " for="cliente" style=" font-size: 14px" />
                             <p:autoComplete id="cliente" value="#{saltoBean.cliente}"
                                             completeMethod="#{saltoBean.sugerirCliente}"
                                             forceSelection="true" converter="clienteconverter"
                                             var="c" itemLabel="#{c.nome}" itemValue="#{c}" />
-                            <p:outputLabel value="Selecione o tipo de salto: " for="cliente" />
+                            <p:outputLabel value="Selecione o tipo de salto: " for="cliente" style=" font-size: 14px" />
                             <p:selectOneMenu value="#{saltoBean.idTiposDeSaltos}">
                                 <f:selectItems var="inst" value="#{tipoDeSaltoBean.tiposDeSaltos}" itemLabel="#{inst.nome}" itemValue="#{inst.idTipoDeSalto}" />
                             </p:selectOneMenu>  

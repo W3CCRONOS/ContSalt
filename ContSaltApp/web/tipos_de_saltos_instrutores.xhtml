@@ -23,39 +23,39 @@ and open the template in the editor.
                 <p:layoutUnit  position="west" size="175" header="Ocultar" visible="true" collapsible="true">
                     <p:panelMenu style="width:175px">
                         <p:submenu label="Home">
-                            <p:menuitem value="Inicio" url="http://localhost:8080/ContSaltApp/faces/index.xhtml" />
+                            <p:menuitem value="Início" url="http://localhost:8080/ContSaltApp/faces/index.xhtml" style=" font-size: 14px" />
                         </p:submenu>
                     </p:panelMenu>
                     <p:panelMenu style="width:175px">
                         <p:submenu label="Clientes">
-                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_cliente.xhtml" />
+                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_cliente.xhtml" style=" font-size: 14px" />
                         </p:submenu>
                     </p:panelMenu>
                     <p:panelMenu style="width:175px">
                         <p:submenu label="Decolagens">
-                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_decolagens.xhtml" />
+                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_decolagens.xhtml" style=" font-size: 14px" />
                         </p:submenu>
                     </p:panelMenu>
                     <p:panelMenu style="width:175px">
                     <p:submenu label="Instrutores">
-                        <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_instrutor.xhtml" />
-                        <p:menuitem value="Presença" url="http://localhost:8080/ContSaltApp/faces/presenca_instrutores.xhtml" />                                               
+                        <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_instrutor.xhtml" style=" font-size: 14px" />
+                        <p:menuitem value="Presença" url="http://localhost:8080/ContSaltApp/faces/presenca_instrutores.xhtml" style=" font-size: 14px" />                                               
                     </p:submenu>
                 </p:panelMenu>
                     <p:panelMenu style="width:175px">
                         <p:submenu label="Saltos">
-                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_salto.xhtml" />
-                            <p:menuitem value="Relatório de Saltos" url="" />
+                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_salto.xhtml" style=" font-size: 14px" />
+                            <p:menuitem value="Relatório de Saltos" url="" style=" font-size: 14px" />
                         </p:submenu>
                     </p:panelMenu>
                     <p:panelMenu style="width:175px">
                         <p:submenu label="Taxas de Sobrepeso">
-                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_taxa_sobrepeso.xhtml" />
+                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_taxa_sobrepeso.xhtml" style=" font-size: 14px" />
                         </p:submenu>
                     </p:panelMenu>                   
                     <p:panelMenu style="width:175px">
                         <p:submenu label="Tipos de Saltos">
-                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_tipos_de_saltos.xhtml" />
+                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_tipos_de_saltos.xhtml" style=" font-size: 14px" />
                         </p:submenu>
                     </p:panelMenu>
                 </p:layoutUnit>
@@ -63,10 +63,12 @@ and open the template in the editor.
                     <h:form>
                         <h2>Cadastro dos Tipos de Saltos dos Instrutores</h2>
                         <h:panelGrid columns="2" cellpadding="4">
-                            <p:selectOneMenu value="#{tiposDeSaltosInstrutoresBean.idInstrutor}">
+                            <p:outputLabel value="Instrutor : " for="inst" style=" font-size: 14px" />
+                            <p:selectOneMenu  id="inst" value="#{tiposDeSaltosInstrutoresBean.idInstrutor}">
                                 <f:selectItems var="inst" value="#{instrutorBean.instrutores}" itemLabel="#{inst.nome}" itemValue="#{inst.idInstrutor}" />
-                            </p:selectOneMenu>                            
-                            <p:selectManyCheckbox value="#{tiposDeSaltosInstrutoresBean.idTiposDeSaltos}">
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Tipos de saltos : " for="tps" style=" font-size: 14px" />
+                            <p:selectManyCheckbox id="tps" value="#{tiposDeSaltosInstrutoresBean.idTiposDeSaltos}">
                                 <f:selectItems var="saltos" value="#{tipoDeSaltoBean.tiposDeSaltos}" itemLabel="#{saltos.nome}" itemValue="#{saltos.idTipoDeSalto}" />                                
                             </p:selectManyCheckbox>                  
                             <p:commandButton value="Alterar" action="#{tiposDeSaltosInstrutoresBean.tiposDeSaltosDoInstrutor()}" ajax="false" />
@@ -75,7 +77,7 @@ and open the template in the editor.
                         <center><h2>Tipos de Saltos por Instrutor</h2></center>
                         <p:dataTable var="dados" value="#{instrutorBean.instrutores}" > 
                             <p:column headerText="Instrutor">
-                                <h:outputText value="#{dados.nome}"/>
+                                <h:outputText value="#{dados.nome}" style=" font-size: 14px"/>
                             </p:column>
                             <p:column>
                                 <p:dataTable var="saltos" value="#{tiposDeSaltosInstrutoresBean.getTiposDeSaltosPorInstrutor(dados.idInstrutor)}">

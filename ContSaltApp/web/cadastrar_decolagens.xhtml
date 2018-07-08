@@ -23,35 +23,35 @@ and open the template in the editor.
                 <p:layoutUnit  position="west" size="175" header="Ocultar" visible="true" collapsible="true">
                     <p:panelMenu style="width:175px">
                         <p:submenu label="Home">
-                            <p:menuitem value="Inicio" url="http://localhost:8080/ContSaltApp/faces/index.xhtml" />
+                            <p:menuitem value="Início" url="http://localhost:8080/ContSaltApp/faces/index.xhtml" style=" font-size: 14px" />
                         </p:submenu>
                     </p:panelMenu>
                     <p:panelMenu style="width:175px">
                         <p:submenu label="Clientes">
-                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_cliente.xhtml" />
+                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_cliente.xhtml" style=" font-size: 14px" />
                         </p:submenu>
                     </p:panelMenu>
                     <p:panelMenu style="width:175px">
                     <p:submenu label="Instrutores">
-                        <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_instrutor.xhtml" />
-                        <p:menuitem value="Presença" url="http://localhost:8080/ContSaltApp/faces/presenca_instrutores.xhtml" />
-                        <p:menuitem value="Tipos de Saltos" url="http://localhost:8080/ContSaltApp/faces/tipos_de_saltos_instrutores.xhtml" />
+                        <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_instrutor.xhtml" style=" font-size: 14px" />
+                        <p:menuitem value="Presença" url="http://localhost:8080/ContSaltApp/faces/presenca_instrutores.xhtml" style=" font-size: 14px" />
+                        <p:menuitem value="Tipos de Saltos" url="http://localhost:8080/ContSaltApp/faces/tipos_de_saltos_instrutores.xhtml" style=" font-size: 14px" />
                     </p:submenu>
                     </p:panelMenu>
                     <p:panelMenu style="width:175px">
                         <p:submenu label="Saltos">
-                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_salto.xhtml" />
-                            <p:menuitem value="Relatório de Saltos" url="" />
+                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_salto.xhtml" style=" font-size: 14px" />
+                            <p:menuitem value="Relatório de Saltos" url="" style=" font-size: 14px" />
                         </p:submenu>
                     </p:panelMenu>
                     <p:panelMenu style="width:175px">
                         <p:submenu label="Taxas de Sobrepeso">
-                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_taxa_sobrepeso.xhtml" />
+                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_taxa_sobrepeso.xhtml" style=" font-size: 14px" />
                         </p:submenu>
                     </p:panelMenu>                   
                     <p:panelMenu style="width:175px">
                         <p:submenu label="Tipos de Saltos">
-                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_tipos_de_saltos.xhtml" />
+                            <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_tipos_de_saltos.xhtml" style=" font-size: 14px" />
                         </p:submenu>
                     </p:panelMenu>
                 </p:layoutUnit>
@@ -59,7 +59,7 @@ and open the template in the editor.
                     <h:form>
                         <h2>Cadastro de Decolagens</h2>
                          <h:panelGrid columns="2" cellpadding="2">
-                            <h:outputLabel for="txtNumero" value="Número da decolagem:" style="font-weight:bold" />
+                            <h:outputLabel for="txtNumero" value="Número da decolagem:" style=" font-size: 14px" />
                             <p:inputText id="txtNumero" value="#{decolagemBean.CTO.numero}" />
                             <p:commandButton value="Salvar" action="#{decolagemBean.salvar()}"  ajax="false" />
                         </h:panelGrid>
