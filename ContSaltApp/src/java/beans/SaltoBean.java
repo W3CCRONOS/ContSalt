@@ -6,8 +6,9 @@
 package beans;
 
 import classBO.Filtros;
-import classDAO.ClienteDAO;
 import classDAO.InstrutorDAO;
+import classDAO.TaxaSobrepesoDAO;
+import classDAO.TipoDeSaltoDAO;
 
 import classTO.ClienteTO;
 import classTO.DecolagemTO;
@@ -34,51 +35,38 @@ import java.util.List;
 public class SaltoBean implements Serializable {
     
     private ClienteTO cliente;
-    private ClienteDAO clienteDAo;
-    
     private TipoDeSaltoTO tipoDeSalto;
-    private int idTiposDeSaltos;
+    private int idTipoDeSalto;    
+    private TaxaSobrepesoTO taxaSobrepeso;
+    private TipoDeSaltoDAO tipoDeSaltoDao;
+    private TaxaSobrepesoDAO taxaSobresoDao;
     
     private InstrutorDAO intrutorDao;
     private DecolagemTO decolagem;
-    private TaxaSobrepesoTO taxaSobrepeso;
     private Filtros filtros;
      
     public SaltoBean() {
-        this.setCliente(new ClienteTO());
-        this.setClienteDAo(new ClienteDAO());  
+        this.setCliente(new ClienteTO());  
         this.setTipoDeSalto(new TipoDeSaltoTO());
-        this.setIdTiposDeSaltos(idTiposDeSaltos = 0);
-        this.setDecolagem(new DecolagemTO());
+        this.setIdTipoDeSalto(idTipoDeSalto = 0);
         this.setTaxaSobrepeso(new TaxaSobrepesoTO());
+        this.setTaxaSobresoDao(new TaxaSobrepesoDAO());
+        this.setTipoDeSaltoDao(new TipoDeSaltoDAO());
+        
+        
+        this.setDecolagem(new DecolagemTO());    
         this.setFiltros(new Filtros());
         this.setIntrutorDao(new InstrutorDAO());
     }
     
     /**
-    * Método para busca de clientes. 
-    * O metodo retorna uma lista de clientes, segundo a digitação realizada no formulário.
-    * @param consulta String - Texto digitado pelo usuário do sistema.
-    * @return List - Lista de clientes.  
+    * Método de seleção do cliente, do tipo de salto e taxa de sobrepeso.
     */
-    public List<ClienteTO> sugerirCliente(String consulta) {
-        List<ClienteTO> ClientesSugeridos = new ArrayList<>();
-        List<ClienteTO> allClientes = clienteDAo.getClientes();        
-        for (ClienteTO c : allClientes) {
-            if (c.getNome().toLowerCase().startsWith(consulta.toLowerCase())) {
-               ClientesSugeridos.add(c);
-            }
-        }
-        
-        return ClientesSugeridos;
+    public void selectClientTipSaltoTaxaSobrepeso() {
+        tipoDeSalto = filtros.getTipoDeSaltoTO(idTipoDeSalto);
+        taxaSobrepeso = filtros.getTaxaDeSobrepeso(tipoDeSalto, cliente);        
     }
- 
-    /**
-    * Método que seleciona um cliente e o tipo de salto. 
-    */
-    public void selecClientTipoDeSalto() {
-        
-    }
+    
       
     /**
     * Método que retorna uma lista de instrutores. 
@@ -102,11 +90,7 @@ public class SaltoBean implements Serializable {
         }
          return listInstPorPeso;
        // return listInstPorSalt;
-    }
-
-    public void selInstrutor(InstrutorTO d){           
-        
-    }   
+    }  
     
     public ClienteTO getCliente() {
         return cliente;
@@ -114,22 +98,14 @@ public class SaltoBean implements Serializable {
     public void setCliente(ClienteTO cliente) {
         this.cliente = cliente;
     }
-
-    public ClienteDAO getClienteDAo() {
-        return clienteDAo;
-    }
-
-    public void setClienteDAo(ClienteDAO clienteDAo) {
-        this.clienteDAo = clienteDAo;
-    }
-    
-    
+     
     public TipoDeSaltoTO getTipoDeSalto() {
         return tipoDeSalto;
     }
     public void setTipoDeSalto(TipoDeSaltoTO tipoDeSalto) {
         this.tipoDeSalto = tipoDeSalto;
-    } 
+    }
+
     public TaxaSobrepesoTO getTaxaSobrepeso() {
         return taxaSobrepeso;
     }
@@ -159,13 +135,29 @@ public class SaltoBean implements Serializable {
         this.intrutorDao = intrutorDao;
     }
 
-    public int getIdTiposDeSaltos() {
-        return idTiposDeSaltos;
+    public int getIdTipoDeSalto() {
+        return idTipoDeSalto;
     }
 
-    public void setIdTiposDeSaltos(int idTiposDeSaltos) {
-        this.idTiposDeSaltos = idTiposDeSaltos;
+    public void setIdTipoDeSalto(int idTipoDeSalto) {
+        this.idTipoDeSalto = idTipoDeSalto;
     }
 
+    public TaxaSobrepesoDAO getTaxaSobresoDao() {
+        return taxaSobresoDao;
+    }
+
+    public void setTaxaSobresoDao(TaxaSobrepesoDAO taxaSobresoDao) {
+        this.taxaSobresoDao = taxaSobresoDao;
+    }
+
+    public TipoDeSaltoDAO getTipoDeSaltoDao() {
+        return tipoDeSaltoDao;
+    }
+
+    public void setTipoDeSaltoDao(TipoDeSaltoDAO tipoDeSaltoDao) {
+        this.tipoDeSaltoDao = tipoDeSaltoDao;
+    }
+    
     
 }

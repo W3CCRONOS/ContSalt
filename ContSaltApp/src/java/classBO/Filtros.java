@@ -5,10 +5,13 @@
 package classBO;
 
 import classDAO.InstrutorDAO;
+import classDAO.TaxaSobrepesoDAO;
+import classDAO.TipoDeSaltoDAO;
 import classDAO.TiposDeSaltosInstrutoresDAO;
 import classTO.ClienteTO;
 import classTO.DecolagemTO;
 import classTO.InstrutorTO;
+import classTO.TaxaSobrepesoTO;
 import classTO.TipoDeSaltoTO;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +21,10 @@ import java.util.List;
  * @author almir
  */
 public class Filtros {
+    private TipoDeSaltoDAO tipSaltDao;
+    private TaxaSobrepesoDAO taxaSobresoDao;
+    
+    
     private InstrutorDAO intrutorDao;
     private TiposDeSaltosInstrutoresDAO tipSaltInstDao;
     private ClienteTO client;
@@ -25,12 +32,57 @@ public class Filtros {
     private TipoDeSaltoTO tipSalt;
 
     public Filtros() {
+        this.setTipSaltDao(new TipoDeSaltoDAO());
+        this.setTaxaSobresoDao(new TaxaSobrepesoDAO());
+        
+        
         this.setIntrutorDao(new InstrutorDAO());
         this.setTipSaltInstDao(new TiposDeSaltosInstrutoresDAO());
         this.setClient(new ClienteTO());
         this.setDeco(new DecolagemTO());
         this.setTipSalt(new TipoDeSaltoTO());
     }
+    
+     
+    /** Método para buscar o tipo de salto.
+    * @param id - É o número de identificação de um tipo de salto.
+    * @return TipoDeSaltoTO - Um tipo de salto.
+    */
+    public TipoDeSaltoTO getTipoDeSaltoTO(int id){
+            TipoDeSaltoTO tipSalt = new TipoDeSaltoTO();
+         for(TipoDeSaltoTO tipo : tipSaltDao.getTiposDeSaltos()){
+                if(tipo.getIdTipoDeSalto() == id ){
+                    tipSalt = tipo;
+                    break;
+                }                                  
+            }
+        return tipSalt;         
+    }
+    
+    /** Método para filtrar a taxa de sobrepeso.
+    * @param tipSalt - É o tipo de salto.
+    * @param cliente - É o cliente.
+    * @return TaxaSobrepesoTO - É a taxa de sobrepeso.
+    */    
+    public TaxaSobrepesoTO getTaxaDeSobrepeso(TipoDeSaltoTO tipSalt, ClienteTO cliente){
+        TaxaSobrepesoTO taxaSobrepeso = new TaxaSobrepesoTO();
+        if(tipSalt.getTaxaDeSobrePeso().equals("false")){
+            for(TaxaSobrepesoTO taxa : taxaSobresoDao.getTaxasSobrepesos()){
+                taxaSobrepeso=taxa;
+                break;
+            }                      
+        }
+        else{
+            for(TaxaSobrepesoTO taxa : taxaSobresoDao.getTaxasSobrepesos()){
+                if(cliente.getPeso()<= taxa.getPeso()){
+                    taxaSobrepeso=taxa;
+                    break;
+                }
+            }
+        }
+        return taxaSobrepeso;    
+    }
+    
     
     /** Método que retorna uma lista dos instrutores que estão em uma decolagem.
     * @param iddecolagem int - É o número de identificação de uma decolagem.
@@ -118,5 +170,22 @@ public class Filtros {
     public void setTipSalt(TipoDeSaltoTO tipSalt) {
         this.tipSalt = tipSalt;
     }
+
+    public TipoDeSaltoDAO getTipSaltDao() {
+        return tipSaltDao;
+    }
+
+    public void setTipSaltDao(TipoDeSaltoDAO tipSaltDao) {
+        this.tipSaltDao = tipSaltDao;
+    }
+
+    public TaxaSobrepesoDAO getTaxaSobresoDao() {
+        return taxaSobresoDao;
+    }
+
+    public void setTaxaSobresoDao(TaxaSobrepesoDAO taxaSobresoDao) {
+        this.taxaSobresoDao = taxaSobresoDao;
+    }
+    
     
 }

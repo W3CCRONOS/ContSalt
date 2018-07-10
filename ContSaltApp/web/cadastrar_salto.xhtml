@@ -64,14 +64,14 @@ and open the template in the editor.
                         <h:panelGrid columns="2" cellpadding="4">
                             <p:outputLabel value="Nome do cliente: " for="cliente" style=" font-size: 14px" />
                             <p:autoComplete id="cliente" value="#{saltoBean.cliente}"
-                                            completeMethod="#{saltoBean.sugerirCliente}"
+                                            completeMethod="#{clienteBean.sugerirCliente}"
                                             forceSelection="true" converter="clienteconverter"
                                             var="c" itemLabel="#{c.nome}" itemValue="#{c}" />
                             <p:outputLabel value="Selecione o tipo de salto: " for="cliente" style=" font-size: 14px" />
-                            <p:selectOneMenu value="#{saltoBean.idTiposDeSaltos}">
+                            <p:selectOneMenu value="#{saltoBean.idTipoDeSalto}">
                                 <f:selectItems var="inst" value="#{tipoDeSaltoBean.tiposDeSaltos}" itemLabel="#{inst.nome}" itemValue="#{inst.idTipoDeSalto}" />
                             </p:selectOneMenu>  
-                            <p:commandButton value="Selecionar" action="#{saltoBean.selecClientTipoDeSalto()}" ajax="false" />
+                            <p:commandButton value="Selecionar" action="#{saltoBean.selectClientTipSaltoTaxaSobrepeso()}" ajax="false" />
                         </h:panelGrid>
                     </h:form>
                 </p:layoutUnit>

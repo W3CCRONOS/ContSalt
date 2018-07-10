@@ -63,6 +63,24 @@ public class ClienteBean implements Serializable {
         clienteDAO.alterar(clienteTO); 
         clienteTO = new ClienteTO();
     }
+    
+    /**
+    * Método para busca de clientes. 
+    * O metodo retorna uma lista de clientes, segundo a digitação realizada no formulário.
+    * @param consulta String - Texto digitado pelo usuário do sistema.
+    * @return List - Lista de clientes.  
+    */
+    public List<ClienteTO> sugerirCliente(String consulta) {
+        List<ClienteTO> ClientesSugeridos = new ArrayList<>();
+        List<ClienteTO> allClientes = clienteDAO.getClientes();        
+        for (ClienteTO c : allClientes) {
+            if (c.getNome().toLowerCase().startsWith(consulta.toLowerCase())) {
+               ClientesSugeridos.add(c);
+            }
+        }
+        
+        return ClientesSugeridos;
+    }
 
     public ClienteTO getClienteTO() {
         return clienteTO;

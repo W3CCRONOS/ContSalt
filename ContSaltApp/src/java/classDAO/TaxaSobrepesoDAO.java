@@ -73,7 +73,7 @@ public class TaxaSobrepesoDAO {
      
     /** 
     * Método de busca. 
-    * O método busca todos os registros dos clientes armazenados no banco de dados.
+    * O método busca todos os registros das taxas de sobrepeso armazenados no banco de dados.
     * @return List - o retorno é uma lista com taxa de sobrepeso.
     */ 
     public List<TaxaSobrepesoTO> getTaxasSobrepesos(){           
@@ -93,6 +93,7 @@ public class TaxaSobrepesoDAO {
             }
             return lstA;
     }
+    
     
     /** 
     * Método para montar um objeto. 

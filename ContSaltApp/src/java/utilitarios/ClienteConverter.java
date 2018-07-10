@@ -5,7 +5,6 @@
  */
 package utilitarios;
 
-import beans.SaltoBean;
 import classDAO.ClienteDAO;
 import classTO.ClienteTO;
 import static java.lang.Integer.parseInt;
