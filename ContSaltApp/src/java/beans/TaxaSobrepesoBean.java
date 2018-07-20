@@ -28,7 +28,8 @@ public class TaxaSobrepesoBean implements Serializable {
         this.setcDAO(new TaxaSobrepesoDAO());
     }
     
-    public  void salvar(){        
+    public  void salvar(){
+       
         cDAO.salvar(CTO); 
         CTO = new TaxaSobrepesoTO();
     }

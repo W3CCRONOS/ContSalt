@@ -106,9 +106,10 @@ public class TiposDeSaltosInstrutoresDAO{
     }        
     
     /** 
-    * Método para buscar os instrutores que executam um determinado tipo de salto.
+    * Método de busca.
+    * O método retorna os instrutores que executam um determinado tipo de salto.
     * @param idTipodeSalto int - É o número de identificação de um tipo de salto.
-    * @return List - Uma lista com intrutores.
+    * @return list - Lista com intrutores.
     */
      public List<InstrutorTO> getInstrutoresPorTipoDeSalto(int idTipodeSalto){
         List<InstrutorTO> list = new LinkedList<>();

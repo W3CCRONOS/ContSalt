@@ -35,61 +35,49 @@ import java.util.List;
 public class SaltoBean implements Serializable {
     
     private ClienteTO cliente;
-    private TipoDeSaltoTO tipoDeSalto;
-    private int idTipoDeSalto;    
+    /*Algumas funcionalidade do PrimeFaces(p:selectOneMenu e p:selectOneRadio) enviam para
+     o Bean valores inteiros*/
+    private int idTipoDeSalto;
+    private int idInstrutor;
+    private String instruString;
+    private TipoDeSaltoTO tipoDeSalto;      
     private TaxaSobrepesoTO taxaSobrepeso;
-    private TipoDeSaltoDAO tipoDeSaltoDao;
-    private TaxaSobrepesoDAO taxaSobresoDao;
-    
-    private InstrutorDAO intrutorDao;
-    private DecolagemTO decolagem;
     private Filtros filtros;
+    private InstrutorTO instrutor;
      
     public SaltoBean() {
         this.setCliente(new ClienteTO());  
         this.setTipoDeSalto(new TipoDeSaltoTO());
         this.setIdTipoDeSalto(idTipoDeSalto = 0);
-        this.setTaxaSobrepeso(new TaxaSobrepesoTO());
-        this.setTaxaSobresoDao(new TaxaSobrepesoDAO());
-        this.setTipoDeSaltoDao(new TipoDeSaltoDAO());
-        
-        
-        this.setDecolagem(new DecolagemTO());    
+        this.setIdInstrutor(idInstrutor = 0);
+        this.setTaxaSobrepeso(new TaxaSobrepesoTO());    
         this.setFiltros(new Filtros());
-        this.setIntrutorDao(new InstrutorDAO());
+        this.setInstrutor(new InstrutorTO());
+        this.setInstruString(instruString = "false");
     }
     
     /**
-    * Método de seleção do cliente, do tipo de salto e taxa de sobrepeso.
+    * Método de seleção do cliente e do tipo de salto.
+    * O método recebe da interface o cliente e o id do tipo de salto.
+    * O cliente é armazenado na variável cliente, o id do tipo de salto na 
+    * varável idTipoDeSalto;
     */
-    public void selectClientTipSaltoTaxaSobrepeso() {
-        tipoDeSalto = filtros.getTipoDeSaltoTO(idTipoDeSalto);
-        taxaSobrepeso = filtros.getTaxaDeSobrepeso(tipoDeSalto, cliente);        
+    public void selectClientTipSalto(){     
     }
-    
-      
+ 
     /**
-    * Método que retorna uma lista de instrutores. 
+    * Método buca dos intrutores.
     * @return List - Lista de instrutores.  
     */
     public List<InstrutorTO> getInstrutores(){       
         
-      //  List<InstrutorTO> listInstPorSalt = new LinkedList<>();
-       // listInstPorSalt=filtros.filtraInstruoresPorTipodeSalto(tipoDeSalto.getIdTipoDeSalto());
+        List<InstrutorTO> listInst = new LinkedList<>();
+        //listInst = filtros.instrutoresPresentes();
+        //listInst = filtros.instruoresPorTipodeSalto(listInst, tipoDeSalto);
+        // listInst = filtros.instrutoresPorPeso(cliente, taxaSobrepeso, listInst);
         
-        List<InstrutorTO> listInstPorPeso = new LinkedList<>();
-        listInstPorPeso= intrutorDao.getInstrutores();      
-        
-        if(cliente!=null){ 
-            for(int i = 0; i < listInstPorPeso.size();i++){             
-                if(listInstPorPeso.get(i).getPeso()<cliente.getPeso()){
-                    listInstPorPeso.remove(i);                    
-                }
-            }
-                 
-        }
-         return listInstPorPeso;
-       // return listInstPorSalt;
+        //return listInst;
+        return filtros.instrutores();
     }  
     
     public ClienteTO getCliente() {
@@ -100,6 +88,7 @@ public class SaltoBean implements Serializable {
     }
      
     public TipoDeSaltoTO getTipoDeSalto() {
+        tipoDeSalto = filtros.getTipoDeSaltoTO(idTipoDeSalto);
         return tipoDeSalto;
     }
     public void setTipoDeSalto(TipoDeSaltoTO tipoDeSalto) {
@@ -107,6 +96,7 @@ public class SaltoBean implements Serializable {
     }
 
     public TaxaSobrepesoTO getTaxaSobrepeso() {
+        taxaSobrepeso = filtros.getTaxaDeSobrepeso(tipoDeSalto, cliente);
         return taxaSobrepeso;
     }
     public void setTaxaSobrepeso(TaxaSobrepesoTO taxaSobrepeso) {
@@ -119,22 +109,6 @@ public class SaltoBean implements Serializable {
         this.filtros = filtros;
     }
 
-    public DecolagemTO getDecolagem() {
-        return decolagem;
-    }
-
-    public void setDecolagem(DecolagemTO decolagem) {
-        this.decolagem = decolagem;
-    }
-
-    public InstrutorDAO getIntrutorDao() {
-        return intrutorDao;
-    }
-
-    public void setIntrutorDao(InstrutorDAO intrutorDao) {
-        this.intrutorDao = intrutorDao;
-    }
-
     public int getIdTipoDeSalto() {
         return idTipoDeSalto;
     }
@@ -143,20 +117,28 @@ public class SaltoBean implements Serializable {
         this.idTipoDeSalto = idTipoDeSalto;
     }
 
-    public TaxaSobrepesoDAO getTaxaSobresoDao() {
-        return taxaSobresoDao;
+    public int getIdInstrutor() {
+        return idInstrutor;
     }
 
-    public void setTaxaSobresoDao(TaxaSobrepesoDAO taxaSobresoDao) {
-        this.taxaSobresoDao = taxaSobresoDao;
+    public void setIdInstrutor(int idInstrutor) {
+        this.idInstrutor = idInstrutor;
+    }
+    
+    public InstrutorTO getInstrutor() {
+        return instrutor;
     }
 
-    public TipoDeSaltoDAO getTipoDeSaltoDao() {
-        return tipoDeSaltoDao;
+    public void setInstrutor(InstrutorTO instrutor) {
+        this.instrutor = instrutor;
     }
 
-    public void setTipoDeSaltoDao(TipoDeSaltoDAO tipoDeSaltoDao) {
-        this.tipoDeSaltoDao = tipoDeSaltoDao;
+    public String getInstruString() {
+        return instruString;
+    }
+
+    public void setInstruString(String instruString) {
+        this.instruString = instruString;
     }
     
     

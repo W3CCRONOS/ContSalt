@@ -14,8 +14,13 @@ import java.sql.Date;
  */
 public class InstrutorTO extends PessoaTO{
     private int idInstrutor;   
-    private Date admissao;
+    private Date admissao;// Data de admissão do instrutor na empresa.
+    /*A variável(presenca) amazenará duas strings: false ou true. 
+    "false" significa que o instrutor está ausente e não poderá realizar saltos.
+    "true" significa que o instrutor está presente e pode realizar saltos*/
     private String presenca = "false";
+    /*Peso máximo que um cliente deverá ter para que o instrutor possa
+    realizar o salto - Limite de peso para um cliente*/
     private double peso = 0.0;
     
     

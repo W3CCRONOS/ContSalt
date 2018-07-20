@@ -41,13 +41,13 @@ public class TaxaSobrepesoDAO {
     public void salvar(TaxaSobrepesoTO taxa){
  
         try{
-            PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO taxasobrepeso (valor,peso) VALUES (?,?)");
+            PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO taxasobrepeso (valor, pesomin, pesomax) VALUES (?,?,?)");
             ppStmt.setDouble(1,taxa.getValor());
-            ppStmt.setDouble(2,taxa.getPeso());
+            ppStmt.setDouble(2,taxa.getPesoMin());
+            ppStmt.setDouble(3,taxa.getPesoMax());
             ppStmt.execute();
             ppStmt.close();
-        }
-        
+        }        
         catch(SQLException ex){         
             ex.printStackTrace();
         }
@@ -60,10 +60,11 @@ public class TaxaSobrepesoDAO {
     */
      public void alterar(TaxaSobrepesoTO taxa){
         try {
-            PreparedStatement ppStmt = conn.prepareStatement("UPDATE taxasobrepeso SET valor =? ,peso =? WHERE idtaxasobrepeso =?");
+            PreparedStatement ppStmt = conn.prepareStatement("UPDATE taxasobrepeso SET valor =?, pesomin =?, pesomax =? WHERE idtaxasobrepeso =?");
             ppStmt.setDouble(1, taxa.getValor());
-            ppStmt.setDouble(2,taxa.getPeso());
-            ppStmt.setInt(3, taxa.getIdTaxaSobrepeso());
+            ppStmt.setDouble(2,taxa.getPesoMin());
+            ppStmt.setDouble(3,taxa.getPesoMax());
+            ppStmt.setInt(4, taxa.getIdTaxaSobrepeso());
             ppStmt.execute();
             ppStmt.close(); 
         }catch(SQLException EX){
@@ -80,7 +81,7 @@ public class TaxaSobrepesoDAO {
             List<TaxaSobrepesoTO> lstA = new LinkedList<>();
             ResultSet rs;
             try{
-                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM taxasobrepeso ORDER BY peso");
+                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM taxasobrepeso ORDER BY pesomin");
                 rs = ppStmt.executeQuery();
                 while(rs.next()){
                     lstA.add(getTaxaSobrepeso(rs));
@@ -105,7 +106,8 @@ public class TaxaSobrepesoDAO {
         TaxaSobrepesoTO t = new TaxaSobrepesoTO();
         t.setValor(rs.getDouble("valor"));
         t.setIdTaxaSobrepeso(rs.getInt("idtaxasobrepeso"));    
-        t.setPeso(rs.getDouble("peso"));
+        t.setPesoMin(rs.getDouble("pesomin"));
+        t.setPesoMax(rs.getDouble("pesomax"));
         return t;
     }
     

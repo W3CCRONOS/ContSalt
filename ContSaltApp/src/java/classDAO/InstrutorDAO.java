@@ -98,6 +98,9 @@ public class InstrutorDAO {
     /** 
     * Método de busca. 
     * O método busca todos os registros dos instrutores armazenados no banco de dados.
+    * Ordena a busca pela data de adimissão dos instrutores.
+    * A data de admissão dos intrutores é um dos requisitos utilizados para selecionar
+    * um intrutor.
     * @return List - o retorno é uma lista com instrutores.
     */
     public List<InstrutorTO> getInstrutores(){

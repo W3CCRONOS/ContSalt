@@ -58,9 +58,11 @@ and open the template in the editor.
                 <p:layoutUnit position="center">
                     <h:form>
                        <h2>Cadastro das Taxas de Sobrepeso</h2>
-                        <h:panelGrid columns="2" cellpadding="6">                          
-                            <h:outputLabel for="txtPeso" value="Peso:" style=" font-size: 14px" />                                                                                  
-                            <p:inputMask id="txtPeso" value="#{taxaSobrepesoBean.CTO.peso}" mask="999.99"/> 
+                        <h:panelGrid columns="2" cellpadding="8">                          
+                            <h:outputLabel for="txtPesoMin" value="Peso Mínino:" style=" font-size: 14px" />                                                                                  
+                            <p:inputMask id="txtPesoMin" value="#{taxaSobrepesoBean.CTO.pesoMin}" mask="999.99"/>
+                            <h:outputLabel for="txtPesoMax" value="Peso Máximo:" style=" font-size: 14px" />                                                                                  
+                            <p:inputMask id="txtPesoMax" value="#{taxaSobrepesoBean.CTO.pesoMax}" mask="999.99"/> 
                             <h:outputLabel for="txtValor" value="Valor:" style=" font-size: 14px" />                                                      
                             <h:inputText id="txtValor" value="#{taxaSobrepesoBean.CTO.valor}"
 				size="20" required="true" >
@@ -73,8 +75,11 @@ and open the template in the editor.
                         </h:panelGrid>
                        <center><h2>Taxas de Sobrepeso</h2></center>
                         <p:dataTable var="dados" value="#{taxaSobrepesoBean.taxasSobrepesos}" >
-                            <p:column headerText="Peso">
-                                 <h:outputText value="#{dados.peso}"/>
+                            <p:column headerText="Peso Mínino">
+                                <h:outputText value="#{dados.pesoMin}"/>
+                            </p:column>
+                             <p:column headerText="Peso Máximo">
+                                 <h:outputText value="#{dados.pesoMax}"/>
                             </p:column>
                             <p:column headerText="Valor">
                                 <h:outputText value="#{dados.valor}">

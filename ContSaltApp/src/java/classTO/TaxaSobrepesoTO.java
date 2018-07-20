@@ -14,7 +14,8 @@ public class TaxaSobrepesoTO {
     
     private int idTaxaSobrepeso;
     private double valor = 0.0;
-    private double peso = 0.0;
+    private double pesoMin = 0.0;
+    private double pesoMax = 0.0;
 
 
     public int getIdTaxaSobrepeso() {
@@ -33,14 +34,20 @@ public class TaxaSobrepesoTO {
         this.valor = valor;
     }
 
-    public double getPeso() {
-        return peso;
+    public double getPesoMin() {
+        return pesoMin;
     }
 
-    public void setPeso(double peso) {
-        this.peso = peso;
+    public void setPesoMin(double pesoMin) {
+        this.pesoMin = pesoMin;
     }
-    
-  
- 
+
+    public double getPesoMax() {
+        return pesoMax;
+    }
+
+    public void setPesoMax(double pesoMax) {
+        this.pesoMax = pesoMax;
+    }
+
 }

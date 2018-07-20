@@ -61,19 +61,48 @@ and open the template in the editor.
                 <p:layoutUnit position="center">
                     <h:form>                        
                         <center><h1>Criar Saltos</h1></center><br/>
-                        <h:panelGrid columns="2" cellpadding="4">
+                        <h:panelGrid columns="2" cellpadding="12">
+                           
                             <p:outputLabel value="Nome do cliente: " for="cliente" style=" font-size: 14px" />
                             <p:autoComplete id="cliente" value="#{saltoBean.cliente}"
                                             completeMethod="#{clienteBean.sugerirCliente}"
                                             forceSelection="true" converter="clienteconverter"
                                             var="c" itemLabel="#{c.nome}" itemValue="#{c}" />
-                            <p:outputLabel value="Selecione o tipo de salto: " for="cliente" style=" font-size: 14px" />
-                            <p:selectOneMenu value="#{saltoBean.idTipoDeSalto}">
-                                <f:selectItems var="inst" value="#{tipoDeSaltoBean.tiposDeSaltos}" itemLabel="#{inst.nome}" itemValue="#{inst.idTipoDeSalto}" />
-                            </p:selectOneMenu>  
-                            <p:commandButton value="Selecionar" action="#{saltoBean.selectClientTipSaltoTaxaSobrepeso()}" ajax="false" />
-                        </h:panelGrid>
-                    </h:form>
+                            
+                            <p:outputLabel value="Selecione o tipo de salto: " for="tipoDeSalto" style=" font-size: 14px" /> 
+                            <p:selectOneMenu id="tipoDeSalto" value="#{saltoBean.idTipoDeSalto}">
+                                <f:selectItems var="tipSalt" value="#{tipoDeSaltoBean.tiposDeSaltos}" itemLabel="#{tipSalt.nome}" itemValue="#{tipSalt.idTipoDeSalto}" />
+                            </p:selectOneMenu> 
+                            
+                            <p:outputLabel value="Selecione INSTRUTOR: " for="INST" style=" font-size: 14px" /> 
+                            <p:selectOneMenu id="INST" value="#{saltoBean.instruString}">
+                                <f:selectItems var="INSTR" value="#{saltoBean.instrutores}" itemLabel="#{INSTR.nome}" itemValue="#{INSTR.nome}" />
+                            </p:selectOneMenu> 
+                            
+                            
+                            <p:commandButton value="Selecionar" action="#{saltoBean.selectClientTipSalto()}" ajax="false" />
+                            
+                            <center><h2>Instrutores</h2></center>
+                            <p:dataTable var="dados" value="#{saltoBean.instrutores}" >
+                                <p:column headerText="Nome">
+                                    <h:outputText value="#{dados.nome}"/>
+                                </p:column>
+                                <p:column headerText="CPF">
+                                    <h:outputText value="#{dados.cpf}"/>
+                                </p:column>
+                                <p:column headerText="Peso Máximo">
+                                    <h:outputText value="#{dados.peso}"/>
+                                </p:column>
+                                <p:column headerText="Admissão">
+                                    <h:outputText value="#{dados.admissao}" >
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText>
+                                </p:column>
+                            </p:dataTable>
+                       
+                                                  
+                        </h:panelGrid> 
+                    </h:form>                                                          
                 </p:layoutUnit>
             </p:layout>
         </h:body>
