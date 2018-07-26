@@ -1,5 +1,6 @@
 package classDAO;
 
+import classTO.DecolagemTO;
 import classTO.SaltoTO;
 import java.sql.Connection;
 import java.sql.Date;
@@ -37,12 +38,12 @@ public class SaltoDAO {
     */
      public void salvar(SaltoTO salt){ 
         try{
-            PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO salto (cliente_idcliente,data,taxasobrepeso_idtaxasobrepeso,tipodesalto_idtipodesalto,instrutor_idinstrutor) VALUES (?,?,?,?,?)");
-            ppStmt.setInt(1, salt.getIdCliente());
-            ppStmt.setDate(2,salt.getDataDoSalto()); 
-            ppStmt.setInt(3, salt.getIdTaxaDeSobrepeso());
-            ppStmt.setInt(4, salt.getIdTipoDeSalto());
-            ppStmt.setInt(5, salt.getIdInstrutor());
+            PreparedStatement ppStmt =  conn.prepareStatement("INSERT INTO salto (idcliente,idtaxasobrepeso,idtipodesalto,idinstrutor,iddecolagem) VALUES (?,?,?,?,?)");
+            ppStmt.setInt(1, salt.getIdCliente());             
+            ppStmt.setInt(2, salt.getIdTaxaDeSobrepeso());
+            ppStmt.setInt(3, salt.getIdTipoDeSalto());
+            ppStmt.setInt(4, salt.getIdInstrutor());
+            ppStmt.setInt(5,salt.getIdDecolagem());
             ppStmt.execute();
             ppStmt.close();
         }       
@@ -92,7 +93,7 @@ public class SaltoDAO {
     /** 
     * Método de busca. 
     * O método busca todos os saltos relalizados em uma determinada data.
-    * @param dataDoSalto Date - data referente a busca.
+    * @param dataDoSalto - data referente a busca.
     * @return List - o retorno é uma lista com saltos.
     */    
     public List<SaltoTO> getSaltosPorData(Date dataDoSalto){
@@ -117,6 +118,33 @@ public class SaltoDAO {
     }
     
     /** 
+    * Método de busca. 
+    * O método busca todos os saltos em uma decolagem específica.
+    * @param idDecolagem - Id da decolagem que se realizará a busca.
+    * @return List - o retorno é uma lista com saltos.
+    */    
+    public List<SaltoTO> getSaltosPorDecolagem(int idDecolagem){
+            
+            List<SaltoTO> lstA = new LinkedList<SaltoTO>();
+            ResultSet rs;
+            
+            try{
+                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM salto WHERE iddecolagem = ?");
+                ppStmt.setInt(1,idDecolagem);
+                rs = ppStmt.executeQuery();
+                while(rs.next()){
+                    lstA.add(getSalto(rs));
+                }
+                ppStmt.close();
+	        rs.close();
+            }
+            catch(SQLException ex){
+                ex.printStackTrace();
+            }
+            return lstA;
+    }
+         
+    /** 
     * Método para montar um objeto salto. Este método recebe um resultado do banco
     * e preenche os atributos de um objeto salto.
     * @param rs ResultSet - É o resultado de uma solicitação feita ao banco de dados, referente a uma busca.
@@ -125,11 +153,40 @@ public class SaltoDAO {
     private SaltoTO getSalto(ResultSet rs) throws SQLException{
         SaltoTO salt = new SaltoTO();
         salt.setIdSalto(rs.getInt("idsalto"));
-        salt.setIdInstrutor(rs.getInt("instrutor_idinstrutor"));  
-        salt.setIdCliente(rs.getInt("cliente_idcliente"));
-        salt.setIdTaxaDeSobrepeso(rs.getInt("taxasobrepeso_idtaxasobrepeso"));
-        salt.setIdTipoDeSalto(rs.getInt("tipodesalto_idtipodesalto"));
-        salt.setDataDoSalto(rs.getDate("data"));
+        salt.setIdInstrutor(rs.getInt("idinstrutor"));  
+        salt.setIdCliente(rs.getInt("idcliente"));
+        salt.setIdTaxaDeSobrepeso(rs.getInt("idtaxasobrepeso"));
+        salt.setIdTipoDeSalto(rs.getInt("idtipodesalto"));
+        salt.setIdTipoDeSalto(rs.getInt("iddecolagem"));
         return salt;
     }
+    
+    
+     /** 
+    * Método para verificar se existe registro.
+    * O método verifica se existe algum registro de um salto numa decolagem específica.
+    * @param decolagem - decolagem.
+    * @return total int - Retorna 0(zero) para ausência de registro ou 1(um) se houver registro.    
+    */
+    public int verificarSeExisteRegistro(DecolagemTO decolagem){
+        int total = 0;
+        ResultSet rs;
+        try{ 
+            PreparedStatement ppStmt =  conn.prepareStatement("SELECT COUNT(idsalto) AS quantidadeDeRegistros FROM salto WHERE iddecolagem = ?");
+            ppStmt.setInt(1,decolagem.getIddecolagem());
+            rs = ppStmt.executeQuery();
+            /* Se  rs.next() for true...(existe algum registro dentro do ResuslSet)*/
+            if(rs.next()){
+                /* a variável total, recebe o valor do ResultSet. 
+                Se este valor for diferente de zero, então, foi encontrado um registro armazenado no banco*/
+                total = rs.getInt("quantidadeDeRegistros"); 
+            }
+            ppStmt.close();
+	    rs.close(); 
+        }       
+        catch(SQLException ex){         
+            ex.printStackTrace();
+        }  
+        return total;        
+    }   
 }

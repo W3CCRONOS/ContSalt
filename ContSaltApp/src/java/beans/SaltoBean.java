@@ -7,12 +7,14 @@ package beans;
 
 import classBO.Filtros;
 import classDAO.InstrutorDAO;
+import classDAO.SaltoDAO;
 import classDAO.TaxaSobrepesoDAO;
 import classDAO.TipoDeSaltoDAO;
 
 import classTO.ClienteTO;
 import classTO.DecolagemTO;
 import classTO.InstrutorTO;
+import classTO.SaltoTO;
 
 import classTO.TaxaSobrepesoTO;
 import classTO.TipoDeSaltoTO;
@@ -35,49 +37,118 @@ import java.util.List;
 public class SaltoBean implements Serializable {
     
     private ClienteTO cliente;
-    /*Algumas funcionalidade do PrimeFaces(p:selectOneMenu e p:selectOneRadio) enviam para
+    /*Algumas funcionalidade do PrimeFaces(p:selectOneMenu) envia para
      o Bean valores inteiros*/
     private int idTipoDeSalto;
-    private int idInstrutor;
-    private String instruString;
-    private TipoDeSaltoTO tipoDeSalto;      
+    private int idDecolagem;
+    private TipoDeSaltoTO tipoDeSalto; 
+    private DecolagemTO decolagem;
     private TaxaSobrepesoTO taxaSobrepeso;
     private Filtros filtros;
     private InstrutorTO instrutor;
+    private SaltoTO salto;
+    private SaltoDAO saltoDao = new SaltoDAO();
      
     public SaltoBean() {
         this.setCliente(new ClienteTO());  
         this.setTipoDeSalto(new TipoDeSaltoTO());
+        this.setDecolagem(new DecolagemTO());
         this.setIdTipoDeSalto(idTipoDeSalto = 0);
-        this.setIdInstrutor(idInstrutor = 0);
+        this.setIdDecolagem(idDecolagem = 0);
         this.setTaxaSobrepeso(new TaxaSobrepesoTO());    
         this.setFiltros(new Filtros());
         this.setInstrutor(new InstrutorTO());
-        this.setInstruString(instruString = "false");
+        this.setSalto(new SaltoTO());
     }
     
     /**
-    * Método de seleção do cliente e do tipo de salto.
-    * O método recebe da interface o cliente e o id do tipo de salto.
-    * O cliente é armazenado na variável cliente, o id do tipo de salto na 
-    * varável idTipoDeSalto;
+    * Método de seleção do cliente, do tipo de salto e da decolagem.
+    * O método recebe da interface o cliente, o id do tipo de salto e decolagem.
     */
-    public void selectClientTipSalto(){     
+    public void selectClientTipSaltoDecolage(){ 
+        System.out.println(cliente.getNome());
+        System.out.println(idTipoDeSalto);
+        System.out.println(idDecolagem);
+        System.out.println(taxaSobrepeso.getValor());
+    }
+    
+    /**
+    * Método de seleção do instrutor.
+    * O método recebe da interface o cliente, o id do tipo de salto e decolagem.
+    */
+    public void selectInstrutor(InstrutorTO isntrutor){
+        this.instrutor=isntrutor;
     }
  
     /**
-    * Método buca dos intrutores.
+    * Método de busca dos intrutores.
+    * O método retorna uma lista ordenada com instrutores aptos para realização do salto.
     * @return List - Lista de instrutores.  
     */
-    public List<InstrutorTO> getInstrutores(){       
-        
+    public List<InstrutorTO> getInstrutores(){               
         List<InstrutorTO> listInst = new LinkedList<>();
-        //listInst = filtros.instrutoresPresentes();
-        //listInst = filtros.instruoresPorTipodeSalto(listInst, tipoDeSalto);
-        // listInst = filtros.instrutoresPorPeso(cliente, taxaSobrepeso, listInst);
         
-        //return listInst;
-        return filtros.instrutores();
+            // Com a variável, idTipoDeSalto, identifico o tipo de salto.
+        tipoDeSalto = filtros.getTipoDeSaltoTO(idTipoDeSalto);
+            /*Filtro para taxa de sobrepeso*/
+        taxaSobrepeso = filtros.getTaxaDeSobrepeso(tipoDeSalto, cliente);
+            // Com a variável, idDecolagem, identifico a decolagem.
+        decolagem = filtros.getDecolagemTO(idDecolagem);
+       
+        
+        /*A variável listInst recebe os instrutores presentes no dia do salto, ordenados 
+        pela data de admissão*/
+        listInst = filtros.instrutoresPresentes();
+
+        /*Filtro os instrutores que estão aptos a realizar o tipo de salto*/
+        listInst = filtros.instruoresPorTipodeSalto(listInst, tipoDeSalto); 
+
+        /*Filtro os instrutores pelo peso do cliente.*/
+        listInst = filtros.instrutoresPorPeso(cliente, taxaSobrepeso, listInst);
+
+        /*Filtro os instrutores que já estão em algum salto dentro da decolagem.*/
+        listInst = filtros.instroresPorDecolagem(listInst, decolagem);
+        //Retorno lista de istrutores filtrados.
+        return listInst;        
+    } 
+    
+    public void cancelar(){
+        this.setCliente(new ClienteTO());  
+        this.setTipoDeSalto(new TipoDeSaltoTO());
+        this.setDecolagem(new DecolagemTO());
+        this.setIdTipoDeSalto(idTipoDeSalto = 0);
+        this.setIdDecolagem(idDecolagem = 0);
+        this.setTaxaSobrepeso(new TaxaSobrepesoTO());    
+        this.setFiltros(new Filtros());
+        this.setInstrutor(new InstrutorTO());
+        this.setSalto(new SaltoTO());
+    }
+    
+        public void salvar(){
+
+            System.out.print("========================1");
+            salto.setIdCliente(cliente.getIdCliente());           
+            salto.setIdInstrutor(instrutor.getIdInstrutor());
+            salto.setIdDecolagem(decolagem.getIddecolagem());
+            salto.setIdTaxaDeSobrepeso(taxaSobrepeso.getIdTaxaSobrepeso());
+            salto.setIdTipoDeSalto(tipoDeSalto.getIdTipoDeSalto());
+            System.out.print( salto.getIdCliente());
+            System.out.print( salto.getIdInstrutor());
+            System.out.print( salto.getIdDecolagem());
+            System.out.print( salto.getIdTaxaDeSobrepeso());
+             System.out.print( salto.getIdTipoDeSalto());
+            
+        saltoDao.salvar(salto);
+            
+    }
+    
+    /**
+    * Método de buca das decolagens.
+    * O método retorna as decolagem disponíveis para o salto
+    * @return List - Lista de decolagem.  
+    */
+    public List<DecolagemTO> getDecolagems(){       
+        return filtros.decolagens();
     }  
     
     public ClienteTO getCliente() {
@@ -87,16 +158,14 @@ public class SaltoBean implements Serializable {
         this.cliente = cliente;
     }
      
-    public TipoDeSaltoTO getTipoDeSalto() {
-        tipoDeSalto = filtros.getTipoDeSaltoTO(idTipoDeSalto);
+    public TipoDeSaltoTO getTipoDeSalto() {       
         return tipoDeSalto;
     }
     public void setTipoDeSalto(TipoDeSaltoTO tipoDeSalto) {
         this.tipoDeSalto = tipoDeSalto;
     }
 
-    public TaxaSobrepesoTO getTaxaSobrepeso() {
-        taxaSobrepeso = filtros.getTaxaDeSobrepeso(tipoDeSalto, cliente);
+    public TaxaSobrepesoTO getTaxaSobrepeso() {        
         return taxaSobrepeso;
     }
     public void setTaxaSobrepeso(TaxaSobrepesoTO taxaSobrepeso) {
@@ -116,14 +185,6 @@ public class SaltoBean implements Serializable {
     public void setIdTipoDeSalto(int idTipoDeSalto) {
         this.idTipoDeSalto = idTipoDeSalto;
     }
-
-    public int getIdInstrutor() {
-        return idInstrutor;
-    }
-
-    public void setIdInstrutor(int idInstrutor) {
-        this.idInstrutor = idInstrutor;
-    }
     
     public InstrutorTO getInstrutor() {
         return instrutor;
@@ -133,13 +194,29 @@ public class SaltoBean implements Serializable {
         this.instrutor = instrutor;
     }
 
-    public String getInstruString() {
-        return instruString;
+    public int getIdDecolagem() {
+        return idDecolagem;
     }
 
-    public void setInstruString(String instruString) {
-        this.instruString = instruString;
+    public void setIdDecolagem(int idDecolagem) {
+        this.idDecolagem = idDecolagem;
     }
-    
+
+    public DecolagemTO getDecolagem() {
+        return decolagem;
+    }
+
+    public void setDecolagem(DecolagemTO decolagem) { 
+        this.decolagem = decolagem;
+    }
+
+    public SaltoTO getSalto() {
+        return salto;
+    }
+
+    public void setSalto(SaltoTO salto) {
+        this.salto = salto;
+    }
+  
     
 }

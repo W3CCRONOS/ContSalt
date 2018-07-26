@@ -61,7 +61,7 @@ and open the template in the editor.
                 <p:layoutUnit position="center">
                     <h:form>                        
                         <center><h1>Criar Saltos</h1></center><br/>
-                        <h:panelGrid columns="2" cellpadding="12">
+                        <h:panelGrid columns="2" cellpadding="9">
                            
                             <p:outputLabel value="Nome do cliente: " for="cliente" style=" font-size: 14px" />
                             <p:autoComplete id="cliente" value="#{saltoBean.cliente}"
@@ -74,34 +74,61 @@ and open the template in the editor.
                                 <f:selectItems var="tipSalt" value="#{tipoDeSaltoBean.tiposDeSaltos}" itemLabel="#{tipSalt.nome}" itemValue="#{tipSalt.idTipoDeSalto}" />
                             </p:selectOneMenu> 
                             
-                            <p:outputLabel value="Selecione INSTRUTOR: " for="INST" style=" font-size: 14px" /> 
-                            <p:selectOneMenu id="INST" value="#{saltoBean.instruString}">
-                                <f:selectItems var="INSTR" value="#{saltoBean.instrutores}" itemLabel="#{INSTR.nome}" itemValue="#{INSTR.nome}" />
+                            <p:outputLabel value="Selecione decolagem: " for="deco" style=" font-size: 14px" /> 
+                            <p:selectOneMenu id="deco" value="#{saltoBean.idDecolagem}">
+                                <f:selectItems var="decola" value="#{saltoBean.decolagems}" itemLabel="#{decola.numero}" itemValue="#{decola.iddecolagem}" />
                             </p:selectOneMenu> 
                             
                             
-                            <p:commandButton value="Selecionar" action="#{saltoBean.selectClientTipSalto()}" ajax="false" />
-                            
+                            <p:commandButton value="Selecionar" action="#{saltoBean.selectClientTipSaltoDecolage()}" ajax="false" />
+                        </h:panelGrid>                         
                             <center><h2>Instrutores</h2></center>
-                            <p:dataTable var="dados" value="#{saltoBean.instrutores}" >
-                                <p:column headerText="Nome">
+                            <p:dataTable var="dados" value="#{saltoBean.instrutores}"  >
+                                <p:column headerText="Nome" >
                                     <h:outputText value="#{dados.nome}"/>
                                 </p:column>
-                                <p:column headerText="CPF">
-                                    <h:outputText value="#{dados.cpf}"/>
+                            <p:column >
+                                <p:commandButton value="Selecionar" action="#{saltoBean.setInstrutor(dados)}" ajax="false" />                                
+                            </p:column>
+                            </p:dataTable>                            
+                             <center><h2>Confirmar Informações</h2></center>
+                             <p:dataTable var="dados" value="#{saltoBean.instrutor}"  >
+                                <p:column headerText="Instrutor" >
+                                    <h:outputText value="#{dados.nome}"/>
                                 </p:column>
-                                <p:column headerText="Peso Máximo">
-                                    <h:outputText value="#{dados.peso}"/>
+                                <p:column >
+                                    <p:dataTable var="dados" value="#{saltoBean.cliente}"  >
+                                        <p:column headerText="Cliente" >
+                                            <h:outputText value="#{dados.nome}"/>
+                                        </p:column>
+                                    </p:dataTable>                                  
                                 </p:column>
-                                <p:column headerText="Admissão">
-                                    <h:outputText value="#{dados.admissao}" >
-                                        <f:convertDateTime pattern="dd/MM/yyyy" />
-                                    </h:outputText>
+                                <p:column >
+                                    <p:dataTable var="dados" value="#{saltoBean.tipoDeSalto}"  >
+                                        <p:column headerText="Tipo de Salto" >
+                                            <h:outputText value="#{dados.nome}"/>
+                                        </p:column>
+                                    </p:dataTable>                                  
                                 </p:column>
-                            </p:dataTable>
-                       
-                                                  
-                        </h:panelGrid> 
+                                <p:column >
+                                    <p:dataTable var="dados" value="#{saltoBean.taxaSobrepeso}"  >
+                                        <p:column headerText="Taxa de Sobrepeso" >
+                                            <h:outputText value="#{dados.valor}"/>
+                                        </p:column>
+                                    </p:dataTable>                                  
+                                </p:column>
+                                <p:column >
+                                    <p:dataTable var="dados" value="#{saltoBean.decolagem}"  >
+                                        <p:column headerText="Decolagem" >
+                                            <h:outputText value="#{dados.numero}"/>
+                                        </p:column>
+                                    </p:dataTable>                                  
+                                </p:column>
+                                <p:column >
+                                    <p:commandButton value="Confirmar" action="#{saltoBean.salvar()}" ajax="false" />
+                                    <p:commandButton value="Cancelar" action="#{saltoBean.cancelar()}" ajax="false" />
+                                </p:column>
+                            </p:dataTable>                            
                     </h:form>                                                          
                 </p:layoutUnit>
             </p:layout>

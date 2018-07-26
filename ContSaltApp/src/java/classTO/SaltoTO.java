@@ -10,11 +10,11 @@ import java.sql.Date;
  */
 public class SaltoTO {
     private int idSalto;
-    private Date dataDoSalto;
     private int idCliente;
     private int idTipoDeSalto;
     private int idTaxaDeSobrepeso;
     private int idInstrutor;
+    private int idDecolagem;
 
     public int getIdSalto() {
         return idSalto;
@@ -23,14 +23,6 @@ public class SaltoTO {
     public void setIdSalto(int idSalto) {
         //ksja
         this.idSalto = idSalto;
-    }
-
-    public Date getDataDoSalto() {
-        return dataDoSalto;
-    }
-
-    public void setDataDoSalto(Date dataDoSalto) {
-        this.dataDoSalto = dataDoSalto;
     }
 
     public int getIdCliente() {
@@ -64,6 +56,13 @@ public class SaltoTO {
     public void setIdInstrutor(int idInstrutor) {
         this.idInstrutor = idInstrutor;
     }
-    
+
+    public int getIdDecolagem() {
+        return idDecolagem;
+    }
+
+    public void setIdDecolagem(int idDecolagem) {
+        this.idDecolagem = idDecolagem;
+    }
     
 }

@@ -4,15 +4,19 @@
  */
 package classBO;
 
+import classDAO.DecolagemDAO;
 import classDAO.InstrutorDAO;
+import classDAO.SaltoDAO;
 import classDAO.TaxaSobrepesoDAO;
 import classDAO.TipoDeSaltoDAO;
 import classDAO.TiposDeSaltosInstrutoresDAO;
 import classTO.ClienteTO;
 import classTO.DecolagemTO;
 import classTO.InstrutorTO;
+import classTO.SaltoTO;
 import classTO.TaxaSobrepesoTO;
 import classTO.TipoDeSaltoTO;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,31 +26,27 @@ import java.util.List;
  */
 public class Filtros {
     private TipoDeSaltoDAO tipSaltDao;
-    private TaxaSobrepesoDAO taxaSobresoDao;
-    
-    
+    private TaxaSobrepesoDAO taxaSobresoDao;      
     private InstrutorDAO intrutorDao;
     private TiposDeSaltosInstrutoresDAO tipSaltInstDao;
-    private ClienteTO client;
-    private DecolagemTO deco;
-    private TipoDeSaltoTO tipSalt;
+    private DecolagemDAO decoDao;
+    private SaltoDAO saltoDao;
+    private Date dataUtil;
 
     public Filtros() {
         this.setTipSaltDao(new TipoDeSaltoDAO());
         this.setTaxaSobresoDao(new TaxaSobrepesoDAO());
-        
-        
+        this.decoDao = new DecolagemDAO();
+        this.saltoDao = new SaltoDAO();
         this.setIntrutorDao(new InstrutorDAO());
         this.setTipSaltInstDao(new TiposDeSaltosInstrutoresDAO());
-        this.setClient(new ClienteTO());
-        this.setDeco(new DecolagemTO());
-        this.setTipSalt(new TipoDeSaltoTO());
+        this.dataUtil = new Date();
     }
     
      
-    /** Método para buscar o tipo de salto.
+    /** Método para buscar um tipo de salto.
     * @param id - É o número de identificação de um tipo de salto.
-    * @return TipoDeSaltoTO - Um tipo de salto.
+    * @return - Um tipo de salto.
     */
     public TipoDeSaltoTO getTipoDeSaltoTO(int id){
             TipoDeSaltoTO tipSalt = new TipoDeSaltoTO();
@@ -57,6 +57,30 @@ public class Filtros {
                 }                                  
             }
         return tipSalt;         
+    }
+    
+    
+     public List<InstrutorTO> getInstrutores(){       
+        
+     return intrutorDao.getInstrutores();
+    }  
+    
+    
+    /** Método para uma decolagem.
+    * @param id - É o número de identificação de uma decolagem.
+    * @return  - Uma decolagem.
+    */
+    public DecolagemTO getDecolagemTO(int id){
+        DecolagemTO decolagem1 = new DecolagemTO();
+         /* A variável para data(dataSql) recebe a data atual do sistema*/
+        java.sql.Date dataSql = new java.sql.Date(dataUtil.getTime());
+         for(DecolagemTO decolagem2 : decoDao.getDecolagens(dataSql)){
+                if(decolagem2.getIddecolagem()== id ){
+                    decolagem1 = decolagem2;
+                    break;
+                }                                  
+            }
+        return decolagem1;         
     }
     
     /** Filtrar a taxa de sobrepeso.
@@ -94,12 +118,26 @@ public class Filtros {
         return taxaSobrepeso;    
     }
     
-      
-    
-    public List<InstrutorTO> instrutores(){
-        return intrutorDao.getInstrutores();
-    }
-    
+    /** Filtrar decolagem.
+    * O método retornar as decolagens NÃO FINALIZADAS na data do salto. 
+    * Um salto deve estar dentro de uma decolagem. E uma decolagem pode conter vários saltos.
+    * @return list  - decolagens.
+    */
+    public List<DecolagemTO> decolagens(){
+        
+        List<DecolagemTO> list =new LinkedList<>();//Lista para decolagens.
+        /* A variável para data(dataSql) recebe a data atual do sistema*/
+        java.sql.Date dataSql = new java.sql.Date(dataUtil.getTime());
+        /*Percorro todas as decolagem criadas na data do salto e separo as decolagem que ainda não foram
+        finalizadas.*/
+        for(DecolagemTO deco : decoDao.getDecolagens(dataSql)){
+             if(deco.getStatus().equals("false")){
+                 list.add(deco);
+             }
+        }
+        
+        return list; //Retorno das decolagem ainda não finalizadas. 
+    }    
     
     /** Filtro dos intrutores presentes.
     *   O método retorna uma lista com os instrutores presentes.
@@ -123,23 +161,23 @@ public class Filtros {
     *   @param tipSalto  - tipo de salto.  
     *   @param instrutores   - instrutores presentes.  
     *   @return List  - instrutores por tipo de salto*/
-    public List<InstrutorTO> instruoresPorTipodeSalto(List<InstrutorTO> instrutores, TipoDeSaltoTO tipSalto){
-        List<InstrutorTO> lstA = new LinkedList<>(); 
+    public List<InstrutorTO> instruoresPorTipodeSalto(List<InstrutorTO> instrutores, TipoDeSaltoTO tipoDeSalto){
+        List<InstrutorTO> lstA = new LinkedList<>();                
         /* Percorre-se a lista com todos os istrutores que execultam
-        o tipo de salto informado*/
-        for(InstrutorTO inst1 : tipSaltInstDao.getInstrutoresPorTipoDeSalto(tipSalto.getIdTipoDeSalto())){
+        o tipo de salto informado*/       
+        for(InstrutorTO inst1 : tipSaltInstDao.getInstrutoresPorTipoDeSalto(tipoDeSalto.getIdTipoDeSalto())){
             /*Percorre-se a lista com os istrutores recebidos*/
             for (InstrutorTO inst2 : instrutores) {
                 /*Compara-se os elementos das listas para que os elementos iguais
                 sejam retornados.*/
-                if(inst1==inst2){
+                if(inst1.getIdInstrutor()==inst2.getIdInstrutor()){
                     lstA.add(inst1);
                 }
             }
-        }        
+        }
         return lstA;
     }
-
+    
     
     /** Filtro dos instrutores por peso.
      * O método recebe uma lista de instrutores e identifica quais intrutores podem
@@ -182,8 +220,43 @@ public class Filtros {
         return lstA;
     }
     * 
+    *     /** Filtro dos instrutores por decolagem.
+     * O método filtra os instrutores que já estão realizando algum salto
+     * dentro da decolagem.
+    * 
+    * 
     */
     
+    /** Filtro dos instrutores por decolagem.
+    *   O método filtra os instrutores que já estão realizando algum salto
+    *   dentro da decolagem.
+    *   @param decolagem  - decolagem.  
+    *   @param instrutores   - instrutores.  
+    *   @return List  - instrutores que não estão na decolagem.
+    */
+    public List<InstrutorTO> instroresPorDecolagem(List<InstrutorTO> instrutores, DecolagemTO decolagem){
+        List<InstrutorTO> lstA = new LinkedList<>(); 
+        /*Verifico se existe algum salto na decolagem*/
+        if(saltoDao.verificarSeExisteRegistro(decolagem) == 0){
+            /*Se o resultdo for 0(zero), retorno a propria lista de instrutores sem alterações*/
+            return instrutores;
+        }
+        else{//Senão
+            /* Percorre-se a lista com todos os saltos que estão na decolagem*/
+            for(SaltoTO salto : saltoDao.getSaltosPorDecolagem(decolagem.getIddecolagem())){
+                /*Percorre-se a lista com os istrutores recebidos*/
+                for (InstrutorTO instrutor : instrutores) {
+                    /*Compara se o instrutor não está em nenhum salto dentro da decolagem.
+                    Se ele não tiver salvo ele em uma lista*/
+                    if(instrutor.getIdInstrutor()!=salto.getIdInstrutor()){
+                        lstA.add(instrutor);
+                    }
+                }
+            }  
+            //retorna a lista com instrutores que não estão na decolagem.
+            return lstA;
+        }
+    }
     
     public InstrutorDAO getIntrutorDao() {
         return intrutorDao;
@@ -198,30 +271,6 @@ public class Filtros {
 
     public void setTipSaltInstDao(TiposDeSaltosInstrutoresDAO tipSaltInstDao) {
         this.tipSaltInstDao = tipSaltInstDao;
-    }
-
-    public ClienteTO getClient() {
-        return client;
-    }
-
-    public void setClient(ClienteTO client) {
-        this.client = client;
-    }
-
-    public DecolagemTO getDeco() {
-        return deco;
-    }
-
-    public void setDeco(DecolagemTO deco) {
-        this.deco = deco;
-    }
-
-    public TipoDeSaltoTO getTipSalt() {
-        return tipSalt;
-    }
-
-    public void setTipSalt(TipoDeSaltoTO tipSalt) {
-        this.tipSalt = tipSalt;
     }
 
     public TipoDeSaltoDAO getTipSaltDao() {

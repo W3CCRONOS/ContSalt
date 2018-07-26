@@ -56,7 +56,7 @@ public class DecolagemDAO {
      
     /** 
     * Método de busca. 
-    * O método busca os registros de algumas decolagens realizadas em uma data
+    * O método busca os registros das decolagens realizadas em uma data
     * específica.
     * @param data - data das decolagens.
     * @return List - O retorno é uma lista com decolagens.
@@ -65,7 +65,7 @@ public class DecolagemDAO {
             List<DecolagemTO> lstA = new LinkedList<>();
             ResultSet rs;            
             try{
-                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM decolagem WHERE data = ?");
+                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM decolagem WHERE data = ? ORDER BY numero");
                 ppStmt.setDate(1,data);
                 rs = ppStmt.executeQuery();
                 while(rs.next()){
