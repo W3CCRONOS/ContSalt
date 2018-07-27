@@ -207,26 +207,7 @@ public class Filtros {
         }
         return lstA;
     }
-    
-    
-        /**
-     * Método que retorna uma lista dos instrutores que estão em uma decolagem.
-     * @param iddecolagem int - É o número de identificação de uma decolagem.
-     * @return List - Uma lista com intrutores.
-    
-    public List<InstrutorTO> getInstrutoresDecolagem(int iddecolagem){
-        List<InstrutorTO> lstA = new LinkedList<>();
-        //lstA = intrutorDao.getInstrutoresDecolagem(iddecolagem);
-        return lstA;
-    }
-    * 
-    *     /** Filtro dos instrutores por decolagem.
-     * O método filtra os instrutores que já estão realizando algum salto
-     * dentro da decolagem.
-    * 
-    * 
-    */
-    
+        
     /** Filtro dos instrutores por decolagem.
     *   O método filtra os instrutores que já estão realizando algum salto
     *   dentro da decolagem.
@@ -236,20 +217,21 @@ public class Filtros {
     */
     public List<InstrutorTO> instroresPorDecolagem(List<InstrutorTO> instrutores, DecolagemTO decolagem){
         List<InstrutorTO> lstA = new LinkedList<>(); 
+        lstA=instrutores;
         /*Verifico se existe algum salto na decolagem*/
         if(saltoDao.verificarSeExisteRegistro(decolagem) == 0){
             /*Se o resultdo for 0(zero), retorno a propria lista de instrutores sem alterações*/
-            return instrutores;
+            return  lstA;
         }
         else{//Senão
             /* Percorre-se a lista com todos os saltos que estão na decolagem*/
-            for(SaltoTO salto : saltoDao.getSaltosPorDecolagem(decolagem.getIddecolagem())){
-                /*Percorre-se a lista com os istrutores recebidos*/
+            for(SaltoTO salto : saltoDao.getSaltosPorDecolagem(decolagem)){
+                /*Com a lista de istrutores recebidas remove-se 
+                os instrures que já estiverem em algum salto*/
                 for (InstrutorTO instrutor : instrutores) {
-                    /*Compara se o instrutor não está em nenhum salto dentro da decolagem.
-                    Se ele não tiver salvo ele em uma lista*/
-                    if(instrutor.getIdInstrutor()!=salto.getIdInstrutor()){
-                        lstA.add(instrutor);
+                    if(instrutor.getIdInstrutor()==salto.getIdInstrutor()){
+                        lstA.remove(instrutor);
+                        break;
                     }
                 }
             }  

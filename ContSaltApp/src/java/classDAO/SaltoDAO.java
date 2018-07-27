@@ -120,17 +120,17 @@ public class SaltoDAO {
     /** 
     * Método de busca. 
     * O método busca todos os saltos em uma decolagem específica.
-    * @param idDecolagem - Id da decolagem que se realizará a busca.
+    * @param decolagem - Id da decolagem que se realizará a busca.
     * @return List - o retorno é uma lista com saltos.
     */    
-    public List<SaltoTO> getSaltosPorDecolagem(int idDecolagem){
+    public List<SaltoTO> getSaltosPorDecolagem(DecolagemTO decolagem){
             
             List<SaltoTO> lstA = new LinkedList<SaltoTO>();
             ResultSet rs;
             
             try{
                 PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM salto WHERE iddecolagem = ?");
-                ppStmt.setInt(1,idDecolagem);
+                ppStmt.setInt(1,decolagem.getIddecolagem());
                 rs = ppStmt.executeQuery();
                 while(rs.next()){
                     lstA.add(getSalto(rs));

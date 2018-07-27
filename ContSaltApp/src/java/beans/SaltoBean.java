@@ -66,10 +66,7 @@ public class SaltoBean implements Serializable {
     * O método recebe da interface o cliente, o id do tipo de salto e decolagem.
     */
     public void selectClientTipSaltoDecolage(){ 
-        System.out.println(cliente.getNome());
-        System.out.println(idTipoDeSalto);
-        System.out.println(idDecolagem);
-        System.out.println(taxaSobrepeso.getValor());
+
     }
     
     /**
@@ -124,22 +121,14 @@ public class SaltoBean implements Serializable {
         this.setSalto(new SaltoTO());
     }
     
-        public void salvar(){
-
-            System.out.print("========================1");
-            salto.setIdCliente(cliente.getIdCliente());           
-            salto.setIdInstrutor(instrutor.getIdInstrutor());
-            salto.setIdDecolagem(decolagem.getIddecolagem());
-            salto.setIdTaxaDeSobrepeso(taxaSobrepeso.getIdTaxaSobrepeso());
-            salto.setIdTipoDeSalto(tipoDeSalto.getIdTipoDeSalto());
-            System.out.print( salto.getIdCliente());
-            System.out.print( salto.getIdInstrutor());
-            System.out.print( salto.getIdDecolagem());
-            System.out.print( salto.getIdTaxaDeSobrepeso());
-             System.out.print( salto.getIdTipoDeSalto());
-            
+    public void salvar(){
+        salto.setIdCliente(cliente.getIdCliente());           
+        salto.setIdInstrutor(instrutor.getIdInstrutor());
+        salto.setIdDecolagem(decolagem.getIddecolagem());
+        salto.setIdTaxaDeSobrepeso(taxaSobrepeso.getIdTaxaSobrepeso());
+        salto.setIdTipoDeSalto(tipoDeSalto.getIdTipoDeSalto());
         saltoDao.salvar(salto);
-            
+        cancelar();        
     }
     
     /**
