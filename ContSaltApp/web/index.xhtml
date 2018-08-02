@@ -48,10 +48,19 @@
             <p:layoutUnit position="center">
                 <p:clock id="data" pattern="dd.MM.yyyy HH:mm:ss" />
                 <center><h2>Saltos</h2></center>
-                <p:dataTable var="car" >
-                    <p:column headerText=" ">
+                <p:dataTable var="decolagem" value="#{decolagemBean.decolagens}" >
+                    <p:column headerText="Decolagens">
+                        <h:outputText value="#{decolagem.numero}  " style="font-size: 14px "/>
+                        <p:column headerText="Status" style="text-align: center;">
+                            <p:selectBooleanCheckbox value="#{decolagem.status}" disabled="true"  >                 
+                            </p:selectBooleanCheckbox> 
+                        </p:column>
                     </p:column>
-                </p:dataTable>
+                    <p:columns value="#{saltoBean.instrutoresPresentes}" var="instrutor" headerText="#{instrutor.nome}">      
+                        <h:outputText value="#{saltoBean.getCliente(instrutor, decolagem)}  " style="font-size: 14px ">
+                        </h:outputText>       
+                    </p:columns>
+                </p:dataTable> 
             </p:layoutUnit>                        
         </p:layout>        
     </h:body>
