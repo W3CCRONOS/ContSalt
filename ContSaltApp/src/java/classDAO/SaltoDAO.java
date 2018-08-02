@@ -1,6 +1,7 @@
 package classDAO;
 
 import classTO.DecolagemTO;
+import classTO.InstrutorTO;
 import classTO.SaltoTO;
 import java.sql.Connection;
 import java.sql.Date;
@@ -96,14 +97,14 @@ public class SaltoDAO {
     * @param dataDoSalto - data referente a busca.
     * @return List - o retorno é uma lista com saltos.
     */    
-    public List<SaltoTO> getSaltosPorData(Date dataDoSalto){
+    public List<SaltoTO> getSaltos(){
             
             List<SaltoTO> lstA = new LinkedList<SaltoTO>();
             ResultSet rs;
             
             try{
-                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM salto WHERE data = ?");
-                ppStmt.setDate(1,dataDoSalto);
+                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM salto");
+                
                 rs = ppStmt.executeQuery();
                 while(rs.next()){
                     lstA.add(getSalto(rs));
@@ -143,7 +144,10 @@ public class SaltoDAO {
             }
             return lstA;
     }
-         
+     
+        
+
+    
     /** 
     * Método para montar um objeto salto. Este método recebe um resultado do banco
     * e preenche os atributos de um objeto salto.

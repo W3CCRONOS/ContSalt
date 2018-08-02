@@ -4,6 +4,7 @@
  */
 package classBO;
 
+import classDAO.ClienteDAO;
 import classDAO.DecolagemDAO;
 import classDAO.InstrutorDAO;
 import classDAO.SaltoDAO;
@@ -32,6 +33,8 @@ public class Filtros {
     private DecolagemDAO decoDao;
     private SaltoDAO saltoDao;
     private Date dataUtil;
+    private java.sql.Date dataSql;
+    private ClienteDAO clienteDao;
 
     public Filtros() {
         this.setTipSaltDao(new TipoDeSaltoDAO());
@@ -41,6 +44,9 @@ public class Filtros {
         this.setIntrutorDao(new InstrutorDAO());
         this.setTipSaltInstDao(new TiposDeSaltosInstrutoresDAO());
         this.dataUtil = new Date();
+        /* A variável para data(dataSql) recebe a data atual do sistema*/
+        this.dataSql = new java.sql.Date(dataUtil.getTime());
+        this.clienteDao = new ClienteDAO();
     }
     
      
@@ -72,8 +78,6 @@ public class Filtros {
     */
     public DecolagemTO getDecolagemTO(int id){
         DecolagemTO decolagem1 = new DecolagemTO();
-         /* A variável para data(dataSql) recebe a data atual do sistema*/
-        java.sql.Date dataSql = new java.sql.Date(dataUtil.getTime());
          for(DecolagemTO decolagem2 : decoDao.getDecolagens(dataSql)){
                 if(decolagem2.getIddecolagem()== id ){
                     decolagem1 = decolagem2;
@@ -89,8 +93,7 @@ public class Filtros {
     * @param tipSalt - É o tipo de salto.
     * @param cliente - É o cliente.
     * @return TaxaSobrepesoTO - É a taxa de sobrepeso.
-    */
-    
+    */    
     public TaxaSobrepesoTO getTaxaDeSobrepeso(TipoDeSaltoTO tipSalt, ClienteTO cliente){
         TaxaSobrepesoTO taxaSobrepeso = new TaxaSobrepesoTO();
         /* Se O tipo de salto NÃO gerar taxa de sobrepeso,
@@ -137,7 +140,35 @@ public class Filtros {
         }
         
         return list; //Retorno das decolagem ainda não finalizadas. 
-    }    
+    } 
+    
+    /** Buscar Salto.
+    * O método retornar um salto que está em uma decolagem e foi realizado  por
+    * um instrutor.
+    * @return  - salto.
+    */
+    public SaltoTO getSalto(InstrutorTO instrutor, DecolagemTO decolagem){        
+        SaltoTO saltoTO = new SaltoTO();
+        for(SaltoTO salto: saltoDao.getSaltos()){  
+            if(instrutor.getIdInstrutor() == salto.getIdInstrutor() && decolagem.getIddecolagem() == salto.getIdDecolagem()){
+                saltoTO =  salto;
+                break;
+            }
+        }            
+        return saltoTO;
+    } 
+    
+    public ClienteTO getCliente(SaltoTO salto){
+        ClienteTO cliente1 = new ClienteTO();
+        for(ClienteTO cliente2 : clienteDao.getClientes()){
+            if(cliente2.getIdCliente()==salto.getIdCliente()){
+                cliente1=cliente2;
+            }
+        }
+        
+        return cliente1;
+               
+    }
     
     /** Filtro dos intrutores presentes.
     *   O método retorna uma lista com os instrutores presentes.

@@ -57,7 +57,6 @@ public class InstrutorBean implements Serializable {
     public List<InstrutorTO> getInstrutores(){       
         return cDAO.getInstrutores();
     }
-
     
     /**
     * Método para excluir o registro de um instrutor.

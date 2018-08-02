@@ -107,7 +107,20 @@ public class SaltoBean implements Serializable {
         listInst = filtros.instroresPorDecolagem(listInst, decolagem);
         //Retorno lista de istrutores filtrados.
         return listInst;        
-    } 
+    }
+    
+        
+    /**
+    * Método que retorna uma lista dos instrutore presentes.
+    * A presença dos intrutores todo dia precisa ser verificada para que
+    * seus nomes possam ser selecionados para efetuar os saltos.
+    * @return  - Lista de instrutores.  
+    */
+    public List<InstrutorTO> getInstrutoresPresentes(){       
+        List<InstrutorTO> listInst = new LinkedList<>();
+        listInst = filtros.instrutoresPresentes();
+        return listInst;
+    }
     
     public void cancelar(){
         this.setCliente(new ClienteTO());  
@@ -138,7 +151,18 @@ public class SaltoBean implements Serializable {
     */
     public List<DecolagemTO> getDecolagems(){       
         return filtros.decolagens();
-    }  
+    }
+    
+    /**
+    * Método de buca.
+    * O método retorna o cliente de um instrutor em uma decolagem.
+    * @return - Um cliente.  
+    */
+    public ClienteTO getCliente(InstrutorTO instrutor, DecolagemTO decolagem){ 
+        ClienteTO cliente =  new ClienteTO();
+        cliente= filtros.getCliente(filtros.getSalto(instrutor, decolagem));
+        return cliente;
+    }
     
     public ClienteTO getCliente() {
         return cliente;
