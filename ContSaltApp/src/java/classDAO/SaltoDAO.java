@@ -1,5 +1,4 @@
 package classDAO;
-
 import classTO.DecolagemTO;
 import classTO.InstrutorTO;
 import classTO.SaltoTO;
@@ -11,7 +10,6 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import utilitarios.Conexao;
-
 /**
  * Classe que mantém os registros no banco de dados.
  * A classe mantém os registros dos clientes.
@@ -20,18 +18,15 @@ import utilitarios.Conexao;
  * @see SaltoTO
  * @see Conexao
  */
-
 public class SaltoDAO {
      Connection conn;
-
     /**
     * Método construtor. 
     * No método inicializa a variável, realizando a conexão com o banco de dados. 
     */
     public SaltoDAO() {
         this.conn =  new Conexao().conectar();
-    }
-    
+    }    
     /**
     * Método para criar um registros. 
     * O método salva o registro de um salto no banco de dados.
@@ -51,8 +46,7 @@ public class SaltoDAO {
         catch(SQLException ex){         
             ex.printStackTrace();
         }
-    }
-     
+    }     
     /**
     * Método para alterar registros no banco. Este método altera um salto
     *registrado no banco.
@@ -74,7 +68,6 @@ public class SaltoDAO {
             EX.printStackTrace();
         }        
     }
-
     /**
     * Método para excluir registros no banco. Este método exclui um salto
     *registrado no banco.
@@ -89,35 +82,34 @@ public class SaltoDAO {
         }catch(SQLException EX){
             EX.printStackTrace();
         }
-    }
-    
+    }    
     /** 
     * Método de busca. 
     * O método busca todos os saltos relalizados em uma determinada data.
     * @param dataDoSalto - data referente a busca.
     * @return List - o retorno é uma lista com saltos.
     */    
-    public List<SaltoTO> getSaltos(){
-            
-            List<SaltoTO> lstA = new LinkedList<SaltoTO>();
-            ResultSet rs;
-            
+    public SaltoTO getSaltosPorInstrutorDecolagem(InstrutorTO inst, DecolagemTO deco){           
+            List<SaltoTO> lstA = new LinkedList<>();
+            SaltoTO salto1 = new SaltoTO();                    
+            ResultSet rs;            
             try{
-                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM salto");
-                
+                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM salto WHERE idinstrutor = ? AND iddecolagem = ?");
+                ppStmt.setInt(1, inst.getIdInstrutor());             
+                ppStmt.setInt(2, deco.getIddecolagem());
                 rs = ppStmt.executeQuery();
                 while(rs.next()){
                     lstA.add(getSalto(rs));
-                }
+                }            
                 ppStmt.close();
 	        rs.close();
             }
             catch(SQLException ex){
                 ex.printStackTrace();
             }
-            return lstA;
-    }
-    
+            for(SaltoTO salto2: lstA) salto1=salto2;
+            return salto1;
+    }    
     /** 
     * Método de busca. 
     * O método busca todos os saltos em uma decolagem específica.
@@ -143,11 +135,7 @@ public class SaltoDAO {
                 ex.printStackTrace();
             }
             return lstA;
-    }
-     
-        
-
-    
+    }                
     /** 
     * Método para montar um objeto salto. Este método recebe um resultado do banco
     * e preenche os atributos de um objeto salto.
@@ -157,15 +145,13 @@ public class SaltoDAO {
     private SaltoTO getSalto(ResultSet rs) throws SQLException{
         SaltoTO salt = new SaltoTO();
         salt.setIdSalto(rs.getInt("idsalto"));
-        salt.setIdInstrutor(rs.getInt("idinstrutor"));  
         salt.setIdCliente(rs.getInt("idcliente"));
         salt.setIdTaxaDeSobrepeso(rs.getInt("idtaxasobrepeso"));
         salt.setIdTipoDeSalto(rs.getInt("idtipodesalto"));
-        salt.setIdTipoDeSalto(rs.getInt("iddecolagem"));
+        salt.setIdInstrutor(rs.getInt("idinstrutor"));
+        salt.setIdDecolagem(rs.getInt("iddecolagem"));
         return salt;
-    }
-    
-    
+    }    
      /** 
     * Método para verificar se existe registro.
     * O método verifica se existe algum registro de um salto numa decolagem específica.

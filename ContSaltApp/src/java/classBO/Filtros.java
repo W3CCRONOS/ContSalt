@@ -147,27 +147,40 @@ public class Filtros {
     * um instrutor.
     * @return  - salto.
     */
-    public SaltoTO getSalto(InstrutorTO instrutor, DecolagemTO decolagem){        
-        SaltoTO saltoTO = new SaltoTO();
-        for(SaltoTO salto: saltoDao.getSaltos()){  
-            if(instrutor.getIdInstrutor() == salto.getIdInstrutor() && decolagem.getIddecolagem() == salto.getIdDecolagem()){
-                saltoTO =  salto;
-                break;
-            }
-        }            
-        return saltoTO;
+    public SaltoTO getSaltoPorInstrutorDecolagem(InstrutorTO instrutor, DecolagemTO decolagem){        
+        SaltoTO salt= new SaltoTO();
+                salt =  saltoDao.getSaltosPorInstrutorDecolagem(instrutor, decolagem);
+        return  salt;
     } 
-    
+
+    /** Buscar Cliente.
+    * O método retornar um cliente que está em um salto.
+    * @return  - cliente.
+    */    
     public ClienteTO getCliente(SaltoTO salto){
         ClienteTO cliente1 = new ClienteTO();
         for(ClienteTO cliente2 : clienteDao.getClientes()){
             if(cliente2.getIdCliente()==salto.getIdCliente()){
                 cliente1=cliente2;
+                break;
             }
         }
-        
-        return cliente1;
-               
+        return cliente1;          
+    }
+    
+    /** Buscar Tipo de Salto.
+    * O método retornar o tipo de salto que está em um salto.
+    * @return  - tipo de salto.
+    */    
+    public TipoDeSaltoTO getTipoDeSalto(SaltoTO salto){
+        TipoDeSaltoTO tipoSalto1 = new TipoDeSaltoTO();
+        for(TipoDeSaltoTO tipoSalto2 : tipSaltDao.getTiposDeSaltos()){
+            if(tipoSalto2.getIdTipoDeSalto()==salto.getIdTipoDeSalto()){
+                tipoSalto1=tipoSalto2;
+                break;
+            }
+        }
+        return tipoSalto1;          
     }
     
     /** Filtro dos intrutores presentes.
@@ -185,7 +198,6 @@ public class Filtros {
         }
         return lstA;
     } 
-
     
     /** Filtro dos intrutores por tipo de salto.
     *   O método retorna uma lista de instrutores que execultam o tipo de salto informado.
@@ -208,8 +220,7 @@ public class Filtros {
         }
         return lstA;
     }
-    
-    
+       
     /** Filtro dos instrutores por peso.
      * O método recebe uma lista de instrutores e identifica quais intrutores podem
      * realizar o salto devido ao peso do cliente.
@@ -219,7 +230,6 @@ public class Filtros {
      * @param instrutores - Uma lista de instrutores.
      * @return List  - Lista de instrutores
      */
-
     public List<InstrutorTO> instrutoresPorPeso(ClienteTO cliente, TaxaSobrepesoTO taxa, List<InstrutorTO> instrutores ){
         List<InstrutorTO> lstA = new LinkedList<>(); 
         /*Se a o valor da taxa de sobrepeso for igual a 0 (zero),
@@ -274,6 +284,7 @@ public class Filtros {
     public InstrutorDAO getIntrutorDao() {
         return intrutorDao;
     }
+    
     public void setIntrutorDao(InstrutorDAO intrutorDao) {
         this.intrutorDao = intrutorDao;
     }

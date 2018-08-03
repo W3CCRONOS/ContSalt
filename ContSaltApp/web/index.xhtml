@@ -57,8 +57,11 @@
                         </p:column>
                     </p:column>
                     <p:columns value="#{saltoBean.instrutoresPresentes}" var="instrutor" headerText="#{instrutor.nome}">      
-                        <h:outputText value="#{saltoBean.getCliente(instrutor, decolagem)}  " style="font-size: 14px ">
-                        </h:outputText>       
+                        <h:outputText value="#{saltoBean.getNomeCliente(instrutor,decolagem)}" style="font-size: 14px ">
+                        </h:outputText>
+                        <br></br>
+                        <h:outputText value="#{saltoBean.getNomeTipoDeSalto(instrutor,decolagem)}" style="font-size: 14px ">
+                        </h:outputText> 
                     </p:columns>
                 </p:dataTable> 
             </p:layoutUnit>                        

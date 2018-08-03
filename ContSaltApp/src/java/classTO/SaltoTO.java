@@ -21,7 +21,6 @@ public class SaltoTO {
     }
 
     public void setIdSalto(int idSalto) {
-        //ksja
         this.idSalto = idSalto;
     }
 
