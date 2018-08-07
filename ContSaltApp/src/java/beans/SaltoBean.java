@@ -151,29 +151,7 @@ public class SaltoBean implements Serializable {
     public List<DecolagemTO> getDecolagems(){       
         return filtros.decolagens();
     }
-    
-    /**
-    * Buscar nome do cliente.
-    * O método retorna o nome do cliente em um salto.
-    * @return - nome do cliente.  
-    */
-    public String getNomeCliente(InstrutorTO instrutor, DecolagemTO decolagem){ 
-        ClienteTO cliente =  new ClienteTO();
-        cliente= filtros.getCliente(filtros.getSaltoPorInstrutorDecolagem(instrutor, decolagem));
-        return cliente.getNome();
-    }
-    
-    /**
-    * Buscar nome do tipo de salto.
-    * O método retorna o nome do tipo de salto de um salto.
-    * @return - nome do tipo de salto.  
-    */
-    public String getNomeTipoDeSalto(InstrutorTO instrutor, DecolagemTO decolagem){ 
-        TipoDeSaltoTO tipSalt =  new TipoDeSaltoTO();
-        tipSalt = filtros.getTipoDeSalto(filtros.getSaltoPorInstrutorDecolagem(instrutor, decolagem));    
-        return tipSalt.getNome();
-    }
-    
+        
     public ClienteTO getCliente() {
         return cliente;
     }

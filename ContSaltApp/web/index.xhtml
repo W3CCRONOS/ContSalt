@@ -44,27 +44,32 @@
                         <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_tipos_de_saltos.xhtml" style=" font-size: 14px" />
                     </p:submenu>
                 </p:panelMenu>
-            </p:layoutUnit>
-            <p:layoutUnit position="center">
-                <p:clock id="data" pattern="dd.MM.yyyy HH:mm:ss" />
+            </p:layoutUnit>         
+            <p:layoutUnit position="center" id="layout">                
                 <center><h2>Saltos</h2></center>
+                <p:clock id="data" pattern="dd.MM.yyyy HH:mm:ss" />                
+                <br></br>
+                <br></br>
                 <p:dataTable var="decolagem" value="#{decolagemBean.decolagens}" >
-                    <p:column headerText="Decolagens">
+                        <p:column headerText="Decolagens">
                         <h:outputText value="#{decolagem.numero}  " style="font-size: 14px "/>
                         <p:column headerText="Status" style="text-align: center;">
-                            <p:selectBooleanCheckbox value="#{decolagem.status}" disabled="true"  >                 
-                            </p:selectBooleanCheckbox> 
+                           <h:outputText value="#{indexBean.statusDasDecolagens(decolagem)}" style="font-size: 14px ">
+                           </h:outputText> 
                         </p:column>
                     </p:column>
                     <p:columns value="#{saltoBean.instrutoresPresentes}" var="instrutor" headerText="#{instrutor.nome}">      
-                        <h:outputText value="#{saltoBean.getNomeCliente(instrutor,decolagem)}" style="font-size: 14px ">
+                        <h:outputText value="#{indexBean.getNomeCliente(instrutor,decolagem)}" style="font-size: 14px ">
                         </h:outputText>
                         <br></br>
-                        <h:outputText value="#{saltoBean.getNomeTipoDeSalto(instrutor,decolagem)}" style="font-size: 14px ">
+                        <h:outputText value="#{indexBean.getNomeTipoDeSalto(instrutor,decolagem)}" style="font-size: 14px ">
                         </h:outputText> 
                     </p:columns>
-                </p:dataTable> 
-            </p:layoutUnit>                        
+                </p:dataTable>
+                <p:commandButton value="Imprimir" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
+                    <p:printer target="layout" />
+                </p:commandButton>
+            </p:layoutUnit>           
         </p:layout>        
     </h:body>
 </html>

@@ -142,47 +142,6 @@ public class Filtros {
         return list; //Retorno das decolagem ainda não finalizadas. 
     } 
     
-    /** Buscar Salto.
-    * O método retornar um salto que está em uma decolagem e foi realizado  por
-    * um instrutor.
-    * @return  - salto.
-    */
-    public SaltoTO getSaltoPorInstrutorDecolagem(InstrutorTO instrutor, DecolagemTO decolagem){        
-        SaltoTO salt= new SaltoTO();
-                salt =  saltoDao.getSaltosPorInstrutorDecolagem(instrutor, decolagem);
-        return  salt;
-    } 
-
-    /** Buscar Cliente.
-    * O método retornar um cliente que está em um salto.
-    * @return  - cliente.
-    */    
-    public ClienteTO getCliente(SaltoTO salto){
-        ClienteTO cliente1 = new ClienteTO();
-        for(ClienteTO cliente2 : clienteDao.getClientes()){
-            if(cliente2.getIdCliente()==salto.getIdCliente()){
-                cliente1=cliente2;
-                break;
-            }
-        }
-        return cliente1;          
-    }
-    
-    /** Buscar Tipo de Salto.
-    * O método retornar o tipo de salto que está em um salto.
-    * @return  - tipo de salto.
-    */    
-    public TipoDeSaltoTO getTipoDeSalto(SaltoTO salto){
-        TipoDeSaltoTO tipoSalto1 = new TipoDeSaltoTO();
-        for(TipoDeSaltoTO tipoSalto2 : tipSaltDao.getTiposDeSaltos()){
-            if(tipoSalto2.getIdTipoDeSalto()==salto.getIdTipoDeSalto()){
-                tipoSalto1=tipoSalto2;
-                break;
-            }
-        }
-        return tipoSalto1;          
-    }
-    
     /** Filtro dos intrutores presentes.
     *   O método retorna uma lista com os instrutores presentes.
     *   Instrutores ausentes não podem realizar saltos.
@@ -201,7 +160,7 @@ public class Filtros {
     
     /** Filtro dos intrutores por tipo de salto.
     *   O método retorna uma lista de instrutores que execultam o tipo de salto informado.
-    *   @param tipSalto  - tipo de salto.  
+    *   @param tipoDeSalto  - tipo de salto.  
     *   @param instrutores   - instrutores presentes.  
     *   @return List  - instrutores por tipo de salto*/
     public List<InstrutorTO> instruoresPorTipodeSalto(List<InstrutorTO> instrutores, TipoDeSaltoTO tipoDeSalto){
