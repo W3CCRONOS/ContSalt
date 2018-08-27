@@ -146,6 +146,35 @@ public class InstrutorDAO {
     }
     
 
+     /** 
+    * Método de busca. 
+    * O método busca o instrutor por sua chave primária.
+    * @param inst IntrutorTO - Instrutor.
+    * @return List - o retorno é uma lista com saltos.
+    */    
+    public InstrutorTO getInstrutorPeloId(int inst){           
+            List<InstrutorTO> lstA = new LinkedList<>();
+            InstrutorTO inst1 = new InstrutorTO();                    
+            ResultSet rs;            
+            try{
+                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM instrutor WHERE idinstrutor = ? ");
+                ppStmt.setInt(1, inst);             
+                rs = ppStmt.executeQuery();
+                while(rs.next()){
+                    lstA.add(getIntrutor(rs));
+                }            
+                ppStmt.close();
+	        rs.close();
+            }
+            catch(SQLException ex){
+                ex.printStackTrace();
+            }
+            for(InstrutorTO inst2: lstA) inst1=inst2;
+            return inst1;
+    }
+    
+    
+    
     
     /** 
     * Método para montar um objeto. 

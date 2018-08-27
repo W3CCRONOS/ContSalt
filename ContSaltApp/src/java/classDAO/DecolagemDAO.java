@@ -11,6 +11,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import utilitarios.Conexao;
@@ -56,7 +57,32 @@ public class DecolagemDAO {
      
     /** 
     * Método de busca. 
-    * O método busca os registros das decolagens realizadas em uma data
+    * O método busca as decolagens realizadas em um periodo.
+    * @param dataInicial  - data inicial do periodo.
+    * @param dataFinal  -   data final do epriodo
+    * @return List -  lista com decolagens.
+    */   
+    public List<DecolagemTO> getDecolagensPorPeriodo(Date dataInicial,Date dataFinal){            
+            List<DecolagemTO> lstA = new LinkedList<>();
+            ResultSet rs;            
+            try{
+                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM decolagem WHERE data BETWEEN ('"+dataInicial+"') AND ('"+dataFinal+"')");
+                rs = ppStmt.executeQuery();
+                while(rs.next()){
+                    lstA.add(getDecolagem(rs));
+                }
+                ppStmt.close();
+	        rs.close();
+            }
+            catch(SQLException ex){
+                ex.printStackTrace();
+            }
+            return lstA;
+    } 
+     
+    /** 
+    * Método de busca. 
+    * O método busca os as decolagens realizadas em uma data
     * específica.
     * @param data - data das decolagens.
     * @return List - O retorno é uma lista com decolagens.

@@ -12,6 +12,11 @@
         <p:layout fullPage="true">
             <p:layoutUnit  position="west" size="175" header="Ocultar" visible="true" collapsible="true">
                 <p:panelMenu style="width:175px">
+                    <p:submenu label="Home">
+                        <p:menuitem value="Início" url="http://localhost:8080/ContSaltApp/faces/index.xhtml" style=" font-size: 14px" />
+                    </p:submenu>
+                </p:panelMenu>
+                <p:panelMenu style="width:175px">
                     <p:submenu label="Clientes">
                         <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_cliente.xhtml" style=" font-size: 14px" />
                     </p:submenu>
@@ -31,7 +36,6 @@
                 <p:panelMenu style="width:175px">
                     <p:submenu label="Saltos">
                         <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_salto.xhtml" style=" font-size: 14px" />
-                        <p:menuitem value="Relatório de Saltos" url="http://localhost:8080/ContSaltApp/faces/relatorios.xhtml" style=" font-size: 14px" />
                    </p:submenu>
                 </p:panelMenu>
                 <p:panelMenu style="width:175px">
@@ -42,36 +46,50 @@
                 <p:panelMenu style="width:175px">
                    <p:submenu label="Tipos de Saltos">
                         <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_tipos_de_saltos.xhtml" style=" font-size: 14px" />
-                        <p:menuitem value="Relatório de Saltos" url="http://localhost:8080/ContSaltApp/faces/relatorios.xhtml" style=" font-size: 14px" />
                     </p:submenu>
                 </p:panelMenu>
-            </p:layoutUnit>         
-            <p:layoutUnit position="center" id="layout">                
-                <center><h2>Saltos</h2></center>
-                <p:clock id="data" pattern="dd.MM.yyyy HH:mm:ss" />                
+            </p:layoutUnit>
+            <p:layoutUnit id="layout" position="center" size="20" >
+                <center><h2>Relatório de Pagamento dos Saltos</h2></center>
                 <br></br>
+                <p:outputLabel value="Instrutor: #{relatoriosBean.instrutor.nome} " style=" font-size: 14px"/>
                 <br></br>
-                <p:dataTable var="decolagem" value="#{decolagemBean.decolagens}" >
-                    <p:column headerText="Decolagens">
-                        <h:outputText value="#{decolagem.numero}  " style="font-size: 14px "/>
-                        <p:column headerText="Status" style="text-align: center;">
-                           <h:outputText value="#{indexBean.statusDasDecolagens(decolagem)}" style="font-size: 14px ">
-                           </h:outputText> 
-                        </p:column>
+                <p:outputLabel value="Periodo de #{relatoriosBean.dataInicial}  à  #{relatoriosBean.dataFinal}" style=" font-size: 14px"/>
+                <center><h2>Saltos</h2></center>             
+                <br></br>
+                <p:dataTable var="tiposDesaltos" value="1">
+                    <p:column headerText="Total de Saltos">      
+                        <p:outputLabel value=" #{relatoriosBean.qtdaDeSaltos()} " style=" font-size: 14px"/> 
                     </p:column>
-                    <p:columns value="#{saltoBean.instrutoresPresentes}" var="instrutor" headerText="#{instrutor.nome}">      
-                        <h:outputText value="#{indexBean.getNomeCliente(instrutor,decolagem)}" style="font-size: 14px ">
-                        </h:outputText>
+                    <p:columns value="#{relatoriosBean.tiposDeSaltos}" var="tipSalto" headerText="#{tipSalto.nome}">      
+                        <p:outputLabel value="#{relatoriosBean.getValor(tipSalto)}" style=" font-size: 14px">
+                            <f:convertNumber minFractionDigits="2" currencyCode="BRL" type="currency" />
+                        </p:outputLabel>
                         <br></br>
-                        <h:outputText value="#{indexBean.getNomeTipoDeSalto(instrutor,decolagem)}" style="font-size: 14px ">
-                        </h:outputText>        
+                        <p:outputLabel value="#{tipSalto.nome}" style=" font-size: 14px"/>
                     </p:columns>
-                </p:dataTable>
+                </p:dataTable>    
+            </p:layoutUnit> 
+            <p:layoutUnit  position="south" size="280" >               
+            <center><h2>Dados para Gerar o Relatório</h2></center>
+                <h:form>
+                <h:panelGrid columns="2" cellpadding="4">
+                    <p:outputLabel value="Informe o Instrutor: " for="instrutor" style=" font-size: 14px" /> 
+                    <p:selectOneMenu id="instrutor" value="#{relatoriosBean.idInstrutor}" >
+                        <f:selectItems var="inst" value="#{instrutorBean.instrutores}" itemLabel="#{inst.nome}" itemValue="#{inst.idInstrutor}" />
+                    </p:selectOneMenu>                     
+                    <p:outputLabel value="Defina o Periodo" style=" font-size: 14px"/> <p:outputLabel/>
+                    <p:outputLabel for="txtDataIni" value="Data Inicial:" style=" font-size: 14px"/>
+                    <p:calendar id="txtDataIni" value="#{relatoriosBean.dataUtilInicial}" locale="pt_BR" pattern="dd/MM/yyyy" navigator="true"  showOn="button"/> 
+                    <p:outputLabel for="txtDataFin" value="Data Final:" style=" font-size: 14px"/>
+                    <p:calendar id="txtDataFin" value="#{relatoriosBean.dataUtilFinal}" locale="pt_BR" pattern="dd/MM/yyyy" navigator="true"  showOn="button"/> 
+                    <p:commandButton value="Ok" action="#{relatoriosBean.buscar()}" ajax="false"/>
+                </h:panelGrid>
+                </h:form>
                 <p:commandButton value="Imprimir" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
                     <p:printer target="layout" />
                 </p:commandButton>
-            </p:layoutUnit>           
+            </p:layoutUnit>
         </p:layout>        
     </h:body>
 </html>
-

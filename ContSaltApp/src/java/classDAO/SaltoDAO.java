@@ -86,7 +86,8 @@ public class SaltoDAO {
     /** 
     * Método de busca. 
     * O método busca todos os saltos relalizados em uma determinada data.
-    * @param dataDoSalto - data referente a busca.
+    * @param inst IntrutorTO - Instrutor.
+    * @param deco DecolagemTO - Uma Decolagem.
     * @return List - o retorno é uma lista com saltos.
     */    
     public SaltoTO getSaltosPorInstrutorDecolagem(InstrutorTO inst, DecolagemTO deco){           
@@ -109,7 +110,34 @@ public class SaltoDAO {
             }
             for(SaltoTO salto2: lstA) salto1=salto2;
             return salto1;
-    }    
+    }
+    
+    
+        /** 
+    * Método de busca. 
+    * O método busca todos os saltos relalizados por um instrutor.
+    * @param idInstrutor identificação do instrutore(primary key).
+    * @return List - o retorno é uma lista com saltos.
+    */    
+    public  List<SaltoTO> getSaltosPorInstrutorDecolagem(int idInstrutor){           
+            List<SaltoTO> lstA = new LinkedList<>();                  
+            ResultSet rs;            
+            try{
+                PreparedStatement ppStmt = conn.prepareStatement("SELECT * FROM salto WHERE idinstrutor = ?");
+                ppStmt.setInt(1, idInstrutor);             
+                rs = ppStmt.executeQuery();
+                while(rs.next()){
+                    lstA.add(getSalto(rs));
+                }            
+                ppStmt.close();
+	        rs.close();
+            }
+            catch(SQLException ex){
+                ex.printStackTrace();
+            }
+            return  lstA;
+    }
+    
     /** 
     * Método de busca. 
     * O método busca todos os saltos em uma decolagem específica.
