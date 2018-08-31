@@ -8,10 +8,12 @@ package classBO;
 import classDAO.DecolagemDAO;
 import classDAO.InstrutorDAO;
 import classDAO.SaltoDAO;
+import classDAO.TaxaSobrepesoDAO;
 import classDAO.TipoDeSaltoDAO;
 import classTO.DecolagemTO;
 import classTO.InstrutorTO;
 import classTO.SaltoTO;
+import classTO.TaxaSobrepesoTO;
 import classTO.TipoDeSaltoTO;
 import java.util.Date;
 import java.util.HashSet;
@@ -32,7 +34,7 @@ public class Reatorios {
     private InstrutorDAO instDao =  new InstrutorDAO();
     private TipoDeSaltoDAO tipSaltDao = new TipoDeSaltoDAO();
     private ConversorDeDatas alteraData = new ConversorDeDatas();
-
+    private TaxaSobrepesoDAO taxaDao = new TaxaSobrepesoDAO();
     /** 
     * Método para buscar os saltos de um instrutor em um periodo. 
     * O método busca os saltos realizados por um determinado instrutor
@@ -115,12 +117,54 @@ public class Reatorios {
     *   @param saltos - lista de saltos.
     *   @return valor  - valor dos saltos.
     */
-    public double getValor(TipoDeSaltoTO tipSalto,List<SaltoTO> saltos){
+    public double getValorPorTipoDeSalto(TipoDeSaltoTO tipSalto,List<SaltoTO> saltos){
         double valor = 0.00;
             for(SaltoTO salt : saltos){
                 if(tipSalto.getIdTipoDeSalto() == salt.getIdTipoDeSalto()){
                     valor = valor + tipSalto.getValor();
                 }               
+            }
+            return valor;
+
+    }
+    
+    /** Método para calcular os valores por tipo de saltos.
+    *   O método calcular os valores totais das somas dos saltos.
+    *   @param saltos - lista de saltos.
+    *   @return valor  - valor total dos saltos.
+    */
+    public double getValorDosSalto(List<SaltoTO> saltos){
+        double valor = 0.00;
+        List<TipoDeSaltoTO> tipsSalts = new LinkedList<>();
+        tipsSalts = tipSaltDao.getTiposDeSaltos();
+             for(SaltoTO salt : saltos){
+                for(TipoDeSaltoTO tipSalt: tipsSalts)
+                    if(tipSalt.getIdTipoDeSalto() == salt.getIdTipoDeSalto()){
+                        valor = valor + tipSalt.getValor();
+                    }               
+            }
+            return valor;
+    }
+    
+    
+    
+    
+    
+    
+    /** Método para calcular as taxas de sobrepeso.
+    *   O método realiza a soma total das taxas de sobrepeso dos saltos realizados.
+    *   @param saltos - lista de saltos.
+    *   @return valor  - valor da soma das taxas de sobrepeso.
+    */
+    public double somaTaxasDeSoprepeso(List<SaltoTO> saltos){
+        double valor = 0.00;
+        List<TaxaSobrepesoTO> taxas = new LinkedList<>();
+        taxas = taxaDao.getTaxasSobrepesos();
+            for(SaltoTO salt : saltos){
+                for(TaxaSobrepesoTO taxa: taxas)
+                    if(taxa.getIdTaxaSobrepeso() == salt.getIdTaxaDeSobrepeso()){
+                        valor = valor + taxa.getValor();
+                    }               
             }
             return valor;
 
@@ -161,6 +205,22 @@ public class Reatorios {
 
     public void setInstDao(InstrutorDAO instDao) {
         this.instDao = instDao;
+    }
+
+    public TipoDeSaltoDAO getTipSaltDao() {
+        return tipSaltDao;
+    }
+
+    public void setTipSaltDao(TipoDeSaltoDAO tipSaltDao) {
+        this.tipSaltDao = tipSaltDao;
+    }
+
+    public TaxaSobrepesoDAO getTaxaDao() {
+        return taxaDao;
+    }
+
+    public void setTaxaDao(TaxaSobrepesoDAO taxaDao) {
+        this.taxaDao = taxaDao;
     }
     
     

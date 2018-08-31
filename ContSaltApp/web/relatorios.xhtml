@@ -49,42 +49,51 @@
                     </p:submenu>
                 </p:panelMenu>
             </p:layoutUnit>
-            <p:layoutUnit id="layout" position="center" size="20" >
+            <p:layoutUnit id="layout" position="center" size="220" >
                 <center><h2>Relatório de Pagamento dos Saltos</h2></center>
-                <br></br>
                 <p:outputLabel value="Instrutor: #{relatoriosBean.instrutor.nome} " style=" font-size: 14px"/>
                 <br></br>
-                <p:outputLabel value="Periodo de #{relatoriosBean.dataInicial}  à  #{relatoriosBean.dataFinal}" style=" font-size: 14px"/>
-                <center><h2>Saltos</h2></center>             
+                <p:outputLabel value="Periodo de #{relatoriosBean.dataInicial}  à  #{relatoriosBean.dataFinal}." style=" font-size: 14px"/>
                 <br></br>
+                
+                <center><p:outputLabel value="Saltos" style=" font-size: 20px"/></center>
+                <p:outputLabel value="Número de saltos realizados no periodo:#{relatoriosBean.qtdaDeSaltos()} " style=" font-size: 14px"/>
                 <p:dataTable var="tiposDesaltos" value="1">
-                    <p:column headerText="Total de Saltos">      
-                        <p:outputLabel value=" #{relatoriosBean.qtdaDeSaltos()} " style=" font-size: 14px"/> 
+                    <p:column>      
+                        <p:outputLabel value="Valores a receber por tipo de salto" style=" font-size: 14px"/>
                     </p:column>
                     <p:columns value="#{relatoriosBean.tiposDeSaltos}" var="tipSalto" headerText="#{tipSalto.nome}">      
-                        <p:outputLabel value="#{relatoriosBean.getValor(tipSalto)}" style=" font-size: 14px">
+                        <p:outputLabel value="#{relatoriosBean.getValorPorTipoDeSalto(tipSalto)}" style=" font-size: 14px">
                             <f:convertNumber minFractionDigits="2" currencyCode="BRL" type="currency" />
                         </p:outputLabel>
-                        <br></br>
-                        <p:outputLabel value="#{tipSalto.nome}" style=" font-size: 14px"/>
                     </p:columns>
-                </p:dataTable>    
+                </p:dataTable>
+                
+                <br></br>
+                <p:outputLabel value="Taxas de sobrepeso a receber: R$ #{relatoriosBean.somaTaxasDeSoprepeso()}0" style=" font-size: 14px"/>
+                <br></br>
+                <br></br>
+                <p:outputLabel value="Valor Total: R$ #{relatoriosBean.getValorTotalDosSaltos()}0 " style=" font-size: 16px"/>
             </p:layoutUnit> 
-            <p:layoutUnit  position="south" size="280" >               
+            <p:layoutUnit  position="south" size="210" >               
             <center><h2>Dados para Gerar o Relatório</h2></center>
                 <h:form>
-                <h:panelGrid columns="2" cellpadding="4">
+                    <h:panelGrid columns="2" cellpadding="2">
                     <p:outputLabel value="Informe o Instrutor: " for="instrutor" style=" font-size: 14px" /> 
                     <p:selectOneMenu id="instrutor" value="#{relatoriosBean.idInstrutor}" >
                         <f:selectItems var="inst" value="#{instrutorBean.instrutores}" itemLabel="#{inst.nome}" itemValue="#{inst.idInstrutor}" />
-                    </p:selectOneMenu>                     
-                    <p:outputLabel value="Defina o Periodo" style=" font-size: 14px"/> <p:outputLabel/>
+                    </p:selectOneMenu>
+                    </h:panelGrid>   
+                    <br></br>
+                    <p:outputLabel value=" Defina o Periodo" style=" font-size: 14px"/> <p:outputLabel/>
+                    <h:panelGrid columns="4" cellpadding="2">
                     <p:outputLabel for="txtDataIni" value="Data Inicial:" style=" font-size: 14px"/>
                     <p:calendar id="txtDataIni" value="#{relatoriosBean.dataUtilInicial}" locale="pt_BR" pattern="dd/MM/yyyy" navigator="true"  showOn="button"/> 
                     <p:outputLabel for="txtDataFin" value="Data Final:" style=" font-size: 14px"/>
                     <p:calendar id="txtDataFin" value="#{relatoriosBean.dataUtilFinal}" locale="pt_BR" pattern="dd/MM/yyyy" navigator="true"  showOn="button"/> 
+                    </h:panelGrid>
                     <p:commandButton value="Ok" action="#{relatoriosBean.buscar()}" ajax="false"/>
-                </h:panelGrid>
+                
                 </h:form>
                 <p:commandButton value="Imprimir" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
                     <p:printer target="layout" />

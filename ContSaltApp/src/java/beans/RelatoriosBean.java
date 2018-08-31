@@ -61,10 +61,31 @@ public class RelatoriosBean implements Serializable {
         
     }
     
-    public double getValor(TipoDeSaltoTO tipSalt){
-        double valor = 0.0;
-        valor = relatorios.getValor(tipSalt, this.saltos);
-        return valor;      
+    /** Método para calcular os valores dos saltos.
+    *   O método calcula os valores dos saltos segundo um tipo de salto
+    *   @param tipSalt - tipo de salto.
+    *   @return valor  - valor dos saltos por tipo de salto.
+    */    
+    public double getValorPorTipoDeSalto(TipoDeSaltoTO tipSalt){
+        return relatorios.getValorPorTipoDeSalto(tipSalt, this.saltos);              
+    }
+    
+    /** Método para calculo total os saltos.
+    *   O método calcula a soma total dos saltos com as taxas de sobrepeso realizados.
+    *   @return valor  - valor total dos saltos.
+    */    
+    public double getValorTotalDosSaltos(){
+        double somaSaltos = relatorios.getValorDosSalto(this.saltos);
+        double somaTaxas = relatorios.somaTaxasDeSoprepeso(this.saltos);
+        return somaSaltos+somaTaxas;
+    }
+    
+     /** Método para calcular as taxas de sobrepeso.
+    *   O método realiza a soma total das taxas de sobrepeso dos saltos realizados.
+    *   @return valor  - valor da soma das taxas de sobrepeso.
+    */
+    public double somaTaxasDeSoprepeso(){
+            return relatorios.somaTaxasDeSoprepeso(saltos);
     }
     
     public int qtdaDeSaltos(){
