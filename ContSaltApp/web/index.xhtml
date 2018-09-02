@@ -30,8 +30,9 @@
                 </p:panelMenu>
                 <p:panelMenu style="width:175px">
                     <p:submenu label="Saltos">
-                        <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_salto.xhtml" style=" font-size: 14px" />
-                        <p:menuitem value="Relatório de Saltos" url="http://localhost:8080/ContSaltApp/faces/relatorios.xhtml" style=" font-size: 14px" />
+                        <p:menuitem value="Cadastrar" url="http://localhost:8080/ContSaltApp/faces/cadastrar_salto.xhtml" style=" font-size: 14px" />
+                         <p:menuitem value="Cancelar" url="http://localhost:8080/ContSaltApp/faces/cancelar_salto.xhtml" style=" font-size: 14px" />
+                        <p:menuitem value="Relatóris" url="http://localhost:8080/ContSaltApp/faces/relatorios.xhtml" style=" font-size: 14px" />
                    </p:submenu>
                 </p:panelMenu>
                 <p:panelMenu style="width:175px">
@@ -42,11 +43,10 @@
                 <p:panelMenu style="width:175px">
                    <p:submenu label="Tipos de Saltos">
                         <p:menuitem value="Cadastro" url="http://localhost:8080/ContSaltApp/faces/cadastrar_tipos_de_saltos.xhtml" style=" font-size: 14px" />
-                        <p:menuitem value="Relatório de Saltos" url="http://localhost:8080/ContSaltApp/faces/relatorios.xhtml" style=" font-size: 14px" />
                     </p:submenu>
                 </p:panelMenu>
             </p:layoutUnit>         
-            <p:layoutUnit position="center" id="layout">                
+            <p:layoutUnit position="center" id="layout">               
                 <center><h2>Saltos</h2></center>
                 <p:clock id="data" pattern="dd.MM.yyyy HH:mm:ss" />                
                 <br></br>
@@ -64,13 +64,27 @@
                         </h:outputText>
                         <br></br>
                         <h:outputText value="#{indexBean.getNomeTipoDeSalto(instrutor,decolagem)}" style="font-size: 14px ">
-                        </h:outputText>        
+                        </h:outputText>
+                        <br></br>
+                        <h:outputText value="#{indexBean.getIdSalto(instrutor, decolagem)}" style="font-size: 14px ">
+                        </h:outputText> 
                     </p:columns>
-                </p:dataTable>
-                <p:commandButton value="Imprimir" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
+                </p:dataTable> 
+            <p:commandButton value="Imprimir" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
                     <p:printer target="layout" />
-                </p:commandButton>
-            </p:layoutUnit>           
+            </p:commandButton>
+            </p:layoutUnit>
+            <p:layoutUnit  position="south" size="110" >               
+            <h2>Cancelar Salto</h2>
+                <h:form>                    
+                        <h:panelGrid columns="2" cellpadding="2">
+                            <h:outputLabel for="txtNumero" value="Informe o número do salto:" style=" font-size: 14px" />
+                            <p:inputText id="txtNumero" value="#{saltoBean.idSalto}" />
+                            <p:commandButton value="Cancelar" action="#{saltoBean.excluir()}"  ajax="false" />
+                        </h:panelGrid>                   
+                </h:form>
+            </p:layoutUnit>
+            
         </p:layout>        
     </h:body>
 </html>

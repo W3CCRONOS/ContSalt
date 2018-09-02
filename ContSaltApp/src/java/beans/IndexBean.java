@@ -10,6 +10,7 @@ import classBO.Saltos;
 import classTO.ClienteTO;
 import classTO.DecolagemTO;
 import classTO.InstrutorTO;
+import classTO.SaltoTO;
 import classTO.TipoDeSaltoTO;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -59,6 +60,20 @@ public class IndexBean implements Serializable {
         tipSalt = saltos.getTipoDeSalto(saltos.getSaltoPorInstrutorDecolagem(instrutor, decolagem));    
         return tipSalt.getNome();
     }
+    
+    /**
+    * Buscar Salto.
+    * O método retorna a identificação de um salto.
+    * @param instrutor
+    * @param decolagem
+    * @return - nome do tipo de salto.  
+    */
+    public int getIdSalto(InstrutorTO instrutor, DecolagemTO decolagem){ 
+        SaltoTO salto = new SaltoTO();
+        salto = saltos.getSaltoPorInstrutorDecolagem(instrutor, decolagem);    
+        return  salto.getIdSalto();
+    }
+    
     
     /**
     * Método que retorna uma lista dos instrutore presentes.

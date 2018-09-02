@@ -69,20 +69,21 @@ public class SaltoDAO {
         }        
     }
     /**
-    * Método para excluir registros no banco. Este método exclui um salto
-    *registrado no banco.
-    * @param salt SaltoTO - Objeto salto que terá o registrado no banco excluído.
+    * Método de exclusão. Este método exclui um salto
+    * registrado no banco.
+    * @param idSalto - número de identificação de um salto.
     */
-    public void excluir(SaltoTO salt){
+    public void excluir(int idSalto){
         try {
             PreparedStatement ppStmt = conn.prepareStatement("DELETE FROM salto WHERE idsalto=?");
-            ppStmt.setInt(1,salt.getIdSalto());
+            ppStmt.setInt(1,idSalto);
             ppStmt.execute();
             ppStmt.close();
         }catch(SQLException EX){
             EX.printStackTrace();
         }
-    }    
+    }
+    
     /** 
     * Método de busca. 
     * O método busca todos os saltos relalizados em uma determinada data.

@@ -6,10 +6,7 @@
 package beans;
 
 import classBO.Filtros;
-import classDAO.InstrutorDAO;
 import classDAO.SaltoDAO;
-import classDAO.TaxaSobrepesoDAO;
-import classDAO.TipoDeSaltoDAO;
 
 import classTO.ClienteTO;
 import classTO.DecolagemTO;
@@ -21,7 +18,7 @@ import classTO.TipoDeSaltoTO;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.util.ArrayList;
+
 
 import java.util.LinkedList;
 import java.util.List;
@@ -41,13 +38,14 @@ public class SaltoBean implements Serializable {
      o Bean valores inteiros*/
     private int idTipoDeSalto;
     private int idDecolagem;
+    private int idSalto;
     private TipoDeSaltoTO tipoDeSalto; 
     private DecolagemTO decolagem;
     private TaxaSobrepesoTO taxaSobrepeso;
     private Filtros filtros;
     private InstrutorTO instrutor;
     private SaltoTO salto;
-    private SaltoDAO saltoDao = new SaltoDAO();
+    private SaltoDAO saltoDao;
      
     public SaltoBean() {
         this.setCliente(new ClienteTO());  
@@ -59,6 +57,8 @@ public class SaltoBean implements Serializable {
         this.setFiltros(new Filtros());
         this.setInstrutor(new InstrutorTO());
         this.setSalto(new SaltoTO());
+        this.setSaltoDao(new SaltoDAO());
+        this.setIdSalto(idSalto = 0);
     }
     
     /**
@@ -121,6 +121,11 @@ public class SaltoBean implements Serializable {
         return listInst;
     }
     
+    /**
+    * Método que cancelar um salto. 
+    * O método cancelar as informações que seriam utilizadas para criar um salto.
+    */
+    
     public void cancelar(){
         this.setCliente(new ClienteTO());  
         this.setTipoDeSalto(new TipoDeSaltoTO());
@@ -133,6 +138,11 @@ public class SaltoBean implements Serializable {
         this.setSalto(new SaltoTO());
     }
     
+    /**
+    * Método cria um salto. 
+    * O método armazena as informações um salto junto ao banco de dados.
+    */
+    
     public void salvar(){
         salto.setIdCliente(cliente.getIdCliente());           
         salto.setIdInstrutor(instrutor.getIdInstrutor());
@@ -141,6 +151,16 @@ public class SaltoBean implements Serializable {
         salto.setIdTipoDeSalto(tipoDeSalto.getIdTipoDeSalto());
         saltoDao.salvar(salto);
         cancelar();        
+    }
+    
+    
+    
+    /**
+    * Método exclui um salto. 
+    * O método apaga as informações de um salto junto ao banco de dados.
+    */  
+    public void excluir(){
+        saltoDao.excluir(idSalto);
     }
     
     /**
@@ -205,5 +225,22 @@ public class SaltoBean implements Serializable {
     }
     public void setSalto(SaltoTO salto) {
         this.salto = salto;
-    }     
+    }
+
+    public SaltoDAO getSaltoDao() {
+        return saltoDao;
+    }
+
+    public void setSaltoDao(SaltoDAO saltoDao) {
+        this.saltoDao = saltoDao;
+    }
+
+    public int getIdSalto() {
+        return idSalto;
+    }
+
+    public void setIdSalto(int idSalto) {
+        this.idSalto = idSalto;
+    }
+    
 }
